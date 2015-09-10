@@ -31,16 +31,15 @@ $config =
 
 			"Google" => array (
 				"enabled" => true,
-				"keys"    => array ( "id" => "937720646213-dmaacrh1dedl6fpqs0n9hosb6sf9vd0q.apps.googleusercontent.com", "secret" => "SkriBBK9NdYvE1gF9nYrkWtF" )
+				"keys"    => array ( "id" => "1020486677583-j5j9lt3mb7lv0ta3fkfotdatq7bd5pkm.apps.googleusercontent.com", "secret" => "DCDAreW1ULYDM6r-8ETBWguH" )
 				
 			),
 
 			"Facebook" => array (
 				"enabled" => true,
-				"keys"    => array ( "id" => "362872267247263", "secret" => "7c33f7681c8227c46d493a99f9748cb7" ),
-                "scope"   => "email, user_about_me, user_birthday, user_hometown, user_website, offline_access, read_stream, publish_stream, read_friendlists,publish_actions"
+				"keys"    => array ( "id" => "1652034465042425", "secret" => "36f6884f23d0365177cbb7ecab324ae5" ),
+                "scope"   => "email, user_about_me, user_birthday, user_hometown, user_website,publish_actions"
 			),
-
 			"Twitter" => array (
 				"enabled" => true,
 				"keys"    => array ( "key" => "OyqptjsjeFqLlzfSZKk1AB386", "secret" => "sFuCATn4UeOmtAKAomWbVIUdi248HLNqaj106YtDvQCNcVAqkB" )
