@@ -125,6 +125,63 @@ class User_model extends CI_Model
 		}
 		return 1;
 	}
+      function sociallogin($user_profile,$provider)
+    {
+        $query=$this->db->query("SELECT * FROM `user` WHERE `user`.`socialid`='$user_profile->identifier'");
+        if($query->num_rows == 0)
+        {
+
+					$googleid="";
+					$facebookid="";
+					$twitterid="";
+					switch($provider)
+					{
+						case "Google":
+						$googleid=$user_profile->identifier;
+						break;
+						case "Facebook":
+						$facebookid=$user_profile->identifier;
+						break;
+						case "Twitter":
+						$twitterid=$user_profile->identifier;
+						break;
+					}
+
+            $query2=$this->db->query("INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `dob`, `street`, `address`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`) VALUES (NULL, '$user_profile->displayName', '', '$user_profile->email', '3', CURRENT_TIMESTAMP, '1', '$user_profile->photoURL', '', '$user_profile->identifier', '$provider', '', '$user_profile->birthYear-$user_profile->birthMonth-$user_profile->birthDay', '', '$user_profile->address,$user_profile->region', '$user_profile->city', '', '$user_profile->country', '', '$facebookid', '$googleid', '$twitterid')");
+            $id=$this->db->insert_id();
+            $newdata = array(
+                'email'     => $user_profile->email,
+                'password' => "",
+                'logged_in' => true,
+                'id'=> $id,
+                'name'=> $user_profile->displayName,
+                'image'=> $user_profile->photoURL,
+                'logintype'=>$provider
+            );
+
+            $this->session->set_userdata($newdata);
+
+            return $newdata;
+
+        }
+        else
+        {
+            $query=$query->row();
+            $newdata = array(
+                'email'     => $user_profile->email,
+                'password' => "",
+                'logged_in' => true,
+                'id'=> $query->id,
+                'name'=> $user_profile->displayName,
+                'image'=> $user_profile->photoURL,
+                'logintype'=>$provider
+            );
+
+            $this->session->set_userdata($newdata);
+
+            return $newdata;
+        }
+    }
 	function deleteuser($id)
 	{
 		$query=$this->db->query("DELETE FROM `user` WHERE `id`='$id'");
@@ -338,15 +395,23 @@ class User_model extends CI_Model
     function loginuser($email,$password)
     {
         $password=md5($password);
-        $query=$this->db->query("SELECT `id` FROM `user` WHERE `email`='$email' AND `password`= '$password'");
+        $query=$this->db->query("SELECT `id`,`firstname`,`lastname`,`username`,`name` FROM `user` WHERE `email`='$email' AND `password`= '$password'");
         if($query->num_rows > 0)
         {
             $user=$query->row();
             $user=$user->id;
+            $firstname=$user->firstname;
+            $lastname=$user->lastname;
+            $username=$user->username;
+            $name=$user->name;
 
 
             $newdata = array(
                 'email'     => $email,
+                'firstname'     => $firstname,
+                'lastname'     => $lastname,
+                'username'     => $username,
+                'name'     => $name,
                 'logged_in' => 'true',
                 'id'=> $user
             );
@@ -637,12 +702,22 @@ $timestamp=new DateTime();
         }
     }
     
-    function updateuserfront($userid,$name, $lastname, $address, $email, $cell, $gender) 
+    function updateuserfront($id,$firstname, $lastname, $address, $email, $phone, $city,$zipcode,$country,$sameasbilling,$state) 
     {
-        $query="UPDATE `user` SET `firstname`='$name',`lastname`='$lastname',`email`='$email',`phone`='$cell',`billingaddress`='$address',`gender`='$gender' WHERE `id`='$userid'";
+        $query="UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`email`='$email',`phone`='$phone',`shippingaddress`='$address',`shippingcity`='$city',`shippingpincode`='$zipcode',`shippingcountry`='$country',`shippingstate`='$state' WHERE `id`='$userid'";
+        
+        if($sameasbilling=="true")
+        {
+        $query1="UPDATE `user` SET`billingaddress`='$address',`billingcity`='$city',`billingpincode`='$zipcode',`billingcountry`='$country',`billingstate`='$state' WHERE `id`='$userid'";
+        }
 //        echo $query;
         $query=$this->db->query($query);
-        return $query;
+        if($query){
+        return 1;
+        }
+        else{
+        return 0;
+        }
     }
     function getusercartdetails($userid)
     {
