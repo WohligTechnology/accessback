@@ -4475,5 +4475,122 @@ class Site extends CI_Controller
         $this->load->view("redirect",$data);
 	}
     
+    // new arrivals
+    
+    public function createnewarrival()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+         $data['type']=$this->newarrival_model->gettypedropdown();
+		$data['product']=$this->product_model->getproductdropdown();
+		$data[ 'page' ] = 'createnewarrival';
+		$data[ 'title' ] = 'Create New Arrival';
+		$this->load->view( 'template', $data );	
+	}
+	function createnewarrivalsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+			$product=$this->input->post('product');
+			$type=$this->input->post('type');
+			if($this->newarrival_model->create($product,$type)==0)
+			$data['alerterror']="New newarrival could not be created.";
+			else
+			$data['alertsuccess']="newarrival created Successfully.";
+			
+			$data['table']=$this->newarrival_model->viewnewarrival();
+			$data['redirect']="site/viewnewarrivals";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+		
+	}
+    public function viewnewarrivals()
+    {
+        $access=array("1");
+        $this->checkaccess($access);
+        $data['table']=$this->newarrival_model->viewnewarrival();
+		$data['page']='viewnewarrivals';
+//        $data["base_url"]=site_url("site/viewuserjson");
+        $data["title"]="View New Arrivals";
+        $this->load->view("template",$data);
+    }
+    function viewnewarrivalsjson()
+    {
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`newarrival`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`product`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="product";
+        $elements[1]->alias="product";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`newarrival`.`type`";
+        $elements[2]->sort="1";
+        $elements[2]->header="type";
+        $elements[2]->alias="type";
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `newarrival` LEFT OUTER JOIN `product` ON `product`.`id`=`newarrival`.`product`");
+        $this->load->view("json",$data);
+    }
+
+	function editnewarrival()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+         $data['type']=$this->newarrival_model->gettypedropdown();
+		$data['product']=$this->product_model->getproductdropdown();
+		$data['before']=$this->newarrival_model->beforeedit($this->input->get('id'));
+		$data['page']='editnewarrival';
+		$data['title']='Edit New Arrival';
+		$this->load->view('template',$data);
+	}
+	function editnewarrivalsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+            $product=$this->input->post('product');
+			$type=$this->input->post('type');
+			if($this->newarrival_model->edit($id,$product,$type)==0)
+			$data['alerterror']="newarrival Editing was unsuccesful";
+			else
+			$data['alertsuccess']="newarrival edited Successfully.";
+			
+			$data['redirect']="site/viewnewarrivals";
+			$this->load->view("redirect",$data);
+	}
+    
+    function deletenewarrival()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->newarrival_model->deletenewarrival($this->input->get('id'));
+		$data['table']=$this->newarrival_model->viewnewarrivals();
+		$data['alertsuccess']="newarrival Deleted Successfully";
+		$data['page']='viewnewarrival';
+		$data['title']='View newarrivals';
+		$this->load->view('template',$data);
+	}
+    
 }
 ?>

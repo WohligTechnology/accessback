@@ -506,18 +506,18 @@ class Product_model extends CI_Model
 		$query['template']->pageurl = "partials/product.html";
 		return $query;
 	}
-	function getproductdetails($product,$category)
+	function getproductdetails($product)
 	{
-		$query['breadcrumbs']=$this->getparentcategories($category);
+//		$query['breadcrumbs']=$this->getparentcategories($category);
 		$query['product']=$this->db->query("SELECT `product`.`id`,`product`.`name`,`product`.`sku`,`product`.`url`,`product`.`price`,`product`.`wholesaleprice`,`product`.`description`,`product`.`firstsaleprice`,`product`.`secondsaleprice`,`product`.`specialpriceto`,`product`.`specialpricefrom`,`product`.`quantity` FROM `product` 
 		WHERE `product`.`id`='$product'")->row();
 		
 		
 			
-			$query5=$this->db->query("SELECT count(`category`) as `isnew`  FROM `productcategory` 
-			WHERE  `productcategory`.`category`='31' AND `product`='$product'
-			LIMIT 0,1")->row();
-			$query['product']->isnew=$query5->isnew;
+//			$query5=$this->db->query("SELECT count(`category`) as `isnew`  FROM `productcategory` 
+//			WHERE  `productcategory`.`category`='31' AND `product`='$product'
+//			LIMIT 0,1")->row();
+//			$query['product']->isnew=$query5->isnew;
 			
 		
 		
