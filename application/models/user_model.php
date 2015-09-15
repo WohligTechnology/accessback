@@ -399,7 +399,7 @@ class User_model extends CI_Model
         if($query->num_rows > 0)
         {
             $user=$query->row();
-            $user=$user->id;
+            $userid=$user->id;
             $firstname=$user->firstname;
             $lastname=$user->lastname;
             $username=$user->username;
@@ -413,7 +413,7 @@ class User_model extends CI_Model
                 'username'     => $username,
                 'name'     => $name,
                 'logged_in' => 'true',
-                'id'=> $user
+                'id'=> $userid
             );
 
             $this->session->set_userdata($newdata);
