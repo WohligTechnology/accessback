@@ -37,6 +37,16 @@ class restapi_model extends CI_Model
      
         return $query;
     }	
+    
+    public function removefromwishlist($user, $product){
+        $query=$this->db->query(" DELETE FROM `userwishlist` WHERE `user`='$user' AND `product`='$product'");
+        if($query){
+        return 1;
+        }
+        else{
+        return false;
+        }
+    }
 	
 }
 ?>
