@@ -230,10 +230,9 @@ class Json extends CI_Controller {
         $firstname = $order['form']['firstname'];
         $lastname = $order['form']['lastname'];
         $email = $order['form']['email'];
-        $phone = $order['form']['phone'];
+        $billingcontact = $order['form']['billingcontact'];
         $status = $order['form']['status'];
         $company = $order['form']['company'];
-        $fax = $order['form']['fax'];
         $billingaddress = $order['form']['billingaddress'];
         $billingcity = $order['form']['billingcity'];
         $billingstate = $order['form']['billingstate'];
@@ -248,9 +247,9 @@ class Json extends CI_Controller {
         $carts = $order['form']['cart'];
         $finalamount = $order['form']['finalamount'];
         $shippingname = $order['form']['shippingname'];
-        $shippingtel = $order['form']['shippingtel'];
+        $shippingcontact = $order['form']['shippingcontact'];
         $customernote = $order['form']['customernote'];
-        $data["message"] = $this->order_model->placeorder($user, $firstname, $lastname, $email, $billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $phone, $status, $company, $fax, $carts, $finalamount, $shippingmethod, $shippingname, $shippingtel, $customernote);
+        $data["message"] = $this->order_model->placeorder($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote);
         //$data["message"]=$this->order_model->placeorder($user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingcountry,$shippingstate,$shippingpincode,$billingpincode,$phone,$status,$company,$fax);
         $this->load->view("json", $data);
     }
@@ -265,13 +264,13 @@ class Json extends CI_Controller {
         $this->load->view("json", $data);
     }
     function addtocart() {
-        $user = $this->input->get_post('user');
-        $product = $this->input->get_post('product');
-        $productname = $this->input->get_post('productname');
-        $quantity = $this->input->get_post('quantity');
-        $price = $this->input->get_post('price');
-//        $image = $this->input->get_post('image');
-        $data["message"] = $this->user_model->addtocart($product, $productname, $quantity, $price);
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user=$data['user'];
+        $product=$data['product'];
+        $productname=$data['productname'];
+        $quantity=$data['quantity'];
+        $price=$data['price'];
+        $data["message"] = $this->user_model->addtocart($user,$product, $productname, $quantity, $price);
         //$data["message"]=$this->order_model->addtocart($user,$product,$quantity);
         $this->load->view("json", $data);
     }
