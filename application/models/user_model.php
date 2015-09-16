@@ -578,31 +578,55 @@ class User_model extends CI_Model
         $image=$image->image;
         
         $data = array(
-               'id'      => $product,
-               'name'      => $productname,
-               'qty'     => $quantity,
-               'price'   => $price,
-               'image'   => $image
+               'id'      => intval($product),
+               'name'      =>  "1",
+               'qty'     => intval($quantity),
+               'price'   => floatval($price),
+               'options'   => array('image' => $image,'realname'=> $productname)
         );
         //array_push($data,$data2);
         $userid=$this->session->userdata('id');
         if($userid=="")
         {
-  $this->load->library('cart');
-        $this->cart->insert($data);
-         $cartdata=$this->cart->contents();
+            $returnval=$this->cart->insert($data);
+            if(!empty($returnval)){
+            return true;
+            }
+            else{
+            return false;
+            }
         }
         else
         {
-            $this->db->query("INSERT INTO `usercart`(`user`, `product`, `quantity`, `status`, `timestamp`) VALUES ('$userid','$product','$quantity',1,NULL)");
-              $this->load->library('cart');
-        $this->cart->insert($data);
-         $cartdata=$this->cart->contents();
+            $query=$this->db->query("INSERT INTO `usercart`(`user`, `product`, `quantity`, `status`, `timestamp`) VALUES ('$userid','$product','$quantity',1,NULL)");
+            $this->cart->insert($data);
+            if($query)
+            return true;
+            else
+            return false;
         }
-       
-//        print_r($cartdata);
-//        echo $cartdata;
-        return $cartdata;
+        
+//          $image=$this->db->query("SELECT `image` FROM `productimage` WHERE `product` = '$product' LIMIT 0,1")->row();
+//        $image=$image->image;
+//        
+//        $data = array(
+//               'id'      => $product,
+//               'name'      => $productname,
+//               'qty'     => $quantity,
+//               'price'   => $price,
+//               'image'   => $image
+//        );
+//        //array_push($data,$data2);
+//        $userid=$this->session->userdata('id');
+//        if($userid=="")
+//        {
+//
+//        }
+//        else
+//        {
+//            $this->db->query("INSERT INTO `usercart`(`user`, `product`, `quantity`, `status`, `timestamp`) VALUES ('$userid','$product','$quantity',1,NULL)");
+//        }
+//        $this->cart->insert($data);
     }
 
     function destroycart() {
