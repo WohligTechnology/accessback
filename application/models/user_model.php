@@ -571,7 +571,7 @@ class User_model extends CI_Model
 
 
 
-    function addtocart($user,$product,$productname,$quantity,$price) {
+    function addtocart($product,$productname,$quantity,$price) {
         //$data=$this->cart->contents();
 
         $image=$this->db->query("SELECT `image` FROM `productimage` WHERE `product` = '$product' LIMIT 0,1")->row();
@@ -584,20 +584,22 @@ class User_model extends CI_Model
                'price'   => $price,
                'image'   => $image
         );
-        print_r($data);
         //array_push($data,$data2);
         $userid=$this->session->userdata('id');
         if($userid=="")
         {
-
+  $this->load->library('cart');
+        $this->cart->insert($data);
+         $cartdata=$this->cart->contents();
         }
         else
         {
             $this->db->query("INSERT INTO `usercart`(`user`, `product`, `quantity`, `status`, `timestamp`) VALUES ('$userid','$product','$quantity',1,NULL)");
-        }
-         $this->load->library('cart');
+              $this->load->library('cart');
         $this->cart->insert($data);
          $cartdata=$this->cart->contents();
+        }
+       
 //        print_r($cartdata);
 //        echo $cartdata;
         return $cartdata;
