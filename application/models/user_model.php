@@ -582,7 +582,7 @@ class User_model extends CI_Model
                'name'      =>  "1",
                'qty'     => intval($quantity),
                'price'   => floatval($price),
-               'options'   => array('image' => $image,'realname'=> $productname)
+               'options'   => array('image' => $image,'realname'=> $productname,'productid'=> $product,'quantity'=> $quantity,'productprice'=> $price)
         );
         //array_push($data,$data2);
         $userid=$this->session->userdata('id');
@@ -605,28 +605,6 @@ class User_model extends CI_Model
             else
             return false;
         }
-        
-//          $image=$this->db->query("SELECT `image` FROM `productimage` WHERE `product` = '$product' LIMIT 0,1")->row();
-//        $image=$image->image;
-//        
-//        $data = array(
-//               'id'      => $product,
-//               'name'      => $productname,
-//               'qty'     => $quantity,
-//               'price'   => $price,
-//               'image'   => $image
-//        );
-//        //array_push($data,$data2);
-//        $userid=$this->session->userdata('id');
-//        if($userid=="")
-//        {
-//
-//        }
-//        else
-//        {
-//            $this->db->query("INSERT INTO `usercart`(`user`, `product`, `quantity`, `status`, `timestamp`) VALUES ('$userid','$product','$quantity',1,NULL)");
-//        }
-//        $this->cart->insert($data);
     }
 
     function destroycart() {
