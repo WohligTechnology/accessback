@@ -740,5 +740,8 @@ WHERE `usercart`.`user`='$userid'
 GROUP BY `product`.`id`")->result();
         return $query;
     }
+    function deletecartfromdb($id){
+    $query=$this->db->query("DELETE FROM `usercart` WHERE `product`='$id'");
+    }
 }
 ?>

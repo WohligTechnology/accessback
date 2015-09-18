@@ -382,6 +382,7 @@ class Json extends CI_Controller {
     }
     function deletecart() {
         $id = intval($this->input->get_post("id"));
+        $this->user_model->deletecartfromdb($id);
         $cart = $this->cart->contents();
         $newcart = array();
         foreach ($cart as $item) {
