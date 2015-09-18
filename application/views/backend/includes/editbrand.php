@@ -40,6 +40,13 @@
 				  </div>
 				</div>
 				
+				<div class=" form-group">
+					  <label class="col-sm-2 control-label">Is Distributer</label>
+					  <div class="col-sm-4">
+						<?php echo form_dropdown('isdistributer',$isdistributer,set_value('isdistributer',$before->isdistributer),'class="chzn-select form-control" 	data-placeholder="Choose a Accesslevel..."');?>
+					  </div>
+					</div>
+				
 					
 					<div class="form-group">
 						<label class="col-sm-2 control-label">&nbsp;</label>

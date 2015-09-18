@@ -4189,6 +4189,12 @@ class Site extends CI_Controller
         $elements[3]->header="logo";
         $elements[3]->alias="logo";
         
+        $elements[4]=new stdClass();
+        $elements[4]->field="`brand`.`isdistributer`";
+        $elements[4]->sort="1";
+        $elements[4]->header="isdistributer";
+        $elements[4]->alias="isdistributer";
+        
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -4211,6 +4217,7 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
+        $data['isdistributer']=$this->brand_model->getdistributerdropdown();
 		$data[ 'page' ] = 'createbrand';
 		$data[ 'title' ] = 'Create brand';
 		$this->load->view( 'template', $data );	
@@ -4232,6 +4239,7 @@ class Site extends CI_Controller
 		{
 			$name=$this->input->post('name');
 			$order=$this->input->post('order');
+			$isdistributer=$this->input->post('isdistributer');
             
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -4244,7 +4252,7 @@ class Site extends CI_Controller
 				$image=$uploaddata['file_name'];
 			}
             
-			if($this->brand_model->createbrand($name,$order,$image)==0)
+			if($this->brand_model->createbrand($name,$order,$image,$isdistributer)==0)
 			$data['alerterror']="New brand could not be created.";
 			else
 			$data['alertsuccess']="brand  created Successfully.";
@@ -4267,6 +4275,7 @@ class Site extends CI_Controller
 		$access = array("1");
 		$this->checkaccess($access);
 		$data['before']=$this->brand_model->beforeeditbrand($this->input->get('id'));
+		$data['isdistributer']=$this->brand_model->getdistributerdropdown();
 //		$data['page2']='block/brandblock';
 		$data['page']='editbrand';
 		$data['title']='Edit brand';
@@ -4292,6 +4301,7 @@ class Site extends CI_Controller
 			
 			$name=$this->input->post('name');
 			$order=$this->input->post('order');
+            $isdistributer=$this->input->post('isdistributer');
             
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -4311,7 +4321,7 @@ class Site extends CI_Controller
                 $image=$image->logo;
             }
             
-			if($this->brand_model->editbrand($id,$name,$order,$image)==0)
+			if($this->brand_model->editbrand($id,$name,$order,$image,$isdistributer)==0)
 			$data['alerterror']="brand Editing was unsuccesful";
 			else
 			$data['alertsuccess']="brand edited Successfully.";
@@ -4591,6 +4601,135 @@ class Site extends CI_Controller
 		$data['title']='View newarrivals';
 		$this->load->view('template',$data);
 	}
+    
+      public function viewsubscribe()
+    {
+        $access=array("1");
+        $this->checkaccess($access);
+        $data["page"]="viewsubscribe";
+        $data["base_url"]=site_url("site/viewsubscribejson");
+        $data["title"]="View subscribe";
+        $this->load->view("template",$data);
+    }
+    function viewsubscribejson()
+    {
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`subscribe`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`subscribe`.`email`";
+        $elements[1]->sort="1";
+        $elements[1]->header="email";
+        $elements[1]->alias="email";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`subscribe`.`timestamp`";
+        $elements[2]->sort="1";
+        $elements[2]->header="timestamp";
+        $elements[2]->alias="timestamp";
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `subscribe`");
+        $this->load->view("json",$data);
+    }
+
+	public function createsubscribe()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createsubscribe';
+		$data[ 'title' ] = 'Create subscribe';
+		$this->load->view( 'template', $data );	
+	}
+	function createsubscribesubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $this->form_validation->set_rules('email','email','trim|');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data[ 'page' ] = 'createsubscribe';
+			$data[ 'title' ] = 'Create subscribe';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+			$email=$this->input->post('email');
+			if($this->subscribe_model->createsubscribe($email)==0)
+			$data['alerterror']="New subscribe could not be created.";
+			else
+			$data['alertsuccess']="subscribe  created Successfully.";
+			$data['redirect']="site/viewsubscribe";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+		}
+	}
+	function editsubscribe()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['before']=$this->subscribe_model->beforeeditsubscribe($this->input->get('id'));
+//		$data['page2']='block/subscribeblock';
+		$data['page']='editsubscribe';
+		$data['title']='Edit subscribe';
+		$this->load->view('template',$data);
+	}
+	function editsubscribesubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','name','trim|');
+		$this->form_validation->set_rules('order','order','trim|');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['before']=$this->subscribe_model->beforeeditsubscribe($this->input->post('id'));
+			$data['page']='editsubscribe';
+			$data['title']='Edit subscribe';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+			$id=$this->input->post('id');
+			
+			$email=$this->input->post('email');
+			$timestamp=$this->input->post('timestamp');
+          
+			if($this->subscribe_model->editsubscribe($id,$email,$timestamp)==0)
+			$data['alerterror']="subscribe Editing was unsuccesful";
+			else
+			$data['alertsuccess']="subscribe edited Successfully.";
+			$data['redirect']="site/viewsubscribe";
+			$this->load->view("redirect",$data);
+		}
+	}
+	function deletesubscribe()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->subscribe_model->deletesubscribe($this->input->get('id'));
+		$data['alertsuccess']="subscribe Deleted Successfully";
+        $data['redirect']="site/viewsubscribe";
+        $this->load->view("redirect",$data);
+	}
+    
     
 }
 ?>

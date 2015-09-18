@@ -761,7 +761,7 @@ GROUP BY `product`.`id`")->result();
     $query=$this->db->query("DELETE FROM `usercart` WHERE `product`='$id'");
     }
     function getuserdetails($id){
-    $query=$this->db->query("SELECT * FROM `user` WHERE `id`='$id'")->row();
+    $query=$this->db->query("SELECT `id`, `name`, `firstname`, `lastname`, `email`, `phone`, `accesslevel`, `status`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `currency`, `credits`, `companyname`, `companyregistrationno`, `vatnumber`, `country`, `fax`, `image`, `socialid`, `logintype`, `json`, `dob`, `street`, `address`, `city`, `state`, `pincode`, `facebook`, `google`, `twitter`, `timestamp`, `username`, `gender`, `billingpincode` FROM `user` WHERE `id`='$id'")->row();
     return $query;
     }
 }
