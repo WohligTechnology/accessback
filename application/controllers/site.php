@@ -4731,5 +4731,193 @@ class Site extends CI_Controller
 	}
     
     
+    // about us & clients
+    
+      public function viewaboutus()
+    {
+        $access=array("1");
+        $this->checkaccess($access);
+        $data["page"]="viewaboutus";
+        $data["base_url"]=site_url("site/viewaboutusjson");
+        $data["title"]="View aboutus";
+        $this->load->view("template",$data);
+    }
+    function viewaboutusjson()
+    {
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`about`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`about`.`image`";
+        $elements[1]->sort="1";
+        $elements[1]->header="image";
+        $elements[1]->alias="image";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`about`.`order`";
+        $elements[2]->sort="1";
+        $elements[2]->header="order";
+        $elements[2]->alias="order";
+        
+        $elements[3]=new stdClass();
+        $elements[3]->field="`about`.`status`";
+        $elements[3]->sort="1";
+        $elements[3]->header="status";
+        $elements[3]->alias="status";
+        
+        $elements[4]=new stdClass();
+        $elements[4]->field="`about`.`title`";
+        $elements[4]->sort="1";
+        $elements[4]->header="title";
+        $elements[4]->alias="title";
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `about`");
+        $this->load->view("json",$data);
+    }
+
+	public function createaboutus()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $data[ 'status' ] =$this->user_model->getstatusdropdown();
+		$data[ 'page' ] = 'createaboutus';
+		$data[ 'title' ] = 'Create aboutus';
+		$this->load->view( 'template', $data );	
+	}
+	function createaboutussubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('title','title','trim|');
+		$this->form_validation->set_rules('order','order','trim|');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data[ 'page' ] = 'createaboutus';
+			$data[ 'title' ] = 'Create aboutus';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+			$title=$this->input->post('title');
+			$order=$this->input->post('order');
+			$status=$this->input->post('status');
+            
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+			}
+            
+			if($this->aboutus_model->createaboutus($order,$image,$status,$title)==0)
+			$data['alerterror']="New aboutus could not be created.";
+			else
+			$data['alertsuccess']="aboutus  created Successfully.";
+			$data['redirect']="site/viewaboutus";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+		}
+	}
+//	function viewaboutus()
+//	{
+//		$access = array("1");
+//		$this->checkaccess($access);
+//		$data['table']=$this->aboutus_model->viewaboutus();
+//		$data['page']='viewaboutus';
+//		$data['title']='View aboutus';
+//		$this->load->view('template',$data);
+//	}
+	function editaboutus()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['before']=$this->aboutus_model->beforeeditaboutus($this->input->get('id'));
+		$data[ 'status' ] =$this->user_model->getstatusdropdown();
+//		$data['page2']='block/aboutusblock';
+		$data['page']='editaboutus';
+		$data['title']='Edit aboutus';
+		$this->load->view('template',$data);
+	}
+	function editaboutussubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','name','trim|');
+		$this->form_validation->set_rules('order','order','trim|');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['before']=$this->aboutus_model->beforeeditaboutus($this->input->post('id'));
+			$data['page']='editaboutus';
+			$data['title']='Edit aboutus';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+			$id=$this->input->post('id');
+			$title=$this->input->post('title');
+			$order=$this->input->post('order');
+			$status=$this->input->post('status');
+            
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+			}
+            
+            if($image=="")
+            {
+            $image=$this->aboutus_model->getaboutuslogobyid($id);
+               // print_r($image);
+                $image=$image->image;
+            }
+            
+			if($this->aboutus_model->editaboutus($id,$order,$image,$status,$title)==0)
+			$data['alerterror']="aboutus Editing was unsuccesful";
+			else
+			$data['alertsuccess']="aboutus edited Successfully.";
+			$data['redirect']="site/viewaboutus";
+			$this->load->view("redirect",$data);
+		}
+	}
+	function deleteaboutus()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->aboutus_model->deleteaboutus($this->input->get('id'));
+		$data['alertsuccess']="aboutus Deleted Successfully";
+        $data['redirect']="site/viewaboutus";
+        $this->load->view("redirect",$data);
+	}
+    
+    
 }
 ?>

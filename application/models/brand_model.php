@@ -34,7 +34,7 @@ class brand_model extends CI_Model
 			'name' => $name,
 			'order' => $order,
 			'logo' => $logo,
-            '' => $isdistributer
+            'isdistributer' => $isdistributer
 		);
 		$this->db->where( 'id', $id );
 		$this->db->update( 'brand', $data );

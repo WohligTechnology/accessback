@@ -591,27 +591,25 @@ class User_model extends CI_Model
         $userid=$this->session->userdata('id');
         if($userid=="")
         {
-            echo "not login";
-//            $returnval=$this->cart->insert($data);
-//            if(!empty($returnval)){
-//            return true;
-//            }
-//            else{
-//            return false;
-//            }
+            $this->cart->insert($data);
+            $returnval=$this->cart->insert($data);
+            if(!empty($returnval)){
+            return true;
+            }
+            else{
+            return false;
+            }
         }
         else
         {
             $query=$this->db->query("INSERT INTO `usercart`(`user`, `product`, `quantity`, `status`, `timestamp`) VALUES ('$userid','$product','$quantity',1,NULL)");
-           
-            echo "login";
-//            if($query)
-//            return true;
-//            else
-//            return false;
+            $this->cart->insert($data);
+            if($query)
+            return true;
+            else
+            return false;
         }
-         $this->cart->insert($data);
-        return $this->cart->contents();
+         
     }
     function updatecart($rowid,$qty,$id){
     $data = array(

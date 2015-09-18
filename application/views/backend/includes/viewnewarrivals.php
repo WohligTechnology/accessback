@@ -20,7 +20,6 @@
 				</tr>
 			</thead>
 			<tbody>
-           <?php print_r($table); ?>
 			   <?php foreach($table as $row) { ?>
 					<tr>
 						<td><?php echo $row->newarrivalid; ?></td>
