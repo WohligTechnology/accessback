@@ -578,33 +578,49 @@ class User_model extends CI_Model
         $image=$image->image;
         
         $data = array(
-               'id'      => intval($product),
-               'name'      =>  "1",
-               'qty'     => intval($quantity),
-               'price'   => floatval($price),
-               'options'   => array('image' => $image,'realname'=> $productname,'productid'=> $product,'quantity'=> $quantity,'productprice'=> $price)
+               'id'      => $product,
+               'name'      => '1',
+               'qty'     => $quantity,
+               'price'   => $price,
+               'image'   => $image,
+                'options' =>array(
+                    'realname' => $productname
+                )
         );
         //array_push($data,$data2);
         $userid=$this->session->userdata('id');
         if($userid=="")
         {
-            $returnval=$this->cart->insert($data);
-            if(!empty($returnval)){
-            return true;
-            }
-            else{
-            return false;
-            }
+            echo "not login";
+//            $returnval=$this->cart->insert($data);
+//            if(!empty($returnval)){
+//            return true;
+//            }
+//            else{
+//            return false;
+//            }
         }
         else
         {
             $query=$this->db->query("INSERT INTO `usercart`(`user`, `product`, `quantity`, `status`, `timestamp`) VALUES ('$userid','$product','$quantity',1,NULL)");
-            $this->cart->insert($data);
-            if($query)
-            return true;
-            else
-            return false;
+           
+            echo "login";
+//            if($query)
+//            return true;
+//            else
+//            return false;
         }
+         $this->cart->insert($data);
+        return $this->cart->contents();
+    }
+    function updatecart($rowid,$qty,$id){
+    $data = array(
+               'rowid' => $rowid,
+               'qty'   => $qty
+            );
+
+        $this->cart->update($data); 
+        return $this->cart->contents();
     }
 
     function destroycart() {
@@ -742,6 +758,10 @@ GROUP BY `product`.`id`")->result();
     }
     function deletecartfromdb($id){
     $query=$this->db->query("DELETE FROM `usercart` WHERE `product`='$id'");
+    }
+    function getuserdetails($id){
+    $query=$this->db->query("SELECT * FROM `user` WHERE `id`='$id'")->row();
+    return $query;
     }
 }
 ?>

@@ -264,11 +264,15 @@ class Json extends CI_Controller {
         $this->load->view("json", $data);
     }
     function addtocart() {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $product=$data['product'];
-        $productname=$data['productname'];
-        $quantity=$data['quantity'];
-        $price=$data['price'];
+         $product = $this->input->get_post('product');
+         $productname = $this->input->get_post('productname');
+         $quantity = $this->input->get_post('quantity');
+         $price = $this->input->get_post('price');
+//        $data = json_decode(file_get_contents('php://input'), true);
+//        $product=$data['product'];
+//        $productname=$data['productname'];
+//        $quantity=$data['quantity'];
+//        $price=$data['price'];
         $data["message"] = $this->user_model->addtocart($product, $productname, $quantity, $price);
         //$data["message"]=$this->order_model->addtocart($user,$product,$quantity);
         $this->load->view("json", $data);
@@ -287,7 +291,6 @@ class Json extends CI_Controller {
                 array_push($newcart, $item);
             }
             $data["message"] = $newcart;
-            $this->load->view("json", $data);
             $this->load->view("json", $data);
         }
         else
@@ -1067,6 +1070,11 @@ echo $filepath;
         $newpassword=$data['newpassword'];
         $confirmpassword=$data['confirmpassword'];
         $data["message"] = $this->user_model->changepasswordfront($email, $oldpassword, $newpassword, $confirmpassword);
+        $this->load->view("json", $data);
+    }
+    function getuserdetails(){
+        $id=$this->session->userdata('id');
+        $data["message"] = $this->user_model->getuserdetails($id);
         $this->load->view("json", $data);
     }
     function updateuser() {
