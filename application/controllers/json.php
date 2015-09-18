@@ -1090,6 +1090,8 @@ echo $filepath;
         $country=$data['country'];
         $sameasbilling=$data['sameasbilling'];
         $state=$data['state'];
+        echo $id;
+        print_r($data);
         $data["message"] = $this->user_model->updateuserfront($id,$firstname, $lastname, $address, $email, $phone, $city,$zipcode,$country,$sameasbilling,$state);
         $this->load->view("json", $data);
     }
