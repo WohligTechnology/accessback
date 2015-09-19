@@ -6,7 +6,7 @@
 <li><a href="<?php echo site_url('site/editprice?id=').$before['product']->id; ?>">Price</a></li>
 <!--<li><a href="<?php echo site_url('site/viewproductimage?id=').$before['product']->id; ?>">Image</a></li>-->
 <li><a href="<?php echo site_url('site/viewproductimage?id=').$before['product']->id; ?>">Image</a></li>
-<li><a href="<?php echo site_url('site/editrelatedproducts?id=').$before['product']->id; ?>">Related Products</a></li>
+<li><a href="<?php echo site_url('site/editrelatedproducts?id=').$before['product']->id; ?>">Same Colour</a></li>
 <li><a href="<?php echo site_url('site/viewproductwaiting?id=').$before['product']->id; ?>">Product Wating</a></li>
 </ul>
 </div>

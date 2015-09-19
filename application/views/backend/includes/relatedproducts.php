@@ -1,7 +1,7 @@
 
 	    <section class="panel">
 		    <header class="panel-heading">
-				 Related Products
+				 Same Colour Products
 			</header>
 			<div class="panel-body">
 				<form class="form-horizontal row-fluid" method="post" action="<?php echo site_url('site/editrelatedproductssubmit');?>" enctype= "multipart/form-data">
@@ -18,7 +18,7 @@
 						</div>
 					</div>		
 					<div class="form-group">
-						<label class="col-sm-2 control-label">Related Products</label>
+						<label class="col-sm-2 control-label">Same Colour Products</label>
 						<div class="col-sm-4">
 						 <?php 
 						 foreach($product as $row)
