@@ -731,18 +731,17 @@ $timestamp=new DateTime();
     {
         $query="UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`email`='$email',`phone`='$phone',`shippingaddress`='$address',`shippingcity`='$city',`shippingpincode`='$zipcode',`shippingcountry`='$country',`shippingstate`='$state' WHERE `id`='$id'";
         
-        if($sameasbilling=="true")
+        if($sameasbilling=="1")
         {
-            echo "same as";
         $query="UPDATE `user` SET `billingaddress`='$address',`billingcity`='$city',`billingpincode`='$zipcode',`billingcountry`='$country',`billingstate`='$state' WHERE `id`='$id'";
         }
 //        echo $query;
         $query=$this->db->query($query);
         if($query){
-        return 1;
+        return true;
         }
         else{
-        return 0;
+        return false;
         }
     }
     function getusercartdetails($userid)

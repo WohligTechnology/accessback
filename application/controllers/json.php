@@ -1079,7 +1079,7 @@ echo $filepath;
     }
     function updateuser() {
         $data = json_decode(file_get_contents('php://input'), true);
-        $id=$this->session->userdata('id');
+        $id=$data['id'];
         $firstname=$data['firstname'];
         $lastname=$data['lastname'];
         $address=$data['address'];
@@ -1090,8 +1090,6 @@ echo $filepath;
         $country=$data['country'];
         $sameasbilling=$data['sameasbilling'];
         $state=$data['state'];
-        echo $id;
-        print_r($data);
         $data["message"] = $this->user_model->updateuserfront($id,$firstname, $lastname, $address, $email, $phone, $city,$zipcode,$country,$sameasbilling,$state);
         $this->load->view("json", $data);
     }
@@ -1558,6 +1556,11 @@ echo $filepath;
     public function getproductbybrand()
     {
         $data = json_decode(file_get_contents('php://input'), true);
+        if(empty($data)){
+         $data["message"] = 0;
+        }
+        else
+        {
         $brandid=$data['brandid'];
          $getproductids=$this->db->query("SELECT `product` FROM `productbrand` WHERE `brand`='$brandid'")->result();
           $productids="(";
@@ -1649,6 +1652,7 @@ echo $filepath;
             $maxrow = 20;
         }
               $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id` LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND `product`.`id` IN $productids ", ' GROUP BY `product`.`id` ');
+        }
         $this->load->view("json", $data);
     }
     
@@ -1675,6 +1679,10 @@ echo $filepath;
                 }
             }
             $productids.=")";
+        if($productids=="()"){
+       $data['message']=0;
+        }
+        else{
         $elements = array();
         $elements[0] = new stdClass();
         $elements[0]->field = "`product`.`id`";
@@ -1751,6 +1759,8 @@ echo $filepath;
             $maxrow = 20;
         }
               $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id` LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND `product`.`id` IN $productids ", ' GROUP BY `product`.`id` ');
+        }
+
         $this->load->view("json", $data);
     }
     

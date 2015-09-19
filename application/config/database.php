@@ -46,34 +46,74 @@
 */
 
 
-if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false)
+//if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false)
+//{
+//  	$active_group = 'production';
+//}
+//else
+//{
+//  	$active_group = 'testing';
+//}
+//
+//$active_record = TRUE;
+//
+//// Testing (local) DB settings
+//$db['testing']['hostname'] = 'localhost';
+//$db['testing']['username'] = 'root';
+//$db['testing']['password'] = '';
+//$db['testing']['database'] = 'access';
+//$db['testing']['dbdriver'] = 'mysql';
+//$db['testing']['dbprefix'] = '';
+//$db['testing']['pconnect'] = TRUE;
+//$db['testing']['db_debug'] = TRUE;
+//$db['testing']['cache_on'] = FALSE;
+//$db['testing']['cachedir'] = '';
+//$db['testing']['char_set'] = 'utf8';
+//$db['testing']['dbcollat'] = 'utf8_general_ci';
+//$db['testing']['swap_pre'] = '';
+//$db['testing']['autoinit'] = TRUE;
+//$db['testing']['stricton'] = FALSE;
+$active_group = 'default';
+$active_record = TRUE;
+
+
+$myserver=$_SERVER['SERVER_NAME'];
+if($myserver!="localhost")
 {
-  	$active_group = 'production';
+    $db['default']['hostname'] = 'localhost';
+    $db['default']['username'] = 'wohligco_access';
+    $db['default']['password'] = 'chintan123';
+    $db['default']['database'] = 'wohligco_access';
+    $db['default']['dbdriver'] = 'mysql';
+    $db['default']['dbprefix'] = '';
+    $db['default']['pconnect'] = TRUE;
+    $db['default']['db_debug'] = TRUE;
+    $db['default']['cache_on'] = FALSE;
+    $db['default']['cachedir'] = '';
+    $db['default']['char_set'] = 'utf8';
+    $db['default']['dbcollat'] = 'utf8_general_ci';
+    $db['default']['swap_pre'] = '';
+    $db['default']['autoinit'] = TRUE;
+    $db['default']['stricton'] = FALSE;
 }
 else
 {
-  	$active_group = 'testing';
+    $db['default']['hostname'] = 'localhost';
+    $db['default']['username'] = 'root';
+    $db['default']['password'] = '';
+    $db['default']['database'] = 'access';
+    $db['default']['dbdriver'] = 'mysql';
+    $db['default']['dbprefix'] = '';
+    $db['default']['pconnect'] = TRUE;
+    $db['default']['db_debug'] = TRUE;
+    $db['default']['cache_on'] = FALSE;
+    $db['default']['cachedir'] = '';
+    $db['default']['char_set'] = 'utf8';
+    $db['default']['dbcollat'] = 'utf8_general_ci';
+    $db['default']['swap_pre'] = '';
+    $db['default']['autoinit'] = TRUE;
+    $db['default']['stricton'] = FALSE;
 }
-
-$active_record = TRUE;
-//
-//// Testing (local) DB settings
-$db['testing']['hostname'] = 'localhost';
-$db['testing']['username'] = 'root';
-$db['testing']['password'] = '';
-$db['testing']['database'] = 'access';
-$db['testing']['dbdriver'] = 'mysql';
-$db['testing']['dbprefix'] = '';
-$db['testing']['pconnect'] = TRUE;
-$db['testing']['db_debug'] = TRUE;
-$db['testing']['cache_on'] = FALSE;
-$db['testing']['cachedir'] = '';
-$db['testing']['char_set'] = 'utf8';
-$db['testing']['dbcollat'] = 'utf8_general_ci';
-$db['testing']['swap_pre'] = '';
-$db['testing']['autoinit'] = TRUE;
-$db['testing']['stricton'] = FALSE;
-
 //$db['testing']['hostname'] = 'localhost';
 //$db['testing']['username'] = 'root';
 //$db['testing']['password'] = '6dL8+ph4H!LiCT';
