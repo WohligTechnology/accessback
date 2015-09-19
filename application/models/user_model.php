@@ -729,12 +729,12 @@ $timestamp=new DateTime();
     
     function updateuserfront($id,$firstname, $lastname, $address, $email, $phone, $city,$zipcode,$country,$sameasbilling,$state) 
     {
-        $query="UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`email`='$email',`phone`='$phone',`shippingaddress`='$address',`shippingcity`='$city',`shippingpincode`='$zipcode',`shippingcountry`='$country',`shippingstate`='$state' WHERE `id`='$id'";
+        $query="UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`email`='$email',`phone`='$phone',`billingaddress`='$address',`billingcity`='$city',`billingpincode`='$zipcode',`billingcountry`='$country',`billingstate`='$state' WHERE `id`='$id'";
         
-        if($sameasbilling=="1")
-        {
-        $query="UPDATE `user` SET `billingaddress`='$address',`billingcity`='$city',`billingpincode`='$zipcode',`billingcountry`='$country',`billingstate`='$state' WHERE `id`='$id'";
-        }
+//        if($sameasbilling=="1")
+//        {
+//        $query="UPDATE `user` SET `billingaddress`='$address',`billingcity`='$city',`billingpincode`='$zipcode',`billingcountry`='$country',`billingstate`='$state' WHERE `id`='$id'";
+//        }
 //        echo $query;
         $query=$this->db->query($query);
         if($query){
