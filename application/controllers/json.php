@@ -1405,7 +1405,8 @@ echo $filepath;
      public function getexclusiveandnewarrival()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $getproductids=$this->db->query("SELECT `product` FROM `newarrival`")->result();
+         $id=$data['id'];
+        $getproductids=$this->db->query("SELECT * FROM `newarrival` WHERE `type` IN ($id,3)")->result();
           $productids="(";
             foreach($getproductids as $key=>$value){
 //            $catid=$row->id;
