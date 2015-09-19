@@ -415,8 +415,7 @@ class Json extends CI_Controller {
         $this->load->view("json", $data);
     }
     function getproductdetails() {
-         $data = json_decode(file_get_contents('php://input'), true);
-        $id=$data['id'];
+         $id = $this->input->get_post("id");
         $data["message"] = $this->product_model->getproductdetails($id);
         $this->load->view("json", $data);
     }
