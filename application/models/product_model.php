@@ -531,7 +531,8 @@ class Product_model extends CI_Model
 		GROUP BY `product`.`id`
 		ORDER BY `productimage`.`order`")->result();
 		
-		
+        $query['productrating'] = $this->db->query("SELECT AVG(`rating`) as `averagerating` FROM `productrating` WHERE `product`='$product'")->row();
+		 $query['productrating']=$query['productrating']->averagerating;
 		
 		return $query;
 	}
