@@ -1845,5 +1845,11 @@ echo $filepath;
               $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id` LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1", ' GROUP BY `product`.`id` ');
         $this->load->view("json", $data);
     }
+    
+    public function getsubscribe(){
+        $email=$this->input->get('email');
+        $data['message']=$this->restapi_model->getsubscribe($email);
+        $this->load->view("json", $data);
+    }
 }
 ?>

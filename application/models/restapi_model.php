@@ -53,6 +53,15 @@ class restapi_model extends CI_Model
         return false;
         }
     }
+    
+    public function getsubscribe($email){
+      $this->db->query("INSERT INTO `subscribe`(`email`) VALUE('$email')");
+            $id=$this->db->insert_id();
+        if($id)
+        return true;
+        else
+            return false;
+    }
 	
 }
 ?>
