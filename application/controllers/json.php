@@ -1663,9 +1663,11 @@ echo $filepath;
     }
     
     public function getofferdetails(){
-     $data = json_decode(file_get_contents('php://input'), true);
-         $offerid=$data['offerid'];
-          $data["message"] = $this->restapi_model->getmultipleoffer($offerid);
+          $data["message"] = $this->restapi_model->getmultipleoffer();
+        $this->load->view("json", $data);
+    }
+    public function getmultipleoffertry(){
+          $data["message"] = $this->restapi_model->getmultipleoffertry();
         $this->load->view("json", $data);
     }
     public function getwishlistproduct(){
