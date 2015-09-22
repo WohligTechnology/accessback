@@ -1275,9 +1275,8 @@ echo $filepath;
     
     public function getproductbycategory()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $parent = $data['parent'];
-        $category = $data['subcategory'];
+        $parent = $this->input->get_post("parent");
+        $category = $this->input->get_post("category");
         if($parent==0)
         {
         $parent="";
@@ -1412,8 +1411,7 @@ echo $filepath;
     
      public function getexclusiveandnewarrival()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-         $id=$data['id'];
+        $id = $this->input->get_post("id");
         $getproductids=$this->db->query("SELECT * FROM `newarrival` WHERE `type` IN ($id,3)")->result();
           $productids="(";
             foreach($getproductids as $key=>$value){

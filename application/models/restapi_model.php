@@ -55,12 +55,20 @@ class restapi_model extends CI_Model
     }
     
     public function getsubscribe($email){
-      $this->db->query("INSERT INTO `subscribe`(`email`) VALUE('$email')");
-            $id=$this->db->insert_id();
+        $query1=$this->db->query("SELECT * FROM `subscribe` WHERE `email`='$email'");
+        $num=$query1->num_rows();
+        if($num>0)
+        {
+        return 0;
+        }
+        else{
+        $this->db->query("INSERT INTO `subscribe`(`email`) VALUE('$email')");
+        $id=$this->db->insert_id();
         if($id)
         return true;
         else
-            return false;
+        return false;
+        }
     }
 	
 }
