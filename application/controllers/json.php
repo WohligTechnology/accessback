@@ -1322,11 +1322,10 @@ echo $filepath;
             $productids.=")";
         if($productids=="()")
         {
-            $data['message']=0;
-            $this->load->view("json", $data);
+           $productids="(0)";
         }
-        else
-        {
+//        else
+//        {
                 $elements = array();
                 $elements[0] = new stdClass();
                 $elements[0]->field = "`product`.`id`";
@@ -1404,7 +1403,7 @@ echo $filepath;
                 $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND  `product`.`id` IN $productids", ' GROUP BY `product`.`id` ');
         
         $this->load->view("json", $data);
-        }
+//        }
     }
     
     // EXCLUSIVE AND NEW ARRIVALS
@@ -1414,7 +1413,8 @@ echo $filepath;
         $id = $this->input->get_post("id");
         $getproductids=$this->db->query("SELECT * FROM `newarrival` WHERE `type` IN ($id,3)")->result();
           $productids="(";
-            foreach($getproductids as $key=>$value){
+            foreach($getproductids as $key=>$value)
+            {
 //            $catid=$row->id;
                 if($key==0)
                 {
