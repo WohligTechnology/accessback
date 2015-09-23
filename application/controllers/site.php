@@ -4579,8 +4579,10 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
+            $id=$this->input->get_post('id');
             $product=$this->input->post('product');
 			$type=$this->input->post('type');
+       
 			if($this->newarrival_model->edit($id,$product,$type)==0)
 			$data['alerterror']="newarrival Editing was unsuccesful";
 			else

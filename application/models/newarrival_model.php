@@ -15,7 +15,7 @@ class newarrival_model extends CI_Model
 	function viewnewarrival()
 	{
 		$query=$this->db->query("SELECT `newarrival`.`id` AS `newarrivalid`,`newarrival`.`product`,`newarrival`.`type`,`product`.`name` FROM `newarrival` LEFT OUTER JOIN `product` ON `product`.`id`=`newarrival`.`product` 
-		ORDER BY `newarrival`.`id` DESC")->result();
+		ORDER BY `newarrival`.`id` ASC")->result();
 //        print_r($query);
 		return $query;
 	}
