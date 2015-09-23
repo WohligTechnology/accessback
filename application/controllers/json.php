@@ -1877,5 +1877,11 @@ echo $filepath;
         $data['message']=$this->restapi_model->getsubscribe($email);
         $this->load->view("json", $data);
     }
+    
+    public function getofferproducts(){
+      $offerid=$this->input->get('offerid');
+        $data['message']=$this->restapi_model->getofferproducts($offerid);
+        $this->load->view("json", $data);
+    }
 }
 ?>
