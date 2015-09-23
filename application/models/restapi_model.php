@@ -69,10 +69,10 @@ class restapi_model extends CI_Model
         $todaysdate=date("Y-m-d");
 //          // latest offers 
         
+            $abc->offer = array();
           $query1=$this->db->query("SELECT * FROM `offer` WHERE `startdate` <= '$todaysdate' AND `enddate` >= '$todaysdate'")->result();
         foreach($query1 as $row1)
         {
-            $abc->offer = array();
          $query=$this->db->query("SELECT `product` FROM `offerproduct` WHERE `offer`='$row1->id'")->result();
                 $row1->offerproducts=array();
             foreach($query as $productid)
