@@ -1666,10 +1666,7 @@ echo $filepath;
           $data["message"] = $this->restapi_model->getmultipleoffer();
         $this->load->view("json", $data);
     }
-    public function getmultipleoffertry(){
-          $data["message"] = $this->restapi_model->getmultipleoffertry();
-        $this->load->view("json", $data);
-    }
+   
     public function getwishlistproduct(){
       $data = json_decode(file_get_contents('php://input'), true);
          $user=$data['user'];
