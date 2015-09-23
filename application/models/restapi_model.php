@@ -88,7 +88,10 @@ LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` 
           array_push($abc->offer, $query1);
         
         //PAST OFFER PRODUCTS
+        $abc->pastoffer = array();
+         
             $query2=$this->db->query("SELECT * FROM `offer` WHERE `enddate` < '$todaysdate' ORDER BY `timestamp` DESC")->row(); 
+          array_push( $abc->pastoffer,$query2);  
             $abc->pastofferproducts = array();
          $pastoffer=$this->db->query("SELECT `product` FROM `offerproduct` WHERE `offer`='$query2->id'")->result();
             foreach($pastoffer as $productid)
@@ -104,7 +107,9 @@ LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` 
 
         
         //UPCOMING OFFER PRODUCTS
+        $abc->upcomingoffer = array();
          $query3=$this->db->query("SELECT * FROM `offer` WHERE `startdate` > '$todaysdate' ORDER BY `timestamp` DESC")->row(); 
+        array_push( $abc->upcomingoffer,$query3);
             $abc->upcomingofferproducts = array();
          $upcomingoffer=$this->db->query("SELECT `product` FROM `offerproduct` WHERE `offer`='$query3->id'")->result();
             foreach($upcomingoffer as $productid)
