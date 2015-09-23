@@ -981,7 +981,7 @@ echo $filepath;
     
     function getuserorders() 
     {
-        $userid = $this->session->userdata('id');;
+        $userid = $this->input->get_post('user');
         
         $elements = array();
         
