@@ -743,17 +743,11 @@ $timestamp=new DateTime();
 
 $this->db->where('id', $id);
 $val=$this->db->update('user', $data); 
-        echo "fghj";
-        echo $val;
-//        $query="UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`email`='$email',`phone`='$phone',`billingaddress`='$billingaddress',`billingcity`='$billingcity',`billingpincode`='$billingpincode',`billingcountry`='$billingcountry',`billingstate`='$billingstate' WHERE `id`='$id'";
-//
-//        $query=$this->db->query($query);
-//        if($query){
-//        return true;
-//        }
-//        else{
-//        return false;
-//        }
+        return $val;
+    }
+      function getuserdetails($id){
+    $query=$this->db->query("SELECT `id`, `firstname`, `lastname`, `email`, `phone`,`billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingpincode` FROM `user` WHERE `id`='$id'")->row();
+    return $query;
     }
     function getusercartdetails($userid)
     {
@@ -768,9 +762,6 @@ GROUP BY `product`.`id`")->result();
     function deletecartfromdb($id){
     $query=$this->db->query("DELETE FROM `usercart` WHERE `product`='$id'");
     }
-    function getuserdetails($id){
-    $query=$this->db->query("SELECT `id`, `name`, `firstname`, `lastname`, `email`, `phone`, `accesslevel`, `status`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `currency`, `credits`, `companyname`, `companyregistrationno`, `vatnumber`, `country`, `fax`, `image`, `socialid`, `logintype`, `json`, `dob`, `street`, `address`, `city`, `state`, `pincode`, `facebook`, `google`, `twitter`, `timestamp`, `username`, `gender`, `billingpincode` FROM `user` WHERE `id`='$id'")->row();
-    return $query;
-    }
+  
 }
 ?>
