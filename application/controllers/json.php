@@ -1582,6 +1582,9 @@ echo $filepath;
                 }
             }
             $productids.=")";
+            if($productids=="()"){
+             $productids="(0)";
+            }
         $elements = array();
         $elements[0] = new stdClass();
         $elements[0]->field = "`product`.`id`";
