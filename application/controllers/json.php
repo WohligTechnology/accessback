@@ -1561,6 +1561,7 @@ echo $filepath;
     public function getproductbybrand()
     {
         $data = json_decode(file_get_contents('php://input'), true);
+        $userid=$this->session->userdata("id");
         if(empty($data)){
          $data["message"] = 0;
         }
@@ -1650,6 +1651,11 @@ echo $filepath;
         $elements[12]->sort = "1";
         $elements[12]->header = "quantity";
         $elements[12]->alias = "quantity";
+        $elements[13] = new stdClass();
+        $elements[13]->field = "`userwishlist`.`user`";
+        $elements[13]->sort = "1";
+        $elements[13]->header = "isfavid";
+        $elements[13]->alias = "isfavid";
        
         $search = $this->input->get_post("search");
         $pageno = $this->input->get_post("pageno");
@@ -1659,7 +1665,7 @@ echo $filepath;
         if ($maxrow == "") {
             $maxrow = 20;
         }
-              $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id` LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND `product`.`id` IN $productids ", ' GROUP BY `product`.`id` ');
+              $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id`LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid'   LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND `product`.`id` IN $productids ", ' GROUP BY `product`.`id` ');
         }
         $this->load->view("json", $data);
     }
