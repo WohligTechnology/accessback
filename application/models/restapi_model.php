@@ -64,7 +64,7 @@ class restapi_model extends CI_Model
 //        $query['upcomingoffer']=$this->db->query("SELECT * FROM `offer` WHERE `startdate` > '$todaysdate' ORDER BY `timestamp` DESC")->row();  
 //        return $query;
 //    }	
-    public function getmultipleoffer()
+    public function getmultipleoffer($userid)
     {
         $todaysdate=date("Y-m-d");
 //          // latest offers 
