@@ -416,7 +416,8 @@ class Json extends CI_Controller {
     }
     function getproductdetails() {
          $id = $this->input->get_post("id");
-        $data["message"] = $this->product_model->getproductdetails($id);
+        $user=$this->session->userdata('id');
+        $data["message"] = $this->product_model->getproductdetails($id,$user);
         $this->load->view("json", $data);
     }
     function getallslider() {

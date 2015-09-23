@@ -506,10 +506,10 @@ class Product_model extends CI_Model
 		$query['template']->pageurl = "partials/product.html";
 		return $query;
 	}
-	function getproductdetails($product)
+	function getproductdetails($product,$user)
 	{
 //		$query['breadcrumbs']=$this->getparentcategories($category);
-		$query['product']=$this->db->query("SELECT `product`.`id`,`product`.`name`,`product`.`sku`,`product`.`url`,`product`.`price`,`product`.`wholesaleprice`,`product`.`description`,`product`.`firstsaleprice`,`product`.`secondsaleprice`,`product`.`specialpriceto`,`product`.`specialpricefrom`,`product`.`quantity` FROM `product` 
+		$query['product']=$this->db->query("SELECT `product`.`id`,`product`.`name`,`product`.`sku`,`product`.`url`,`product`.`price`,`product`.`wholesaleprice`,`product`.`description`,`product`.`firstsaleprice`,`product`.`secondsaleprice`,`product`.`specialpriceto`,`product`.`specialpricefrom`,`product`.`quantity`,`userwishlist`.`user` FROM `product` LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$user' 
 		WHERE `product`.`id`='$product'")->row();
 		
 		
