@@ -727,22 +727,33 @@ $timestamp=new DateTime();
         }
     }
     
-    function updateuserfront($id,$firstname, $lastname, $address, $email, $phone, $city,$zipcode,$country,$sameasbilling,$state) 
+    function updateuserfront($id,$firstname, $lastname, $billingaddress, $email, $phone, $billingcity,$billingpincode,$billingcountry,$billingstate) 
     {
-        $query="UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`email`='$email',`phone`='$phone',`billingaddress`='$address',`billingcity`='$city',`billingpincode`='$zipcode',`billingcountry`='$country',`billingstate`='$state' WHERE `id`='$id'";
-        
-//        if($sameasbilling=="1")
-//        {
-//        $query="UPDATE `user` SET `billingaddress`='$address',`billingcity`='$city',`billingpincode`='$zipcode',`billingcountry`='$country',`billingstate`='$state' WHERE `id`='$id'";
+        $data = array(
+               'firstname'=> $firstname,
+               'lastname'=> $lastname,
+               'email'=> $email,
+               'phone'=> $phone,
+               'billingaddress'=> $billingaddress,
+               'billingcity'=> $billingcity,
+               'billingpincode'=> $billingpincode,
+               'billingcountry'=> $billingcountry,
+               'billingstate'=> $billingstate,
+            );
+
+$this->db->where('id', $id);
+$val=$this->db->update('user', $data); 
+        echo "fghj";
+        echo $val;
+//        $query="UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`email`='$email',`phone`='$phone',`billingaddress`='$billingaddress',`billingcity`='$billingcity',`billingpincode`='$billingpincode',`billingcountry`='$billingcountry',`billingstate`='$billingstate' WHERE `id`='$id'";
+//
+//        $query=$this->db->query($query);
+//        if($query){
+//        return true;
 //        }
-//        echo $query;
-        $query=$this->db->query($query);
-        if($query){
-        return true;
-        }
-        else{
-        return false;
-        }
+//        else{
+//        return false;
+//        }
     }
     function getusercartdetails($userid)
     {

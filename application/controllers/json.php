@@ -1081,15 +1081,14 @@ echo $filepath;
         $id=$data['id'];
         $firstname=$data['firstname'];
         $lastname=$data['lastname'];
-        $address=$data['address'];
+        $billingaddress=$data['billingaddress'];
         $email=$data['email'];
         $phone=$data['phone'];
-        $city=$data['city'];
-        $zipcode=$data['zipcode'];
-        $country=$data['country'];
-        $sameasbilling=$data['sameasbilling'];
-        $state=$data['state'];
-        $data["message"] = $this->user_model->updateuserfront($id,$firstname, $lastname, $address, $email, $phone, $city,$zipcode,$country,$sameasbilling,$state);
+        $billingcity=$data['billingcity'];
+        $billingpincode=$data['billingpincode'];
+        $billingcountry=$data['billingcountry'];
+        $billingstate=$data['billingstate'];
+        $data["message"] = $this->user_model->updateuserfront($id,$firstname, $lastname, $billingaddress, $email, $phone, $billingcity,$billingpincode,$billingcountry,$billingstate);
         $this->load->view("json", $data);
     }
     function getuserbyid()
