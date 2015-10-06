@@ -164,6 +164,10 @@ LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` 
         return false;
         }
     }
+    public function getallcategory(){
+    $query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=0")->result();
+        return $query;
+    }
 	
 }
 ?>

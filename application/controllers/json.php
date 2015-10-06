@@ -1892,5 +1892,10 @@ echo $filepath;
         $data['message']=$this->restapi_model->getofferproducts($offerid);
         $this->load->view("json", $data);
     }
+    public function getallcategory(){
+     $data['message']=$this->restapi_model->getallcategory();
+        $this->load->view("json", $data);
+    }
+    
 }
 ?>
