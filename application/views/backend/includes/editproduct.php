@@ -42,6 +42,12 @@
                         ?>
                       </div>
                     </div>
+                    <div class="form-group">
+						<label class="col-sm-2 control-label">Type Name</label>
+						<div class="col-sm-4">
+						  <input type="text" id="normal-field" class="form-control" name="typename" value="<?php echo set_value('typename',$before['product']->typename);?>">
+						</div>
+					</div>
 			
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Description</label>
