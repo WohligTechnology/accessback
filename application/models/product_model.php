@@ -758,22 +758,24 @@ $timestamp=new DateTime();
 			'quantity' => $row['quantity'],
 			'status' => 1
 		);
-            $q1="SELECT COUNT(`id`) as `count1` FROM `product` WHERE `sku`='$sku'";
+            $q1="SELECT COUNT(`id`) as `count1` FROM `product` WHERE `name` LIKE '$name'";
             
-            $checkproductpresent=$this->db->query("SELECT COUNT(`id`) as `count1` FROM `product` WHERE `sku`='$sku'")->row();
+            $checkproductpresent=$this->db->query("SELECT COUNT(`id`) as `count1` FROM `product` WHERE `name` LIKE '$name'")->row();
             
-//            if($checkproductpresent->count1 == 0)
-//            {
+            if($checkproductpresent->count1 == 0)
+            {
 //                $query=$this->db->insert('product', $data );
                 $query=$this->db->query("INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`,`size`,`typename`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$modelnumber','$brandcolor','$eanorupc','$eanorupcmeasuringunits','$type','$compatibledevice','$compatiblewith','$material','$color','$design','$width','$height','$depth','$portsize','$packof','$salespackage','$keyfeatures','$videourl','$modelname','$finish','$weight','$domesticwarranty','$domesticwarrantymeasuringunits','$internationalwarranty','$internationalwarrantymeasuringunits','$warrantysummary','$warrantyservicetype','$coveredinwarranty','$notcoveredinwarranty','$size','$typename')");
                 $productid=$this->db->insert_id();
 //                echo "pid".$productid;
                 
-//            }
-//            else
-//            {
+            }
+            else
+            {
 //            return 0;
-//            }
+            }
+            if($productid && $productid=="")
+        {
 			foreach($allimages as $key => $image)
 			{
 				$data1  = array(
@@ -846,6 +848,7 @@ $timestamp=new DateTime();
 				);
 				$queryproducttype=$this->db->insert( 'producttype', $data2 );
 			}
+    }
         }
 		if(!$query)
 			return  0;

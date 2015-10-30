@@ -1306,6 +1306,10 @@ echo $filepath;
                 }
             }
             $ids.=")";
+              if($ids=="()")
+        {
+           $ids="(0)";
+        }
              $getproductids=$this->db->query("SELECT `product` FROM `productcategory` WHERE `category` IN $ids")->result(); 
             
         }
