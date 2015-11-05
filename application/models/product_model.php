@@ -720,6 +720,8 @@ $timestamp=new DateTime();
             $notcoveredinwarranty=$row['Not Covered In Warranty'];
             $size=$row['Size'];
             $typename=$row['Typename'];
+            $subcategory=$row['Sub-Category'];
+            $allsubcategories=explode(",",$subcategory);
             
             $q="INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`,`typename`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$typename')";
 //            echo $q;
@@ -770,15 +772,7 @@ $timestamp=new DateTime();
                 $query=$this->db->query("INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`,`size`,`typename`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$modelnumber','$brandcolor','$eanorupc','$eanorupcmeasuringunits','$type','$compatibledevice','$compatiblewith','$material','$color','$design','$width','$height','$depth','$portsize','$packof','$salespackage','$keyfeatures','$videourl','$modelname','$finish','$weight','$domesticwarranty','$domesticwarrantymeasuringunits','$internationalwarranty','$internationalwarrantymeasuringunits','$warrantysummary','$warrantyservicetype','$coveredinwarranty','$notcoveredinwarranty','$size','$typename')");
                 $productid=$this->db->insert_id();
 //                echo "pid".$productid;
-                
-            }
-            else
-            {
-//            return 0;
-            }
-            if($productid && $productid=="")
-        {
-			foreach($allimages as $key => $image)
+                foreach($allimages as $key => $image)
 			{
 				$data1  = array(
 					'product' => $productid,
@@ -850,7 +844,16 @@ $timestamp=new DateTime();
 				);
 				$queryproducttype=$this->db->insert( 'producttype', $data2 );
 			}
-    }
+                
+            }
+            else
+            {
+//            return 0;
+            }
+//            if($productid && $productid=="")
+//        {
+//			
+//    }
         }
 		if(!$query)
 			return  0;
