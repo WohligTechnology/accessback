@@ -562,137 +562,162 @@ echo $filepath;
     public function emailcustomerdiscount() {
         $this->order_model->emailcustomerdiscount();
     }
-    function getproductbycategory1() {
-        $color = $this->input->get_post("color");
-        $price1 = $this->input->get_post("price1");
-        $price2 = $this->input->get_post("price2");
-        $category = $this->input->get_post("category");
-        $category=str_replace("-"," ",$category);
-		$getcategoryidbyname=$this->db->query("SELECT * FROM `category` WHERE `name`LIKE '$category'")->row();
-        $category=$getcategoryidbyname->id;
-        $iscategory = " 1 ";
-        if ($category != "") {
-            $iscategory = " `productcategory`.`category`=$category ";
-        }
-        $where = "";
-        if ($price1 != "") {
-            $pricefilter = "AND (`product`.`price` BETWEEN $price1 AND $price2 OR `product`.`price`=$price1 OR `product`.`price`=$price2)";
-        } else {
-            $pricefilter = "";
-        }
-        //		$q3 = $this->db->query("SELECT COUNT(*) as `cnt` FROM `category` WHERE `category`.`parent`= '$category'")->row();
-        //		if($q3->cnt > 0)
-        //			$where .= " OR `category`.`parent`='$category' ";
-        //		$query['category']=$this->db->query("SELECT `category`.`name` ,`category`.`image1` FROM `category`
-        //		WHERE `category`.`id`='$category'")->row();
-        $elements = array();
-        $elements[0] = new stdClass();
-        $elements[0]->field = "`product`.`id`";
-        $elements[0]->sort = "1";
-        $elements[0]->header = "ID";
-        $elements[0]->alias = "id";
-        $elements[1] = new stdClass();
-        $elements[1]->field = "`product`.`name`";
-        $elements[1]->sort = "1";
-        $elements[1]->header = "Name";
-        $elements[1]->alias = "name";
-        $elements[2] = new stdClass();
-        $elements[2]->field = "`product`.`sku`";
-        $elements[2]->sort = "1";
-        $elements[2]->header = "sku";
-        $elements[2]->alias = "sku";
-        $elements[3] = new stdClass();
-        $elements[3]->field = "`product`.`url`";
-        $elements[3]->sort = "1";
-        $elements[3]->header = "url";
-        $elements[3]->alias = "url";
-        $elements[4] = new stdClass();
-        $elements[4]->field = "`product`.`price`";
-        $elements[4]->sort = "1";
-        $elements[4]->header = "price";
-        $elements[4]->alias = "price";
-        $elements[5] = new stdClass();
-        $elements[5]->field = "`product`.`wholesaleprice`";
-        $elements[5]->sort = "1";
-        $elements[5]->header = "wholesaleprice";
-        $elements[5]->alias = "wholesaleprice";
-        $elements[6] = new stdClass();
-        $elements[6]->field = "`product`.`firstsaleprice`";
-        $elements[6]->sort = "1";
-        $elements[6]->header = "firstsaleprice";
-        $elements[6]->alias = "firstsaleprice";
-        $elements[7] = new stdClass();
-        $elements[7]->field = "`product`.`secondsaleprice`";
-        $elements[7]->sort = "1";
-        $elements[7]->header = "secondsaleprice";
-        $elements[7]->alias = "secondsaleprice";
-        $elements[8] = new stdClass();
-        $elements[8]->field = "`product`.`specialpriceto`";
-        $elements[8]->sort = "1";
-        $elements[8]->header = "specialpriceto";
-        $elements[8]->alias = "specialpriceto";
-        $elements[9] = new stdClass();
-        $elements[9]->field = "`product`.`specialpricefrom`";
-        $elements[9]->sort = "1";
-        $elements[9]->header = "specialpricefrom";
-        $elements[9]->alias = "specialpricefrom";
-        $elements[10] = new stdClass();
-        $elements[10]->field = "`image1`.`image`";
-        $elements[10]->sort = "1";
-        $elements[10]->header = "image1";
-        $elements[10]->alias = "image1";
-        $elements[11] = new stdClass();
-        $elements[11]->field = "`image2`.`image`";
-        $elements[11]->sort = "1";
-        $elements[11]->header = "image2";
-        $elements[11]->alias = "image2";
-        $elements[12] = new stdClass();
-        $elements[12]->field = "`product`.`quantity`";
-        $elements[12]->sort = "1";
-        $elements[12]->header = "quantity";
-        $elements[12]->alias = "quantity";
-        $search = $this->input->get_post("search");
-        $pageno = $this->input->get_post("pageno");
-        $orderby = $this->input->get_post("orderby");
-        $orderorder = $this->input->get_post("orderorder");
-        $maxrow = $this->input->get_post("maxrow");
-        if ($maxrow == "") {
-            $maxrow = 20;
-        }
-        switch($orderby)
+    function getproductbycategory() {
+        $userid=$this->session->userdata("id");
+        $catid = $this->input->get_post("parent");
+        $nouse = $this->input->get_post("category");
+        
+        //CHECK IF IT IS PARENT OR CATEGORY  $$$$$$$$$$$$$$$$$$
+        
+         $checkifparent=$this->db->query("SELECT `parent` FROM `category` WHERE `id`= '$catid'")->row();
+        $isparent=$checkifparent->parent;
+        if($isparent!=0){
+            
+            // THIS IS TO OBTAIN CATEGORY PRODUCTS IDS  $$$$$$$$$$$$$
+            
+        $getproductids=$this->db->query("SELECT `product` FROM `productcategory` WHERE `category`= '$catid'")->result();
+         $productids="(";
+            foreach($getproductids as $key=>$value){
+//            $catid=$row->id;
+                if($key==0)
+                {
+                    $productids.=$value->product;
+                }
+                else
+                {
+                    $productids.=",".$value->product;
+                }
+            }
+            $productids.=")";
+        if($productids=="()")
         {
-            case "new":
-            {
-                $orderby = "`product`.`id`";
-                $orderorder = "DESC";
-            }
-            break;
-            case "old":
-            {
-                $orderby = "`product`.`id`";
-                $orderorder = "ASC";
-            }
-            break;
-            case "high":
-            {
-                $orderby = "`product`.`price`";
-                $orderorder = "DESC";
-            }
-            break;
-            case "low":
-            {
-                $orderby = "`product`.`price`";
-                $orderorder = "ASC";
-            }
-            break;
-            default: 
-            {
-                $orderby = "`product`.`id`";
-                $orderorder = "DESC";
-            }
-            break;
+           $productids="(0)";
         }
-        $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` INNER JOIN `productcategory` ON `product`.`id`=`productcategory`.`product` INNER JOIN `category` ON `category`.`id`=`productcategory`.`category` LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1  AND `product`.`name` LIKE '%$color%' $pricefilter AND (   $iscategory )", ' GROUP BY `product`.`id` ');
+        }
+        
+        else{
+            
+        // TO OBTAIN PARENT CATEGORIES
+              $getcategoryids=$this->db->query("SELECT `id` FROM `category` WHERE `parent`= '$catid'")->result();
+    
+             $ids="($catid";
+            foreach($getcategoryids as $key=>$value){
+//            $catid=$row->id;
+                if($key==0)
+                {
+                    $ids.=",".$value->id;
+                }
+                else
+                {
+                    $ids.=",".$value->id;
+                }
+            }
+            $ids.=")";
+              if($ids=="()")
+        {
+           $ids="(0)";
+        }
+            // TO OBTAIN PRODUCT IDS
+            $getproductids=$this->db->query("SELECT `product` FROM `productcategory` WHERE `category` IN $ids")->result(); 
+            $productids="(";
+            foreach($getproductids as $key=>$value){
+//            $catid=$row->id;
+                if($key==0)
+                {
+                    $productids.=$value->product;
+                }
+                else
+                {
+                    $productids.=",".$value->product;
+                }
+            }
+            $productids.=")";
+        if($productids=="()")
+        {
+           $productids="(0)";
+        }
+        }
+                $elements = array();
+                $elements[0] = new stdClass();
+                $elements[0]->field = "`product`.`id`";
+                $elements[0]->sort = "1";
+                $elements[0]->header = "ID";
+                $elements[0]->alias = "id";
+                $elements[1] = new stdClass();
+                $elements[1]->field = "`product`.`name`";
+                $elements[1]->sort = "1";
+                $elements[1]->header = "Name";
+                $elements[1]->alias = "name";
+                $elements[2] = new stdClass();
+                $elements[2]->field = "`product`.`sku`";
+                $elements[2]->sort = "1";
+                $elements[2]->header = "sku";
+                $elements[2]->alias = "sku";
+                $elements[3] = new stdClass();
+                $elements[3]->field = "`product`.`url`";
+                $elements[3]->sort = "1";
+                $elements[3]->header = "url";
+                $elements[3]->alias = "url";
+                $elements[4] = new stdClass();
+                $elements[4]->field = "`product`.`price`";
+                $elements[4]->sort = "1";
+                $elements[4]->header = "price";
+                $elements[4]->alias = "price";
+                $elements[5] = new stdClass();
+                $elements[5]->field = "`product`.`wholesaleprice`";
+                $elements[5]->sort = "1";
+                $elements[5]->header = "wholesaleprice";
+                $elements[5]->alias = "wholesaleprice";
+                $elements[6] = new stdClass();
+                $elements[6]->field = "`product`.`firstsaleprice`";
+                $elements[6]->sort = "1";
+                $elements[6]->header = "firstsaleprice";
+                $elements[6]->alias = "firstsaleprice";
+                $elements[7] = new stdClass();
+                $elements[7]->field = "`product`.`secondsaleprice`";
+                $elements[7]->sort = "1";
+                $elements[7]->header = "secondsaleprice";
+                $elements[7]->alias = "secondsaleprice";
+                $elements[8] = new stdClass();
+                $elements[8]->field = "`product`.`specialpriceto`";
+                $elements[8]->sort = "1";
+                $elements[8]->header = "specialpriceto";
+                $elements[8]->alias = "specialpriceto";
+                $elements[9] = new stdClass();
+                $elements[9]->field = "`product`.`specialpricefrom`";
+                $elements[9]->sort = "1";
+                $elements[9]->header = "specialpricefrom";
+                $elements[9]->alias = "specialpricefrom";
+                $elements[10] = new stdClass();
+                $elements[10]->field = "`image1`.`image`";
+                $elements[10]->sort = "1";
+                $elements[10]->header = "image1";
+                $elements[10]->alias = "image1";
+                $elements[11] = new stdClass();
+                $elements[11]->field = "`image2`.`image`";
+                $elements[11]->sort = "1";
+                $elements[11]->header = "image2";
+                $elements[11]->alias = "image2";
+                $elements[12] = new stdClass();
+                $elements[12]->field = "`product`.`quantity`";
+                $elements[12]->sort = "1";
+                $elements[12]->header = "quantity";
+                $elements[12]->alias = "quantity";
+                $elements[13] = new stdClass();
+                $elements[13]->field = "`userwishlist`.`user`";
+                $elements[13]->sort = "1";
+                $elements[13]->header = "isfavid";
+                $elements[13]->alias = "isfavid";
+                $search = $this->input->get_post("search");
+                $pageno = $this->input->get_post("pageno");
+                $orderby = $this->input->get_post("orderby");
+                $orderorder = $this->input->get_post("orderorder");
+                $maxrow = $this->input->get_post("maxrow");
+                if ($maxrow == "") {
+                    $maxrow = 5;
+                }
+                $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid' LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND  `product`.`id` IN $productids", ' GROUP BY `product`.`id` ');
+        
         $this->load->view("json", $data);
     }
     function login() {
@@ -1274,7 +1299,7 @@ echo $filepath;
         $this->load->view("json", $data);
     } 
     
-    public function getproductbycategory()
+    public function getproductbycategory1()
     {
         $userid=$this->session->userdata("id");
         $parent = $this->input->get_post("parent");
