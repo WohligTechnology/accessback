@@ -813,6 +813,8 @@ class Site extends CI_Controller
 	}
 	function editproductsubmit()
 	{
+        $access = array("1");
+		$this->checkaccess($access);
 		$this->form_validation->set_rules('name','Name','trim|required');
 		$this->form_validation->set_rules('sku','sku','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
@@ -902,7 +904,7 @@ class Site extends CI_Controller
 			$data['alertsuccess']="product edited Successfully.";
 			$data['table']=$this->product_model->viewproduct();
             
-			$data['redirect']="site/editproduct?id=".$id;
+			$data['redirect']="site/viewproduct";
 			//$data['other']="template=$template";
 			$this->load->view("redirect",$data);
 			/*$data['page']='viewusers';
