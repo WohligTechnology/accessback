@@ -665,8 +665,13 @@ $timestamp=new DateTime();
 				$specialpriceto = date("Y-m-d",strtotime($row['Special Price To']));
             $sku=$row['SKU'];
             $productfeatures=$row['Product Features'];
-            $image=$row['Images'];
-            $allimages=explode(",",$image);
+            $image1=$row['Image1'];
+            $image2=$row['Image2'];
+            $image3=$row['Image3'];
+            $image4=$row['Image4'];
+            $image5=$row['Image5'];
+            $image6=$row['Image6'];
+            $image7=$row['Image7'];
             $category=$row['Category'];
             $allcategories=explode(",",$category);
             
@@ -772,15 +777,56 @@ $timestamp=new DateTime();
                 $query=$this->db->query("INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`,`size`,`typename`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$modelnumber','$brandcolor','$eanorupc','$eanorupcmeasuringunits','$type','$compatibledevice','$compatiblewith','$material','$color','$design','$width','$height','$depth','$portsize','$packof','$salespackage','$keyfeatures','$videourl','$modelname','$finish','$weight','$domesticwarranty','$domesticwarrantymeasuringunits','$internationalwarranty','$internationalwarrantymeasuringunits','$warrantysummary','$warrantyservicetype','$coveredinwarranty','$notcoveredinwarranty','$size','$typename')");
                 $productid=$this->db->insert_id();
 //                echo "pid".$productid;
-                foreach($allimages as $key => $image)
-			{
-				$data1  = array(
-					'product' => $productid,
-					'image' => $image,
-                    'order' => $key
+                if($image1!=""){
+				$dataimg  = array(
+					'image' => $image1,
+					'product' => $productid
 				);
-				$queryproductimage=$this->db->insert( 'productimage', $data1 );
-			}
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image2!=""){
+				$dataimg  = array(
+					'image' => $image2,
+					'product' => $productid
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image3!=""){
+				$dataimg  = array(
+					'image' => $image3,
+					'product' => $productid
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image4!=""){
+				$dataimg  = array(
+					'image' => $image4,
+					'product' => $productid
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image5!=""){
+				$dataimg  = array(
+					'image' => $image5,
+					'product' => $productid
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image6!=""){
+				$dataimg  = array(
+					'image' => $image6,
+					'product' => $productid
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image7!=""){
+				$dataimg  = array(
+					'image' => $image7,
+					'product' => $productid
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+			
             
 			foreach($allcategories as $key => $category)
 			{
@@ -790,12 +836,36 @@ $timestamp=new DateTime();
                 {
                     $this->db->query("INSERT INTO `category`(`name`) VALUES ('$category')");
                     $categoryid=$this->db->insert_id();
+                    foreach($allsubcategories as $key => $subcategory){
+                    $subcategory=trim($subcategory);
+                    $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$subcategory'")->row();
+                        if(empty($subcategoryquery)){
+                         $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+                        }
+                    }
                 }
                 else
                 {
                     $categoryid=$categoryquery->id;
+                     foreach($allsubcategories as $key => $subcategory){
+                    $subcategory=trim($subcategory);
+                    $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$subcategory'")->row();
+                        if(empty($subcategoryquery)){
+                         $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+                        }
+                    }
+                    
                 }
             
+//                TRUNCATE `brand`;
+//TRUNCATE `category`;
+//TRUNCATE `product`;
+//TRUNCATE `productbrand`;
+//TRUNCATE `productcategory`;
+//TRUNCATE `productimage`;
+//TRUNCATE `producttype`;
+//TRUNCATE `type`;
+                
 				$data2  = array(
 					'product' => $productid,
 					'category' => $categoryid,
