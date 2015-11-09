@@ -168,6 +168,17 @@ LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` 
     $query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=0")->result();
         return $query;
     }
+    
+    public function orderhistory(){
+         $userid=$this->session->userdata("id");
+    $query=$this->db->query("SELECT `order`.`id`, `order`.`user`, `order`.`firstname`, `order`.`lastname`, `order`.`email`, `order`.`billingaddress`, `order`.`billingcity`, `order`.`billingstate`, `order`.`billingcountry`, `order`.`shippingaddress`, `order`.`shippingcity`, `order`.`shippingcountry`, `order`.`shippingstate`, `order`.`shippingpincode`, `order`.`defaultcurrency`, `order`.`timestamp`, `order`.`totalamount`, `order`.`discountamount`, `order`.`finalamount`, `order`.`discountcoupon`, `order`.`paymentmethod`, `order`.`orderstatus`, `order`.`currency`, `order`.`trackingcode`, `order`.`billingpincode`, `order`.`shippingmethod`, `order`.`shippingname`, `order`.`shippingtel`, `order`.`customernote`, `order`.`billingcontact`, `order`.`shippingcontact`,`orderitems`.`id` as `orderitemsid`, `orderitems`.`order` as `orderitemsorder`, `orderitems`.`product` as `orderitemsproduct`, `orderitems`.`quantity` as `orderitemsquantity`, `orderitems`.`price` as `orderitemsprice`, `orderitems`.`discount` as `orderitemsdiscount`, `orderitems`.`finalprice` as `orderitemsfinalprice`,`product`.`id`, `product`.`name`, `product`.`sku`, `product`.`description`, `product`.`url`, `product`.`visibility`, `product`.`price`, `product`.`wholesaleprice`, `product`.`firstsaleprice`, `product`.`secondsaleprice`, `product`.`specialpriceto`, `product`.`specialpricefrom`, `product`.`metatitle`, `product`.`metadesc`, `product`.`metakeyword`, `product`.`quantity`, `product`.`status`, `product`.`modelnumber`, `product`.`brandcolor`, `product`.`eanorupc`, `product`.`eanorupcmeasuringunits`, `product`.`type`, `product`.`compatibledevice`, `product`.`compatiblewith`, `product`.`material`, `product`.`color`, `product`.`design`, `product`.`width`, `product`.`height`, `product`.`depth`, `product`.`portsize`, `product`.`packof`, `product`.`salespackage`, `product`.`keyfeatures`, `product`.`videourl`, `product`.`modelname`, `product`.`finish`, `product`.`weight`, `product`.`domesticwarranty`,`product`.`domesticwarrantymeasuringunits`, `product`.`internationalwarranty`, `product`.`internationalwarrantymeasuringunits`, `product`.`warrantysummary`, `product`.`warrantyservicetype`,`product`.`coveredinwarranty`, `product`.`notcoveredinwarranty`, `product`.`size`,`productimage`.`product`, `productimage`.`image`, `productimage`.`is_default`, `productimage`.`order`, `productimage`.`status`
+FROM `order` 
+LEFT OUTER JOIN `orderitems` ON `orderitems`.`order`=`order`.`id`
+LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product`
+LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`
+WHERE `order`.`user`='$userid'")->result();
+        return $query;
+    }
 	
 }
 ?>

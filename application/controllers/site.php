@@ -4038,7 +4038,7 @@ class Site extends CI_Controller
             $orderby="id";
             $orderorder="ASC";
         }
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `offerproduct` LEFT OUTER JOIN `product` ON `product`.`id`=`offerproduct`.`product`","WHERE `offerproduct`.`offer`=$offerid");
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `offerproduct` LEFT OUTER JOIN `product` ON `product`.`id`=`offerproduct`.`product`","WHERE `offerproduct`.`offer`='$offerid'");
         $this->load->view("json",$data);
     }
 

@@ -780,14 +780,16 @@ $timestamp=new DateTime();
                 if($image1!=""){
 				$dataimg  = array(
 					'image' => $image1,
-					'product' => $productid
+					'product' => $productid,
+					'order' => 0
 				);
 				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
                 }
                 if($image2!=""){
 				$dataimg  = array(
 					'image' => $image2,
-					'product' => $productid
+					'product' => $productid,
+					'order' => 1
 				);
 				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
                 }

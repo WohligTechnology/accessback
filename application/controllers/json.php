@@ -1924,6 +1924,10 @@ echo $filepath;
      $data['message']=$this->restapi_model->getallcategory();
         $this->load->view("json", $data);
     }
+    public function orderhistory(){
+     $data['message']=$this->restapi_model->orderhistory();
+        $this->load->view("json", $data);
+    }
     
 }
 ?>
