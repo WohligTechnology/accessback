@@ -673,7 +673,7 @@ $timestamp=new DateTime();
             $image6=$row['Image6'];
             $image7=$row['Image7'];
             $category=$row['Category'];
-            $allcategories=explode(",",$category);
+//            $allcategories=explode(",",$category);
             
             $name=$row['Name'];
             $description=$row['Description'];
@@ -726,11 +726,11 @@ $timestamp=new DateTime();
             $size=$row['Size'];
             $typename=$row['Typename'];
             $subcategory=$row['Sub-Category'];
-            $allsubcategories=explode(",",$subcategory);
+//            $allsubcategories=explode(",",$subcategory);
             
             $q="INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`,`typename`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$typename')";
 //            echo $q;
-            $category=$row['category'];
+//            $category=$row['category'];
 //            $data  = array(
 //                'name' => $row['name'],
 //                'sku' => $row['sku'],
@@ -828,52 +828,56 @@ $timestamp=new DateTime();
 				);
 				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
                 }
-			
-            
-			foreach($allcategories as $key => $category)
-			{
                 $category=trim($category);
                 $categoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$category'")->row();
                 if(empty($categoryquery))
                 {
                     $this->db->query("INSERT INTO `category`(`name`) VALUES ('$category')");
                     $categoryid=$this->db->insert_id();
-                    foreach($allsubcategories as $key => $subcategory){
                     $subcategory=trim($subcategory);
                     $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$subcategory'")->row();
                         if(empty($subcategoryquery)){
-                         $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+                         $subcategoryid=$this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+                        $subcategoryid=$this->db->insert_id();
+                        
                         }
-                    }
-                }
-                else
-                {
-                    $categoryid=$categoryquery->id;
-                     foreach($allsubcategories as $key => $subcategory){
-                    $subcategory=trim($subcategory);
-                    $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$subcategory'")->row();
-                        if(empty($subcategoryquery)){
-                         $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
-                        }
-                    }
-                    
-                }
-            
-//                TRUNCATE `brand`;
-//TRUNCATE `category`;
-//TRUNCATE `product`;
-//TRUNCATE `productbrand`;
-//TRUNCATE `productcategory`;
-//TRUNCATE `productimage`;
-//TRUNCATE `producttype`;
-//TRUNCATE `type`;
-                
-				$data2  = array(
+                     $data3  = array(
+                        'product' => $productid,
+                        'category' => $subcategoryid,
+                        );
+                        $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
+                    $data2  = array(
 					'product' => $productid,
 					'category' => $categoryid,
 				);
 				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
-			}
+                   
+                }
+                else
+                {
+                    $categoryid=$categoryquery->id;
+                    $subcategory=trim($subcategory);
+                    $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$subcategory'")->row();
+                        if(empty($subcategoryquery)){
+                         $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+                             $subcategoryid=$this->db->insert_id();
+                            
+                        }
+                     $data3  = array(
+                            'product' => $productid,
+                            'category' => $subcategoryid,
+                            );
+                            $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
+                    $data2  = array(
+					'product' => $productid,
+					'category' => $categoryid,
+				);
+				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
+                   
+                }
+            
+				
+			
             
 			foreach($allbrand as $key => $brand)
 			{
