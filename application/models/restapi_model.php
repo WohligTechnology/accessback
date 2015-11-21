@@ -186,6 +186,13 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`
 WHERE `order`.`user`='$userid'")->result();
         return $query;
     }
+    
+    public function getsinglecategory($categoryid){
+        $query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`='$categoryid'")->result();
+       
+        return $query;
+        
+    }
 	
 }
 ?>

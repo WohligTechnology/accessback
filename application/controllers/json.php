@@ -1928,6 +1928,11 @@ echo $filepath;
      $data['message']=$this->restapi_model->orderhistory();
         $this->load->view("json", $data);
     }
+    public function getsinglecategory(){
+        $categoryid=$this->input->get('categoryid');
+     $data['message']=$this->restapi_model->getsinglecategory($categoryid);
+        $this->load->view("json", $data);
+    }
     
 }
 ?>
