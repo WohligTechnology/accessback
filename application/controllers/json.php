@@ -1933,6 +1933,10 @@ echo $filepath;
      $data['message']=$this->restapi_model->getsinglecategory($categoryid);
         $this->load->view("json", $data);
     }
+    public function getHomeProducts(){
+     $data['message']=$this->restapi_model->getHomeProducts();
+        $this->load->view("json", $data);
+    }
     
 }
 ?>

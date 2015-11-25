@@ -22,7 +22,7 @@
 						?>
 					  </div>
 					</div>
-					<div class=" form-group">
+					<div class=" form-group" style="display:none">
 					  <label class="col-sm-2 control-label">User</label>
 					  <div class="col-sm-4">
 						<?php
@@ -32,7 +32,7 @@
 					  </div>
 					</div>
 					
-					<div class="form-group">
+					<div class="form-group" style="display:none">
 						<label class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-4">
 						  <input type="email" id="" name="email" class="form-control" value="<?php echo set_value('email',$before->email); ?>">

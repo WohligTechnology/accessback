@@ -3357,7 +3357,51 @@ class Site extends CI_Controller
 		$this->load->view('template',$data);
 	}
     
+    function createproductwaiting()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['product']=$this->product_model->getproductdropdown();
+		$data[ 'user' ] =$this->newsletter_model->getuserdropdownproductwaiting();
+		$data['page']='createproductwaiting';
+		$data['title']='create product Waiting';
+		$this->load->view('template',$data);
+	}
     
+	function createproductwaitingsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('email','Email','trim|valid_email');
+		$this->form_validation->set_rules('product','product','trim');
+		$this->form_validation->set_rules('user','user','trim');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            print_r($data['alerterror']);
+			$data['before']=$this->product_model->beforecreateproductwaiting($this->input->get('id'));
+            $data['product']=$this->product_model->getproductdropdown();
+            $data[ 'user' ] =$this->newsletter_model->getuserdropdownproductwaiting();
+            $data['page']='createproductwaiting';
+            $data['title']='create product Waiting';
+            $this->load->view('template',$data);
+		}
+		else
+		{
+			$email=$this->input->post('email');
+			$product=$this->input->post('product');
+			$user=$this->input->post('user');
+			if($this->product_model->createproductwaiting($product,$user,$email)==0)
+			$data['alerterror']="Product Waiting createing was unsuccesful";
+			else
+			$data['alertsuccess']="productwaiting createed Successfully.";
+			$data['table']=$this->product_model->viewproductwaiting();
+            $data['page']='viewproductwaiting';
+    //		$data['page2']='block/productblock';
+            $data['title']='Product waiting';
+            $this->load->view('template',$data);
+		}
+	}
 	function editproductwaiting()
 	{
 		$access = array("1");

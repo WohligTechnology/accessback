@@ -3,67 +3,7 @@ if ( !defined( 'BASEPATH' ) )
 	exit( 'No direct script access allowed' );
 class restapi_model extends CI_Model
 {
-//    public function getmultipleoffer()
-//    {
-//        $todaysdate=date("Y-m-d");
-//          // latest offers
-//        
-//          $query['offers']=$this->db->query("SELECT * FROM `offer` WHERE `startdate` <= '$todaysdate' AND `enddate` >= '$todaysdate'")->result();
-//        
-//        
-//        
-//        // get offer ids
-//        
-//         $getofferids=$this->db->query("SELECT `id` FROM `offer` WHERE `startdate` <= '$todaysdate' AND `enddate` >= '$todaysdate' ORDER BY `timestamp` DESC")->result();
-//            $ids="(";
-//            foreach($getofferids as $key=>$value){
-////            $catid=$row->id;
-//                if($key==0)
-//                {
-//                    $ids.=$value->id;
-//                }
-//                else
-//                {
-//                    $ids.=",".$value->id;
-//                }
-//            }
-//            $ids.=")";
-//             $getproductids=$this->db->query("SELECT `product` FROM `offerproduct` WHERE `offer` IN $ids")->result(); 
-//            
-//        
-//         $productids="(";
-//            foreach($getproductids as $key=>$value){
-////            $catid=$row->id;
-//                if($key==0)
-//                {
-//                    $productids.=$value->product;
-//                }
-//                else
-//                {
-//                    $productids.=",".$value->product;
-//                }
-//            }
-//            $productids.=")";
-//       $query['offerproduct']=$this->db->query("SELECT `product`.`id`,`product`.`name`,`product`.`sku`,`product`.`url`,`product`.`price`
-//,`product`.`wholesaleprice`,`product`.`firstsaleprice`,`product`.`secondsaleprice`,`product`.`specialpriceto`,`product`.`specialpricefrom`,`image1`.`image` as `image1`,`image2`.`image` as `image2`,`product`.`quantity`,`offerproduct`.`order` FROM `product`  LEFT OUTER JOIN `offerproduct` ON `offerproduct`.`product`=`product`.`id` LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1 WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND `product`.`id` IN $productids GROUP BY `product`.`id` ORDER BY `offerproduct`.`order` ASC")->result();
-//      
-//        
-////        // pastoffer
-//          
-//        $pastoffer=$this->db->query("SELECT `offerproduct`.`product`,`offerproduct`.`offer` FROM `offerproduct` LEFT OUTER JOIN `offer` ON `offer`.`id`=`offerproduct`.`offer` WHERE `offer`.`enddate` < '$todaysdate' ORDER BY `offer`.`timestamp` DESC")->result();
-//        foreach($pastoffer as $row2)
-//        {
-//            $abc->pastoffer = array();
-//            $pastofferproducts=$this->db->query("SELECT `product`.`id` as `productid`,`product`.`name`,`product`.`sku`,`product`.`url`,`product`.`price`
-//,`product`.`wholesaleprice`,`product`.`firstsaleprice`,`product`.`secondsaleprice`,`product`.`specialpriceto`,`product`.`specialpricefrom`,`image1`.`image` as `image1`,`image2`.`image` as `image2`,`product`.`quantity` FROM `product`
-//LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 
-//LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1 WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND `product`.`id` = '$row2->product'")->row();
-//        }
-////        //upcomingoffer
-//        
-//        $query['upcomingoffer']=$this->db->query("SELECT * FROM `offer` WHERE `startdate` > '$todaysdate' ORDER BY `timestamp` DESC")->row();  
-//        return $query;
-//    }	
+
     public function getmultipleoffer($userid)
     {
         $todaysdate=date("Y-m-d");
@@ -193,6 +133,13 @@ WHERE `order`.`user`='$userid'")->result();
         return $query;
         
     }
+    public function getHomeProducts(){
+      $query=$this->db->query("SELECT `productwaiting`.`id` as `id`,`productwaiting`.`product`,`product`.`name`,`product`.`id`, `product`.`name`, `product`.`sku`, `product`.`description`, `product`.`url`, `product`.`visibility`, `product`.`price`, `product`.`wholesaleprice`, `product`.`firstsaleprice`, `product`.`secondsaleprice`, `product`.`specialpriceto`, `product`.`specialpricefrom`, `product`.`metatitle`, `product`.`metadesc`, `product`.`metakeyword`, `product`.`quantity`, `product`.`status`, `product`.`modelnumber`, `product`.`brandcolor`, `product`.`eanorupc`, `product`.`eanorupcmeasuringunits`, `product`.`type`, `product`.`compatibledevice`, `product`.`compatiblewith`, `product`.`material`, `product`.`color`, `product`.`design`, `product`.`width`, `product`.`height`, `product`.`depth`, `product`.`portsize`, `product`.`packof`, `product`.`salespackage`, `product`.`keyfeatures`, `product`.`videourl`, `product`.`modelname`, `product`.`finish`, `product`.`weight`, `product`.`domesticwarranty`, `product`.`domesticwarrantymeasuringunits`, `product`.`internationalwarranty`, `product`.`internationalwarrantymeasuringunits`, `product`.`warrantysummary`, `product`.`warrantyservicetype`, `product`.`coveredinwarranty`, `product`.`notcoveredinwarranty`, `product`.`size`, `product`.`typename` FROM `productwaiting` LEFT OUTER JOIN `product` ON `product`.`id`=`productwaiting`.`product`")->result();
+        
+        return $query;
+        
+    }
+    
 	
 }
 ?>
