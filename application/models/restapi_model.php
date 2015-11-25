@@ -134,8 +134,14 @@ WHERE `order`.`user`='$userid'")->result();
         
     }
     public function getHomeProducts(){
-      $query=$this->db->query("SELECT `productwaiting`.`id` as `id`,`productwaiting`.`product`,`product`.`name`,`product`.`id`, `product`.`name`, `product`.`sku`, `product`.`description`, `product`.`url`, `product`.`visibility`, `product`.`price`, `product`.`wholesaleprice`, `product`.`firstsaleprice`, `product`.`secondsaleprice`, `product`.`specialpriceto`, `product`.`specialpricefrom`, `product`.`metatitle`, `product`.`metadesc`, `product`.`metakeyword`, `product`.`quantity`, `product`.`status`, `product`.`modelnumber`, `product`.`brandcolor`, `product`.`eanorupc`, `product`.`eanorupcmeasuringunits`, `product`.`type`, `product`.`compatibledevice`, `product`.`compatiblewith`, `product`.`material`, `product`.`color`, `product`.`design`, `product`.`width`, `product`.`height`, `product`.`depth`, `product`.`portsize`, `product`.`packof`, `product`.`salespackage`, `product`.`keyfeatures`, `product`.`videourl`, `product`.`modelname`, `product`.`finish`, `product`.`weight`, `product`.`domesticwarranty`, `product`.`domesticwarrantymeasuringunits`, `product`.`internationalwarranty`, `product`.`internationalwarrantymeasuringunits`, `product`.`warrantysummary`, `product`.`warrantyservicetype`, `product`.`coveredinwarranty`, `product`.`notcoveredinwarranty`, `product`.`size`, `product`.`typename` FROM `productwaiting` LEFT OUTER JOIN `product` ON `product`.`id`=`productwaiting`.`product`")->result();
-        
+      $query=$this->db->query("SELECT `productwaiting`.`product`,`product`.`name`,`product`.`id`, `product`.`name`,  `product`.`price` FROM `productwaiting` LEFT OUTER JOIN `product` ON `product`.`id`=`productwaiting`.`product` ")->result();
+        foreach($query as $row){
+            $row->images=array();
+            $product=$row->product;
+            $image=$this->db->query("SELECT `id`, `product`, `image`, `is_default`, `order`, `status` FROM `productimage` WHERE `product`='$product'")->result();
+            
+            array_push( $row->images,$image);
+        }
         return $query;
         
     }
