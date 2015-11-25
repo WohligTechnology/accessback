@@ -4085,7 +4085,7 @@ class Site extends CI_Controller
                $data['alertsuccess']="offerproduct created Successfully.";
 
 			$data['redirect']="site/viewofferproduct?id=".$offer;
-			$this->load->view("redirect",$data);
+			$this->load->view("redirect2",$data);
 		}
 	}
 
