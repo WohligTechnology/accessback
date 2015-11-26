@@ -173,7 +173,7 @@ INNER JOIN `type` ON `type`.`id` = `producttype`.`type`")->result();
 INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
 INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
  ")->result();
-        if($brandid !="")
+        if($brandid !=0)
         {
         $query['category']=$this->db->query("SELECT DISTINCT `category`.`id`,`category`.`name` FROM `product` 
         INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` 

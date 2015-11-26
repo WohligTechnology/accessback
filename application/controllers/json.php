@@ -563,6 +563,8 @@ echo $filepath;
         $typestr = $this->input->get_post("type");
         $pricemin = $this->input->get_post("pricemin");
         $pricemax = $this->input->get_post("pricemax");
+        $compatiblewith = $this->input->get_post("compatiblewith");
+        $compatibledevice = $this->input->get_post("compatibledevice");
             
         $color = explode(",",$colorstr);
         $type = explode(",",$typestr);
@@ -604,11 +606,11 @@ echo $filepath;
             {
                 if($i++ == 0)
                 {
-                    $where .= "$col";
+                    $where .= "'$col'";
                 }
                 else
                 {
-                    $where .= ",$col";
+                    $where .= ",'$col'";
                 }
             }
             if(count($color) > 0 )
@@ -617,6 +619,62 @@ echo $filepath;
 
             }
         }
+        
+        
+        // COMPATIBLE WITH
+        
+//        if( $compatiblewith != "" )
+//        {
+//            if(count($compatiblewith) > 0 )
+//            {
+//                $where .= " `product`.`compatiblewith` IN (";
+//
+//            }
+//            $i=0;
+//            foreach($compatiblewith as $compwith)
+//            {
+//                if($i++ == 0)
+//                {
+//                    $where .= "$compwith";
+//                }
+//                else
+//                {
+//                    $where .= ",$compwith";
+//                }
+//            }
+//            if(count($compatiblewith) > 0 )
+//            {
+//                $where .= ") AND ";
+//
+//            }
+//        }
+//        // COMPATIBLE DEVICE
+//        
+//        if( $compatibledevice != "" )
+//        {
+//            if(count($compatibledevice) > 0 )
+//            {
+//                $where .= " `product`.`compatibledevice` IN (";
+//
+//            }
+//            $i=0;
+//            foreach($compatibledevice as $compdev)
+//            {
+//                if($i++ == 0)
+//                {
+//                    $where .= "$compdev";
+//                }
+//                else
+//                {
+//                    $where .= ",$compdev";
+//                }
+//            }
+//            if(count($compatibledevice) > 0 )
+//            {
+//                $where .= ") AND ";
+//
+//            }
+//        }
        
         //filter for category end
         
@@ -636,17 +694,18 @@ echo $filepath;
             {
                 if($i++ == 0)
                 {
-                    $where .= "$typ";
+                    $where .= "'$typ'";
                 }
                 else
                 {
-                    $where .= ",$typ";
+                    $where .= ",'$typ'";
                 }
-            }
-            if(count($type) > 0 )
-            {
-                $where .= ") ";
+            
+                if(count($type) > 0 )
+                {
+                    $where .= ") ";
 
+                }
             }
         }
         
