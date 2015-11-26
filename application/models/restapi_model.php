@@ -147,36 +147,45 @@ WHERE `order`.`user`='$userid'")->result();
     }
     public function getFilters($catid,$brandid)
     {
+        $where = " INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
+INNER JOIN `category` ON `category`.`id` = `productcategory`.`category` ";
+
+        if($catid == 0)
+        {
+            $where = " 
+            INNER JOIN `productbrand` ON `productbrand`.`product` = `product`.`id`  AND  `productbrand`.`brand` = '$brandid'
+            INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand` ";
+        }
+
        $query['color']=$this->db->query("SELECT DISTINCT  `product`.`color` FROM `product` 
-INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
-INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
+        $where
 ORDER BY `color`
  ")->result();
         $query['price']=$this->db->query("SELECT MIN(`price`) as `min`,MAX(`price`) as `max` FROM `product` 
-INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
-INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
+$where
  ")->row();
         $query['price']->min = floatval($query['price']->min);
         $query['price']->max = floatval($query['price']->max);
         
         
         $query['type']=$this->db->query("SELECT DISTINCT  `type`.`id`,`type`.`name` FROM `product` 
-INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
-INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
+$where
 INNER JOIN `producttype` ON `producttype`.`product` = `product`.`id`
 INNER JOIN `type` ON `type`.`id` = `producttype`.`type`")->result(); 
         
-        $query['material']=$this->db->query("SELECT DISTINCT `product`.`material` FROM `product` INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` AND `productcategory`.`category` = '$catid' INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`")->result();
+        $query['material']=$this->db->query("SELECT DISTINCT `product`.`material` FROM `product`
+         $where")->result();
         
-        $query['design']=$this->db->query("SELECT DISTINCT `product`.`design` FROM `product` INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` AND `productcategory`.`category` = '$catid' INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`")->result(); 
-        $query['finish']=$this->db->query("SELECT DISTINCT `product`.`finish` FROM `product` INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` INNER JOIN `category` ON `category`.`id` = `productcategory`.`category` AND `productcategory`.`category` = $catid")->result();
-        $query['compatibledevice']=$this->db->query("SELECT DISTINCT `product`.`compatibledevice` FROM `product` INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` INNER JOIN `category` ON `category`.`id` = `productcategory`.`category` AND `productcategory`.`category` = $catid")->result(); 
-        $query['compatiblewith']=$this->db->query("SELECT DISTINCT `product`.`compatiblewith` FROM `product` INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` INNER JOIN `category` ON `category`.`id` = `productcategory`.`category` AND `productcategory`.`category` = $catid")->result();
+        $query['design']=$this->db->query("SELECT DISTINCT `product`.`design` FROM `product` $where")->result(); 
+        $query['finish']=$this->db->query("SELECT DISTINCT `product`.`finish` FROM `product` $where")->result();
+        $query['compatibledevice']=$this->db->query("SELECT DISTINCT `product`.`compatibledevice` FROM `product` $where
+            ")->result(); 
+        $query['compatiblewith']=$this->db->query("SELECT DISTINCT `product`.`compatiblewith` FROM `product` 
+            $where")->result();
         $query1=$this->db->query("SELECT DISTINCT  `product`.`id` FROM `product` 
-INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
-INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
+            $where
  ")->result();
-        if($brandid !=0)
+        if($brandid != 0)
         {
         $query['category']=$this->db->query("SELECT DISTINCT `category`.`id`,`category`.`name` FROM `product` 
         INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` 
