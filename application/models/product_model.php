@@ -720,7 +720,7 @@ $timestamp=new DateTime();
             $salespackage=$row['Sales Package'];
             $keyfeatures=$row['Key Features'];
             $videourl=$row['Video URL'];
-            $modelname=$row['Model Name'];
+            $modelname=$row['Model Type'];
             $finish=$row['Finish'];
             $weight=$row['Weight'];
             $domesticwarranty=$row['Warranty'];
@@ -847,18 +847,18 @@ $timestamp=new DateTime();
                         if(empty($subcategoryquery)){
                          $subcategoryid=$this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
                         $subcategoryid=$this->db->insert_id();
-                        
-                        }
-                     $data3  = array(
+                        $data3  = array(
                         'product' => $productid,
                         'category' => $subcategoryid,
                         );
                         $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
+                        }
+                     
                     $data2  = array(
 					'product' => $productid,
 					'category' => $categoryid,
-				);
-				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
+                    );
+                    $queryproductcategory=$this->db->insert( 'productcategory', $data2 );
                    
                 }
                 else
@@ -869,18 +869,18 @@ $timestamp=new DateTime();
                         if(empty($subcategoryquery)){
                          $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
                              $subcategoryid=$this->db->insert_id();
-                            
-                        }
-                     $data3  = array(
+                            $data3  = array(
                             'product' => $productid,
                             'category' => $subcategoryid,
                             );
                             $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
+                        }
+                     
                     $data2  = array(
-					'product' => $productid,
-					'category' => $categoryid,
-				);
-				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
+                    'product' => $productid,
+                    'category' => $categoryid,
+                    );
+                    $queryproductcategory=$this->db->insert( 'productcategory', $data2 );
                    
                 }
             
@@ -1101,15 +1101,7 @@ $timestamp=new DateTime();
                         if(empty($subcategoryquery)){
                          $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
                              $subcategoryid=$this->db->insert_id();
-                            
-                        }
-                     else{
-                        $this->db->query("DELETE FROM `category` WHERE `name`='$subcategory'");
-                        $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
-                        $subcategoryid=$this->db->insert_id();
-                        
-                    }
-                    $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
+                              $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
                      $data3  = array(
                             'product' => $getprodid,
                             'category' => $subcategoryid,
@@ -1121,6 +1113,25 @@ $timestamp=new DateTime();
 					'category' => $categoryid,
 				);
 				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
+                        }
+                     else{
+                        $this->db->query("DELETE FROM `category` WHERE `name`='$subcategory'");
+                        $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+                        $subcategoryid=$this->db->insert_id();
+                         $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
+                     $data3  = array(
+                            'product' => $getprodid,
+                            'category' => $subcategoryid,
+                            );
+                            $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
+                    $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
+                    $data2  = array(
+					'product' => $getprodid,
+					'category' => $categoryid,
+				);
+				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
+                    }
+                   
                    
                 }
             
