@@ -737,26 +737,7 @@ $timestamp=new DateTime();
 //            $allsubcategories=explode(",",$subcategory);
             
             $q="INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`,`typename`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$typename')";
-//            echo $q;
-//            $category=$row['category'];
-//            $data  = array(
-//                'name' => $row['name'],
-//                'sku' => $row['sku'],
-//                'description' => $row['description'],
-//                'url' => $row['url'],
-//                'metatitle' => $row['metatitle'],
-//                'metadesc' => $row['metadescription'],
-//                'metakeyword' => $row['metakeyword'],
-//                'quantity' => $row['quantity'],
-//                'price' => $row['price'],
-//                'wholesaleprice' => $row['wholesaleprice'],
-//                'firstsaleprice' => $row['firstsaleprice'],
-//                'secondsaleprice' => $row['secondsaleprice'],
-//                'specialpricefrom' => $specialpricefrom,
-//                'specialpriceto' => $specialpriceto,
-//                'visibility' => 1,
-//                'status' => 1
-//            );
+
             $data  = array(
 			'name' => $row['name'],
 			'sku' => $row['sku'],
@@ -781,6 +762,10 @@ $timestamp=new DateTime();
             
             if($checkproductpresent->count1 == 0)
             {
+//                print_r($category);
+//                print_r("CHECK");
+//                print_r($subcategory);
+                
 //                $query=$this->db->insert('product', $data );
                 $query=$this->db->query("INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`,`size`,`typename`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$modelnumber','$brandcolor','$eanorupc','$eanorupcmeasuringunits','$type','$compatibledevice','$compatiblewith','$material','$color','$design','$width','$height','$depth','$portsize','$packof','$salespackage','$keyfeatures','$videourl','$modelname','$finish','$weight','$domesticwarranty','$domesticwarrantymeasuringunits','$internationalwarranty','$internationalwarrantymeasuringunits','$warrantysummary','$warrantyservicetype','$coveredinwarranty','$notcoveredinwarranty','$size','$typename')");
                 $productid=$this->db->insert_id();
@@ -865,7 +850,7 @@ $timestamp=new DateTime();
                 {
                     $categoryid=$categoryquery->id;
                     $subcategory=trim($subcategory);
-                    $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$subcategory'")->row();
+                    $subcategoryquery=$this->db->query("SELECT * FROM `category` WHERE `name` LIKE '$subcategory' AND `parent` LIKE '$categoryid'")->row();
                         if(empty($subcategoryquery)){
                          $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
                              $subcategoryid=$this->db->insert_id();
@@ -875,10 +860,19 @@ $timestamp=new DateTime();
                             );
                             $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
                         }
+                    else
+                    {
+                        $data3  = array(
+                            'product' => $productid,
+                            'category' => $subcategoryquery->id,
+                            );
+                        $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
+                    }
+                    
                      
                     $data2  = array(
-                    'product' => $productid,
-                    'category' => $categoryid,
+					'product' => $productid,
+					'category' => $categoryid,
                     );
                     $queryproductcategory=$this->db->insert( 'productcategory', $data2 );
                    
@@ -930,263 +924,263 @@ $timestamp=new DateTime();
 			}
                 
             }   //product insert end
-            else
-            {
-                // update product
-                
-                $getprod=$this->db->query("SELECT * FROM `product` WHERE `name` LIKE '$name'")->row();
-                $getprodid=$getprod->id;
-                $data = array(
-               'name' => $name,
-			'sku' => $sku,
-			'description' => $description,
-			'url' => $url,
-			'visibility' => $visibility,
-			'price' => $price,
-			'wholesaleprice' => $wholesaleprice,
-			'firstsaleprice' => $firstsaleprice,
-			'secondsaleprice' => $secondsaleprice,
-			'specialpricefrom' => $specialpricefrom,
-			'specialpriceto' => $specialpriceto,
-			'metatitle' => $metatitle,
-			'metadesc' => $metadesc,
-			'metakeyword' => $metakeyword,
-			'quantity' => $quantity,
-			'status' => $status,
-            'modelnumber' => $modelnumber,
-			'brandcolor' => $brandcolor,
-			'eanorupc' => $eanorupc,
-			'eanorupcmeasuringunits' => $eanorupcmeasuringunits,
-			'compatibledevice' => $compatibledevice,
-			'compatiblewith' => $compatiblewith,
-			'material' => $material,
-			'color' => $color,
-			'width' => $width,
-			'height' => $height,
-			'depth' => $depth,
-			'salespackage' => $salespackage,
-			'keyfeatures' => $keyfeatures,
-			'videourl' => $videourl,
-			'modelname' => $modelname,
-			'finish' => $finish,
-			'weight' => $weight,
-			'domesticwarranty' => $domesticwarranty,
-			'warrantysummary' => $warrantysummary,
-			'size' => $size,
-			'typename' => $typename,
-			'type' => $type,
-			'design' => $design,
-			'portsize' => $portsize,
-			'packof' => $packof,
-			'domesticwarrantymeasuringunits' => $domesticwarrantymeasuringunits,
-			'internationalwarranty' => $internationalwarranty,
-			'internationalwarrantymeasuringunits' => $internationalwarrantymeasuringunits,
-			'warrantyservicetype' => $warrantyservicetype,
-			'coveredinwarranty' => $coveredinwarranty,
-			'notcoveredinwarranty' => $notcoveredinwarranty
-            );
-
-                $this->db->where('name', $name);
-                $this->db->update('product', $data);
-                 $this->db->query("DELETE FROM `productimage` WHERE `product`='$getprodid'");
-                if($image1!="")
-                {
-                      $dataimg  = array(
-					'image' => $image1,
-					'product' => $getprodid,
-					'order' => 0
-                    );
-                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
-                    
-                }
-                if($image2!="")
-                {  
-                      $dataimg  = array(
-					'image' => $image2,
-					'product' => $getprodid,
-					'order' => 1
-                    );
-                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
-                    
-                }
-                if($image3!="")
-                {
-                      $dataimg  = array(
-					'image' => $image3,
-					'product' => $getprodid,
-					'order' => 2
-                    );
-                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
-                    
-                }
-                if($image4!="")
-                {
-                      $dataimg  = array(
-					'image' => $image4,
-					'product' => $getprodid,
-					'order' => 3
-                    );
-                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
-                    
-                }
-                if($image5!=""){
-                      $dataimg  = array(
-					'image' => $image5,
-					'product' => $getprodid,
-					'order' => 4
-                    );
-                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
-                    }
-                
-                if($image6!=""){
-                      $dataimg  = array(
-					'image' => $image6,
-					'product' => $getprodid,
-					'order' => 5
-                    );
-                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
-                    
-                }
-                if($image7!=""){
-                      $dataimg  = array(
-					'image' => $image7,
-					'product' => $getprodid,
-					'order' => 6
-                    );
-                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
-                    
-                }
-                $category=trim($category);
-                $categoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$category'")->row();
-                if(empty($categoryquery))
-                {
-                    $this->db->query("INSERT INTO `category`(`name`) VALUES ('$category')");
-                    $categoryid=$this->db->insert_id();
-                    // sub category
-                    $subcategory=trim($subcategory);
-                    $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$subcategory'")->row();
-                        if(empty($subcategoryquery)){
-                         $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
-                        $subcategoryid=$this->db->insert_id();
-                        
-                        }
-                    else{
-                        $this->db->query("DELETE FROM `category` WHERE `name` LIKE '$subcategory'");
-                        $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
-                        $subcategoryid=$this->db->insert_id();
-                        
-                    }
-                    $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid' AND `category`='$subcategoryid'");
-                     $data3  = array(
-                        'product' => $getprodid,
-                        'category' => $subcategoryid,
-                        );
-                        $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
-                    $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
-                    $data2  = array(
-					'product' => $getprodid,
-					'category' => $categoryid,
-				);
-				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
-                   
-                }
-                else
-                {
-                     $this->db->query("DELETE FROM `category` WHERE `name` LIKE '$category'");
-                     $this->db->query("INSERT INTO `category`(`name`) VALUES ('$category')");
-                    $categoryid=$this->db->insert_id();
-                    //subcategory
-                    $subcategory=trim($subcategory);
-                    $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$subcategory'")->row();
-                        if(empty($subcategoryquery)){
-                         $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
-                             $subcategoryid=$this->db->insert_id();
-                              $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
-                     $data3  = array(
-                            'product' => $getprodid,
-                            'category' => $subcategoryid,
-                            );
-                            $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
-                    $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
-                    $data2  = array(
-					'product' => $getprodid,
-					'category' => $categoryid,
-				);
-				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
-                        }
-                     else{
-                        $this->db->query("DELETE FROM `category` WHERE `name`='$subcategory'");
-                        $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
-                        $subcategoryid=$this->db->insert_id();
-                         $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
-                     $data3  = array(
-                            'product' => $getprodid,
-                            'category' => $subcategoryid,
-                            );
-                            $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
-                    $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
-                    $data2  = array(
-					'product' => $getprodid,
-					'category' => $categoryid,
-				);
-				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
-                    }
-                   
-                   
-                }
-            
-				
-			
-            
-			foreach($allbrand as $key => $brand)
-			{
-                $brand=trim($brand);
-                $brandquery=$this->db->query("SELECT * FROM `brand` where `name` LIKE '$brand'")->row();
-                if(empty($brandquery))
-                {
-                    $this->db->query("INSERT INTO `brand`(`name`) VALUES ('$brand')");
-                    $brandid=$this->db->insert_id();
-                }
-                else
-                {
-                    $this->db->query("DELETE FROM `brand` WHERE `name` LIKE '$brand'");
-                    $this->db->query("INSERT INTO `brand`(`name`) VALUES ('$brand')");
-                    $brandid=$this->db->insert_id();
-                }
-                $this->db->query("DELETE FROM `productbrand` WHERE `product`='$getprodid'");
-				$data2  = array(
-					'product' => $getprodid,
-					'brand' => $brandid,
-				);
-				$queryproductbrand=$this->db->insert( 'productbrand', $data2 );
-			}
-            
-			foreach($alltype as $key => $type)
-			{
-                $type=trim($type);
-                $typequery=$this->db->query("SELECT * FROM `type` where `name` LIKE '$type'")->row();
-                if(empty($typequery))
-                {
-                    
-                    $this->db->query("INSERT INTO `type`(`name`) VALUES ('$type')");
-                    $typeid=$this->db->insert_id();
-                }
-                else
-                {
-                    $this->db->query("DELETE FROM `type` WHERE `name` LIKE '$type'");
-                    $this->db->query("INSERT INTO `type`(`name`) VALUES ('$type')");
-                    $typeid=$this->db->insert_id();
-                }
-                $this->db->query("DELETE FROM `producttype` WHERE `product`='$getprodid'");
-				$data2  = array(
-					'product' => $getprodid,
-					'type' => $typeid
-				);
-				$queryproducttype=$this->db->insert( 'producttype', $data2 );
-			}
-                
-                // update product end
-            }
+//            else
+//            {
+//                // update product
+//                
+//                $getprod=$this->db->query("SELECT * FROM `product` WHERE `name` LIKE '$name'")->row();
+//                $getprodid=$getprod->id;
+//                $data = array(
+//               'name' => $name,
+//			'sku' => $sku,
+//			'description' => $description,
+//			'url' => $url,
+//			'visibility' => $visibility,
+//			'price' => $price,
+//			'wholesaleprice' => $wholesaleprice,
+//			'firstsaleprice' => $firstsaleprice,
+//			'secondsaleprice' => $secondsaleprice,
+//			'specialpricefrom' => $specialpricefrom,
+//			'specialpriceto' => $specialpriceto,
+//			'metatitle' => $metatitle,
+//			'metadesc' => $metadesc,
+//			'metakeyword' => $metakeyword,
+//			'quantity' => $quantity,
+//			'status' => $status,
+//            'modelnumber' => $modelnumber,
+//			'brandcolor' => $brandcolor,
+//			'eanorupc' => $eanorupc,
+//			'eanorupcmeasuringunits' => $eanorupcmeasuringunits,
+//			'compatibledevice' => $compatibledevice,
+//			'compatiblewith' => $compatiblewith,
+//			'material' => $material,
+//			'color' => $color,
+//			'width' => $width,
+//			'height' => $height,
+//			'depth' => $depth,
+//			'salespackage' => $salespackage,
+//			'keyfeatures' => $keyfeatures,
+//			'videourl' => $videourl,
+//			'modelname' => $modelname,
+//			'finish' => $finish,
+//			'weight' => $weight,
+//			'domesticwarranty' => $domesticwarranty,
+//			'warrantysummary' => $warrantysummary,
+//			'size' => $size,
+//			'typename' => $typename,
+//			'type' => $type,
+//			'design' => $design,
+//			'portsize' => $portsize,
+//			'packof' => $packof,
+//			'domesticwarrantymeasuringunits' => $domesticwarrantymeasuringunits,
+//			'internationalwarranty' => $internationalwarranty,
+//			'internationalwarrantymeasuringunits' => $internationalwarrantymeasuringunits,
+//			'warrantyservicetype' => $warrantyservicetype,
+//			'coveredinwarranty' => $coveredinwarranty,
+//			'notcoveredinwarranty' => $notcoveredinwarranty
+//            );
+//
+//                $this->db->where('name', $name);
+//                $this->db->update('product', $data);
+//                 $this->db->query("DELETE FROM `productimage` WHERE `product`='$getprodid'");
+//                
+//                if($image1!="")
+//                {
+//                      $dataimg  = array(
+//					'image' => $image1,
+//					'product' => $getprodid,
+//					'order' => 0
+//                    );
+//                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
+//                    
+//                }
+//                if($image2!="")
+//                {  
+//                      $dataimg  = array(
+//					'image' => $image2,
+//					'product' => $getprodid,
+//					'order' => 1
+//                    );
+//                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
+//                    
+//                }
+//                if($image3!="")
+//                {
+//                      $dataimg  = array(
+//					'image' => $image3,
+//					'product' => $getprodid,
+//					'order' => 2
+//                    );
+//                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
+//                    
+//                }
+//                if($image4!="")
+//                {
+//                      $dataimg  = array(
+//					'image' => $image4,
+//					'product' => $getprodid,
+//					'order' => 3
+//                    );
+//                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
+//                    
+//                }
+//                if($image5!=""){
+//                      $dataimg  = array(
+//					'image' => $image5,
+//					'product' => $getprodid,
+//					'order' => 4
+//                    );
+//                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
+//                    }
+//                
+//                if($image6!=""){
+//                      $dataimg  = array(
+//					'image' => $image6,
+//					'product' => $getprodid,
+//					'order' => 5
+//                    );
+//                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
+//                    
+//                }
+//                if($image7!=""){
+//                      $dataimg  = array(
+//					'image' => $image7,
+//					'product' => $getprodid,
+//					'order' => 6
+//                    );
+//                    $queryproductimage=$this->db->insert( 'productimage', $dataimg );
+//                    
+//                }
+//                $category=trim($category);
+//                $categoryquery=$this->db->query("SELECT * FROM `category` where `name` LIKE '$category'")->row();
+//                if(empty($categoryquery))
+//                {
+//                    $this->db->query("INSERT INTO `category`(`name`) VALUES ('$category')");
+//                    $categoryid=$this->db->insert_id();
+//                    // sub category
+//                    $subcategory=trim($subcategory);
+//                    $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$subcategory'")->row();
+//                        if(empty($subcategoryquery)){
+//                         $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+//                        $subcategoryid=$this->db->insert_id();
+//                         $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid' AND `category`='$subcategoryid'");
+//                     $data3  = array(
+//                        'product' => $getprodid,
+//                        'category' => $subcategoryid,
+//                        );
+//                        $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
+//                        }
+//                    else{
+//                        $this->db->query("DELETE FROM `category` WHERE `name` LIKE '$subcategory'");
+//                        $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+//                        $subcategoryid=$this->db->insert_id();
+//                         $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid' AND `category`='$subcategoryid'");
+//                     $data3  = array(
+//                        'product' => $getprodid,
+//                        'category' => $subcategoryid,
+//                        );
+//                        $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
+//                    }
+//                   
+//                    $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
+//                    $data2  = array(
+//					'product' => $getprodid,
+//					'category' => $categoryid,
+//				);
+//				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
+//                   
+//                }
+//                else
+//                {
+//                     $this->db->query("DELETE FROM `category` WHERE `name` LIKE '$category'");
+//                     $this->db->query("INSERT INTO `category`(`name`) VALUES ('$category')");
+//                    $categoryid=$this->db->insert_id();
+//                    //subcategory
+//                    $subcategory=trim($subcategory);
+//                    $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$subcategory'")->row();
+//                        if(empty($subcategoryquery)){
+//                         $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+//                             $subcategoryid=$this->db->insert_id();
+//                             $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
+//                     $data3  = array(
+//                            'product' => $getprodid,
+//                            'category' => $subcategoryid,
+//                            );
+//                            $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
+//                        }
+//                     else{
+//                        $this->db->query("DELETE FROM `category` WHERE `name`='$subcategory'");
+//                        $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+//                        $subcategoryid=$this->db->insert_id();
+//                         $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
+//                     $data3  = array(
+//                            'product' => $getprodid,
+//                            'category' => $subcategoryid,
+//                            );
+//                            $queryproductcategory=$this->db->insert( 'productcategory', $data3 );
+//                    }
+//                   
+//                    $this->db->query("DELETE FROM `productcategory` WHERE `product`='$getprodid'");
+//                    $data2  = array(
+//					'product' => $getprodid,
+//					'category' => $categoryid,
+//				);
+//				$queryproductcategory=$this->db->insert( 'productcategory', $data2 );
+//                   
+//                }
+//            
+//				
+//			
+//            
+//			foreach($allbrand as $key => $brand)
+//			{
+//                $brand=trim($brand);
+//                $brandquery=$this->db->query("SELECT * FROM `brand` where `name` LIKE '$brand'")->row();
+//                if(empty($brandquery))
+//                {
+//                    $this->db->query("INSERT INTO `brand`(`name`) VALUES ('$brand')");
+//                    $brandid=$this->db->insert_id();
+//                }
+//                else
+//                {
+//                    $this->db->query("DELETE FROM `brand` WHERE `name` LIKE '$brand'");
+//                    $this->db->query("INSERT INTO `brand`(`name`) VALUES ('$brand')");
+//                    $brandid=$this->db->insert_id();
+//                }
+//                $this->db->query("DELETE FROM `productbrand` WHERE `product`='$getprodid'");
+//				$data2  = array(
+//					'product' => $getprodid,
+//					'brand' => $brandid,
+//				);
+//				$queryproductbrand=$this->db->insert( 'productbrand', $data2 );
+//			}
+//            
+//			foreach($alltype as $key => $type)
+//			{
+//                $type=trim($type);
+//                $typequery=$this->db->query("SELECT * FROM `type` where `name` LIKE '$type'")->row();
+//                if(empty($typequery))
+//                {
+//                    
+//                    $this->db->query("INSERT INTO `type`(`name`) VALUES ('$type')");
+//                    $typeid=$this->db->insert_id();
+//                }
+//                else
+//                {
+//                    $this->db->query("DELETE FROM `type` WHERE `name` LIKE '$type'");
+//                    $this->db->query("INSERT INTO `type`(`name`) VALUES ('$type')");
+//                    $typeid=$this->db->insert_id();
+//                }
+//                $this->db->query("DELETE FROM `producttype` WHERE `product`='$getprodid'");
+//				$data2  = array(
+//					'product' => $getprodid,
+//					'type' => $typeid
+//				);
+//				$queryproducttype=$this->db->insert( 'producttype', $data2 );
+//			}
+//                
+//                // update product end
+//            }
         }
 		if(!$query)
 			return  0;
