@@ -558,16 +558,25 @@ echo $filepath;
     function getproductbycategory() {
         $userid=$this->session->userdata("id");
         $catidstr = $this->input->get_post("category");
+        $brandstr = $this->input->get_post("brand");
         //$nouse = $this->input->get_post("category");
         $colorstr = $this->input->get_post("color");
         $typestr = $this->input->get_post("type");
         $pricemin = $this->input->get_post("pricemin");
         $pricemax = $this->input->get_post("pricemax");
-        $compatiblewith = $this->input->get_post("compatiblewith");
-        $compatibledevice = $this->input->get_post("compatibledevice");
+        $compatiblewithstr = $this->input->get_post("compatiblewith");
+        $compatibledevicestr = $this->input->get_post("compatibledevice");
+        $materialstr = $this->input->get_post("material");
+        $designstr = $this->input->get_post("design");
+        $finishstr = $this->input->get_post("finish");
             
         $color = explode(",",$colorstr);
         $type = explode(",",$typestr);
+        $compatiblewith = explode(",",$compatiblewithstr);
+        $compatibledevice = explode(",",$compatibledevicestr);
+        $material = explode(",",$materialstr);
+        $design = explode(",",$designstr);
+        $finish = explode(",",$finishstr);
         
         $where = " AND ";
         
@@ -589,9 +598,11 @@ echo $filepath;
             $where .= " `productcategory`.`category` IN ($subCatString) AND ";
         }
         
-        
-        
-        
+        if($brandstr != "" )
+        {
+            
+            $where .= " `productbrand`.`brand` IN ($brandstr) AND ";
+        }
         
         //filter for color begin
         if( $colorstr != "" )
@@ -620,93 +631,153 @@ echo $filepath;
             }
         }
         
-        
         // COMPATIBLE WITH
         
-//        if( $compatiblewith != "" )
-//        {
-//            if(count($compatiblewith) > 0 )
-//            {
-//                $where .= " `product`.`compatiblewith` IN (";
-//
-//            }
-//            $i=0;
-//            foreach($compatiblewith as $compwith)
-//            {
-//                if($i++ == 0)
-//                {
-//                    $where .= "$compwith";
-//                }
-//                else
-//                {
-//                    $where .= ",$compwith";
-//                }
-//            }
-//            if(count($compatiblewith) > 0 )
-//            {
-//                $where .= ") AND ";
-//
-//            }
-//        }
-//        // COMPATIBLE DEVICE
-//        
-//        if( $compatibledevice != "" )
-//        {
-//            if(count($compatibledevice) > 0 )
-//            {
-//                $where .= " `product`.`compatibledevice` IN (";
-//
-//            }
-//            $i=0;
-//            foreach($compatibledevice as $compdev)
-//            {
-//                if($i++ == 0)
-//                {
-//                    $where .= "$compdev";
-//                }
-//                else
-//                {
-//                    $where .= ",$compdev";
-//                }
-//            }
-//            if(count($compatibledevice) > 0 )
-//            {
-//                $where .= ") AND ";
-//
-//            }
-//        }
-       
-        //filter for category end
-        
-        //filter for color end
-        
-        
-        //filter for type begin
-        if($typestr != "")
+         if($compatiblewithstr != "")
         {
-            if(count($type) > 0 )
+            if(count($compatiblewith) > 0 )
             {
-                $where .= " `product`.`type` IN (";
+                $where .= " `product`.`compatiblewith` IN (";
 
             }
             $i=0;
-            foreach($type as $typ)
+            foreach($compatiblewith as $compwith)
             {
                 if($i++ == 0)
                 {
-                    $where .= "'$typ'";
+                    $where .= "'$compwith'";
                 }
                 else
                 {
-                    $where .= ",'$typ'";
+                    $where .= ",'$compwith'";
                 }
             
-                if(count($type) > 0 )
+                if(count($compatiblewith) > 0 )
                 {
-                    $where .= ") ";
+                    $where .= ") AND ";
 
                 }
             }
+        }
+        // COMPATIBLE DEVICE
+         if($compatibledevicestr != "")
+        {
+            if(count($compatibledevice) > 0 )
+            {
+                $where .= " `product`.`compatibledevice` IN (";
+
+            }
+            $i=0;
+            foreach($compatibledevice as $compdevice)
+            {
+                if($i++ == 0)
+                {
+                    $where .= "'$compdevice'";
+                }
+                else
+                {
+                    $where .= ",'$compdevice'";
+                }
+            
+                if(count($compatibledevice) > 0 )
+                {
+                    $where .= ") AND ";
+
+                }
+            }
+        }
+       
+        //MATERIAL
+        
+         if($materialstr != "")
+        {
+            if(count($material) > 0 )
+            {
+                $where .= " `product`.`material` IN (";
+
+            }
+            $i=0;
+            foreach($material as $fin)
+            {
+                if($i++ == 0)
+                {
+                    $where .= "'$fin'";
+                }
+                else
+                {
+                    $where .= ",'$fin'";
+                }
+            
+                if(count($material) > 0 )
+                {
+                    $where .= ") AND ";
+
+                }
+            }
+        }
+        
+        // DESIGN
+         if($designstr != "")
+        {
+            if(count($design) > 0 )
+            {
+                $where .= " `product`.`design` IN (";
+
+            }
+            $i=0;
+            foreach($design as $deg)
+            {
+                if($i++ == 0)
+                {
+                    $where .= "'$deg'";
+                }
+                else
+                {
+                    $where .= ",'$deg'";
+                }
+            
+                if(count($design) > 0 )
+                {
+                    $where .= ") AND ";
+
+                }
+            }
+        }
+        
+        //FINISH
+        if($finishstr != "")
+        {
+            if(count($finish) > 0 )
+            {
+                $where .= " `product`.`finish` IN (";
+
+            }
+            $i=0;
+            foreach($finish as $fin)
+            {
+                if($i++ == 0)
+                {
+                    $where .= "'$fin'";
+                }
+                else
+                {
+                    $where .= ",'$fin'";
+                }
+            
+                if(count($finish) > 0 )
+                {
+                    $where .= ") AND ";
+
+                }
+            }
+        }
+        
+        
+        //filter for type begin
+        if($typestr != "" )
+        {
+            
+            $where .= " `producttype`.`type` IN ($typestr) AND ";
         }
         
         
@@ -805,6 +876,8 @@ echo $filepath;
         }
         $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product`
         INNER JOIN `productcategory` ON `productcategory`.`product`=`product`.`id`
+        INNER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id`
+        INNER JOIN `producttype` ON `producttype`.`product`=`product`.`id`
         LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid' 
         LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 
         LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 $where 1 " , ' GROUP BY `product`.`id` ');
