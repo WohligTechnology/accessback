@@ -559,7 +559,6 @@ echo $filepath;
         $userid=$this->session->userdata("id");
         $catidstr = $this->input->get_post("category");
         $brandstr = $this->input->get_post("brand");
-        //$nouse = $this->input->get_post("category");
         $colorstr = $this->input->get_post("color");
         $typestr = $this->input->get_post("type");
         $pricemin = $this->input->get_post("pricemin");
