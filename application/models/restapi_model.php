@@ -145,7 +145,52 @@ WHERE `order`.`user`='$userid'")->result();
         return $query;
         
     }
-    
-	
+    public function getFilters($catid,$brandid)
+    {
+       $query['color']=$this->db->query("SELECT DISTINCT  `product`.`color` FROM `product` 
+INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
+INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
+ORDER BY `color`
+ ")->result();
+        $query['price']=$this->db->query("SELECT MIN(`price`) as `min`,MAX(`price`) as `max` FROM `product` 
+INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
+INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
+ ")->row();
+        
+        $query['type']=$this->db->query("SELECT DISTINCT  `type`.`id`,`type`.`name` FROM `product` 
+INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
+INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
+INNER JOIN `producttype` ON `producttype`.`product` = `product`.`id`
+INNER JOIN `type` ON `type`.`id` = `producttype`.`type`")->result(); 
+        
+        $query['material']=$this->db->query("SELECT DISTINCT `product`.`material` FROM `product` INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` AND `productcategory`.`category` = '$catid' INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`")->result();
+        
+        $query['design']=$this->db->query("SELECT DISTINCT `product`.`design` FROM `product` INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` AND `productcategory`.`category` = '$catid' INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`")->result(); 
+        $query['finish']=$this->db->query("SELECT DISTINCT `product`.`finish` FROM `product` INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` INNER JOIN `category` ON `category`.`id` = `productcategory`.`category` AND `productcategory`.`category` = $catid")->result();
+        $query['compatibledevice']=$this->db->query("SELECT DISTINCT `product`.`compatibledevice` FROM `product` INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` INNER JOIN `category` ON `category`.`id` = `productcategory`.`category` AND `productcategory`.`category` = $catid")->result(); 
+        $query['compatiblewith']=$this->db->query("SELECT DISTINCT `product`.`compatiblewith` FROM `product` INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` INNER JOIN `category` ON `category`.`id` = `productcategory`.`category` AND `productcategory`.`category` = $catid")->result();
+        $query1=$this->db->query("SELECT DISTINCT  `product`.`id` FROM `product` 
+INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
+INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
+ ")->result();
+        if($brandid !="")
+        {
+        $query['category']=$this->db->query("SELECT DISTINCT `category`.`id`,`category`.`name` FROM `product` 
+        INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id` 
+        INNER JOIN `category` ON `category`.`id` = `productcategory`.`category` 
+        INNER JOIN `productbrand` ON `productbrand`.`product` = `product`.`id` AND `productbrand`.`brand` = '$brandid'
+        INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
+        }
+        else
+        {
+        $query['brand']=$this->db->query("SELECT DISTINCT  `brand`.`id`,`brand`.`name` FROM `product` 
+INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
+INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
+INNER JOIN `productbrand` ON `productbrand`.`product` = `product`.`id`
+INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();   
+        }
+        
+      return $query;
+    }
 }
 ?>
