@@ -661,28 +661,11 @@ echo $filepath;
         // COMPATIBLE DEVICE
          if($compatibledevicestr != "")
         {
-            if(count($compatibledevice) > 0 )
-            {
-                $where .= " `product`.`compatibledevice` IN (";
-
-            }
-            $i=0;
+            
             foreach($compatibledevice as $compdevice)
             {
-                if($i++ == 0)
-                {
-                    $where .= "'$compdevice'";
-                }
-                else
-                {
-                    $where .= ",'$compdevice'";
-                }
-            
-                if(count($compatibledevice) > 0 )
-                {
-                    $where .= ") AND ";
-
-                }
+                
+                $where .= " `product`.`compatibledevice` LIKE '%$compdevice%' ";
             }
         }
        
