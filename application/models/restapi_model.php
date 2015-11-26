@@ -156,6 +156,9 @@ ORDER BY `color`
 INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
 INNER JOIN `category` ON `category`.`id` = `productcategory`.`category`
  ")->row();
+        $query['price']->min = floatval($query['price']->min);
+        $query['price']->max = floatval($query['price']->max);
+        
         
         $query['type']=$this->db->query("SELECT DISTINCT  `type`.`id`,`type`.`name` FROM `product` 
 INNER JOIN `productcategory` ON `productcategory`.`product` = `product`.`id`  AND  `productcategory`.`category` = '$catid'
