@@ -4,11 +4,12 @@ if ( !defined( 'BASEPATH' ) )
 class homeslider_model extends CI_Model
 {
 	//homeslider
-	public function createhomeslider($order,$image)
+	public function createhomeslider($order,$image,$product)
 	{
 		$data  = array(
 			'order' => $order,
-			'image' => $image
+			'image' => $image,
+            'product' => $product
 		);
 		$query=$this->db->insert( 'homeslider', $data );
 		return  1;
@@ -26,11 +27,12 @@ class homeslider_model extends CI_Model
 		return $query;
 	}
 	
-	public function edithomeslider( $id,$order,$image)
+	public function edithomeslider( $id,$order,$image,$product)
 	{
 		$data = array(
 			'order' => $order,
-			'image' => $image
+			'image' => $image,
+            'product' => $product
 		);
 		if($image != "")
 			$data['image']=$image;
@@ -49,6 +51,12 @@ class homeslider_model extends CI_Model
 			unlink("uploads/".$q->image);
 		}
 		$query=$this->db->query("DELETE FROM `homeslider` WHERE `id`='$id'");
+	}
+    function gethomesliderimagebyid($id)
+	{
+	
+		$query = $this->db->query("SELECT `image` FROM `homeslider` WHERE `id`='$id'")->row();
+		return $query;
 	}
 	public function gethomesliderdropdown()
 	{

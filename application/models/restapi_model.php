@@ -210,7 +210,7 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
       return $query;
     }
     public function getHomeSlider(){
-         $query=$this->db->query("SELECT `id`, `order`, `image` FROM `homeslider`")->result();
+         $query=$this->db->query("SELECT `id`, `order`, `image`,`product` FROM `homeslider`")->result();
         return $query;
     }
 }

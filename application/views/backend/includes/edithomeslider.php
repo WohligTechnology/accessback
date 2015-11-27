@@ -32,7 +32,15 @@
 						  ?>
 						</div>
 					</div>	
-						
+						<div class=" form-group">
+					  <label class="col-sm-2 control-label">Product</label>
+					  <div class="col-sm-4">
+						<?php
+							
+							echo form_dropdown('product',$product,set_value('product',$before->product),'id="select2" class="chzn-select form-control" 	data-placeholder="Choose a Accesslevel..."');
+						?>
+					  </div>
+					</div>
 					
 					<div class="form-group">
 						<label class="col-sm-2 control-label">&nbsp;</label>

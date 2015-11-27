@@ -5035,6 +5035,7 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
+        $data['product']=$this->product_model->getproductdropdown();
 		$data[ 'page' ] = 'createhomeslider';
 		$data[ 'title' ] = 'Create homeslider';
 		$this->load->view( 'template', $data );	
@@ -5049,6 +5050,7 @@ class Site extends CI_Controller
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->homeslider_model->getstatusdropdown();
+            $data['product']=$this->product_model->getproductdropdown();
 			$data[ 'page' ] = 'createhomeslider';
 			$data[ 'title' ] = 'Create homeslider';
 			$this->load->view('template',$data);
@@ -5056,6 +5058,7 @@ class Site extends CI_Controller
 		else
 		{
 			$order=$this->input->post('order');
+			$product=$this->input->post('product');
             
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -5068,7 +5071,7 @@ class Site extends CI_Controller
 				$image=$uploaddata['file_name'];
 			}
             
-			if($this->homeslider_model->createhomeslider($order,$image)==0)
+			if($this->homeslider_model->createhomeslider($order,$image,$product)==0)
 			$data['alerterror']="New homeslider could not be created.";
 			else
 			$data['alertsuccess']="homeslider  created Successfully.";
@@ -5084,6 +5087,7 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
 		$data['before']=$this->homeslider_model->beforeedithomeslider($this->input->get('id'));
 		$data[ 'status' ] =$this->homeslider_model->getstatusdropdown();
+        $data['product']=$this->product_model->getproductdropdown();
 //		$data['page2']='block/homesliderblock';
 		$data['page']='edithomeslider';
 		$data['title']='Edit homeslider';
@@ -5103,6 +5107,7 @@ class Site extends CI_Controller
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->homeslider_model->getstatusdropdown();
+            $data['product']=$this->product_model->getproductdropdown();
 			$data['before']=$this->homeslider_model->beforeedithomeslider($this->input->post('id'));
 			$data['page']='edithomeslider';
 			$data['title']='Edit homeslider';
@@ -5113,6 +5118,7 @@ class Site extends CI_Controller
 			$id=$this->input->post('id');
 			
 			$order=$this->input->post('order');
+			$product=$this->input->post('product');
             
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -5132,7 +5138,7 @@ class Site extends CI_Controller
                 $image=$image->image;
             }
             
-			if($this->homeslider_model->edithomeslider($id,$order,$image)==0)
+			if($this->homeslider_model->edithomeslider($id,$order,$image,$product)==0)
 			$data['alerterror']="homeslider Editing was unsuccesful";
 			else
 			$data['alertsuccess']="homeslider edited Successfully.";
