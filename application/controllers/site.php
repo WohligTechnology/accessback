@@ -4968,6 +4968,176 @@ class Site extends CI_Controller
         $this->load->view("redirect",$data);
 	}
     
+    // home slider
+    
+     public function viewhomeslider()
+    {
+        $access=array("1");
+        $this->checkaccess($access);
+        $data["page"]="viewhomeslider";
+        $data["base_url"]=site_url("site/viewhomesliderjson");
+        $data["title"]="View homeslider";
+        $this->load->view("template",$data);
+    }
+    function viewhomesliderjson()
+    {
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`homeslider`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`homeslider`.`image`";
+        $elements[1]->sort="1";
+        $elements[1]->header="image";
+        $elements[1]->alias="image";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`homeslider`.`order`";
+        $elements[2]->sort="1";
+        $elements[2]->header="order";
+        $elements[2]->alias="order";
+        
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `homeslider`");
+        $this->load->view("json",$data);
+    }
+
+	public function createhomeslider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createhomeslider';
+		$data[ 'title' ] = 'Create homeslider';
+		$this->load->view( 'template', $data );	
+	}
+	function createhomeslidersubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('title','title','trim|');
+		$this->form_validation->set_rules('status','status','trim|');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data[ 'status' ] =$this->homeslider_model->getstatusdropdown();
+			$data[ 'page' ] = 'createhomeslider';
+			$data[ 'title' ] = 'Create homeslider';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+			$order=$this->input->post('order');
+            
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+			}
+            
+			if($this->homeslider_model->createhomeslider($order,$image)==0)
+			$data['alerterror']="New homeslider could not be created.";
+			else
+			$data['alertsuccess']="homeslider  created Successfully.";
+			$data['redirect']="site/viewhomeslider";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+		}
+	}
+
+	function edithomeslider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['before']=$this->homeslider_model->beforeedithomeslider($this->input->get('id'));
+		$data[ 'status' ] =$this->homeslider_model->getstatusdropdown();
+//		$data['page2']='block/homesliderblock';
+		$data['page']='edithomeslider';
+		$data['title']='Edit homeslider';
+		$this->load->view('template',$data);
+	}
+	function edithomeslidersubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('title','title','trim|');
+		$this->form_validation->set_rules('status','status','trim|');
+		$this->form_validation->set_rules('description','description','trim|');
+		$this->form_validation->set_rules('price','price','trim|');
+		$this->form_validation->set_rules('startdate','startdate','trim|');
+		$this->form_validation->set_rules('enddate','enddate','trim|');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data[ 'status' ] =$this->homeslider_model->getstatusdropdown();
+			$data['before']=$this->homeslider_model->beforeedithomeslider($this->input->post('id'));
+			$data['page']='edithomeslider';
+			$data['title']='Edit homeslider';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+			$id=$this->input->post('id');
+			
+			$order=$this->input->post('order');
+            
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+			}
+            
+            if($image=="")
+            {
+            $image=$this->homeslider_model->gethomesliderimagebyid($id);
+               // print_r($image);
+                $image=$image->image;
+            }
+            
+			if($this->homeslider_model->edithomeslider($id,$order,$image)==0)
+			$data['alerterror']="homeslider Editing was unsuccesful";
+			else
+			$data['alertsuccess']="homeslider edited Successfully.";
+			$data['redirect']="site/viewhomeslider";
+			$this->load->view("redirect",$data);
+		}
+	}
+	function deletehomeslider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->homeslider_model->deletehomeslider($this->input->get('id'));
+		$data['alertsuccess']="homeslider Deleted Successfully";
+        $data['redirect']="site/viewhomeslider";
+        $this->load->view("redirect",$data);
+	}
+    
     
 }
 ?>
