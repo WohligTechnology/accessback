@@ -1947,6 +1947,10 @@ echo $filepath;
      $data['message']=$this->restapi_model->getFilters($categoryid,$brandid);
         $this->load->view("json", $data);
     }
+    public function getHomeSlider(){
+     $data['message']=$this->restapi_model->getHomeSlider();
+        $this->load->view("json", $data);
+    }
     
 }
 ?>
