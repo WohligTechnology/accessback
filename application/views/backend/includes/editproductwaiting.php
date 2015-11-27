@@ -2,7 +2,7 @@
 	<div class="col-lg-12">
 	    <section class="panel">
 		    <header class="panel-heading">
-				 Product Waiting Details
+				  Edit Home Page Products
 			</header>
 			<div class="panel-body">
 				<form class="form-horizontal row-fluid" method="post" action="<?php echo site_url('site/editproductwaitingsubmit');?>" enctype= "multipart/form-data">

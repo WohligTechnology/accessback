@@ -297,6 +297,30 @@
 						  <input type="text" id="normal-field" class="form-control" name="colormatch" value="<?php echo set_value('colormatch');?>">
 						</div>
 					</div>
+                    <div class="form-group">
+						<label class="col-sm-2 control-label">Microphone</label>
+						<div class="col-sm-4">
+						  <input type="text" id="normal-field" class="form-control" name="microphone" value="<?php echo set_value('microphone');?>">
+						</div>
+					</div>
+                    <div class="form-group">
+						<label class="col-sm-2 control-label">Capacity</label>
+						<div class="col-sm-4">
+						  <input type="text" id="normal-field" class="form-control" name="capacity" value="<?php echo set_value('capacity');?>">
+						</div>
+					</div>
+                    <div class="form-group">
+						<label class="col-sm-2 control-label">Length</label>
+						<div class="col-sm-4">
+						  <input type="text" id="normal-field" class="form-control" name="length" value="<?php echo set_value('length');?>">
+						</div>
+					</div>
+                    <div class="form-group">
+						<label class="col-sm-2 control-label">Voltage</label>
+						<div class="col-sm-4">
+						  <input type="text" id="normal-field" class="form-control" name="voltage" value="<?php echo set_value('voltage');?>">
+						</div>
+					</div>
 					<div class=" form-group">
 					  <label class="col-sm-2 control-label">Status</label>
 					  <div class="col-sm-4">

@@ -2,7 +2,7 @@
 	<div class="col-lg-12">
 	    <section class="panel">
 		    <header class="panel-heading">
-				Create Product for Home
+				Create  Home Page Products
 			</header>
 			<div class="panel-body">
 				<form class="form-horizontal row-fluid" method="post" action="<?php echo site_url('site/createproductwaitingsubmit');?>" enctype= "multipart/form-data">

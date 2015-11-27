@@ -699,12 +699,16 @@ class Site extends CI_Controller
 			$typename=$this->input->post('typename');
 			$dimension=$this->input->post('dimension');
 			$colormatch=$this->input->post('colormatch');
+			$microphone=$this->input->post('microphone');
+			$length=$this->input->post('length');
+			$capacity=$this->input->post('capacity');
+			$voltage=$this->input->post('voltage');
             
 			if($specialpricefrom != "")
 				$specialpricefrom = date("Y-m-d",strtotime($specialpricefrom));
 			if($specialpriceto != "")
 				$specialpriceto = date("Y-m-d",strtotime($specialpriceto));
-			if($this->product_model->createproduct($name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch)==0)
+			if($this->product_model->createproduct($name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage)==0)
 			$data['alerterror']="New product could not be created.";
 			else
 			$data['alertsuccess']="product  created Successfully.";
@@ -901,8 +905,12 @@ class Site extends CI_Controller
             $typename=$this->input->post('typename');
             $dimension=$this->input->post('dimension');
 			$colormatch=$this->input->post('colormatch');
+            $microphone=$this->input->post('microphone');
+			$length=$this->input->post('length');
+			$capacity=$this->input->post('capacity');
+			$voltage=$this->input->post('voltage');
             
-			if($this->product_model->editproduct($id,$name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch)==0)
+			if($this->product_model->editproduct($id,$name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage)==0)
 			$data['alerterror']="product Editing was unsuccesful";
 			else
 			$data['alertsuccess']="product edited Successfully.";
@@ -3396,9 +3404,9 @@ class Site extends CI_Controller
 			$product=$this->input->post('product');
 			$user=$this->input->post('user');
 			if($this->product_model->createproductwaiting($product,$user,$email)==0)
-			$data['alerterror']="Product Waiting createing was unsuccesful";
+			$data['alerterror']="Home product created unsuccesfully";
 			else
-			$data['alertsuccess']="productwaiting createed Successfully.";
+			$data['alertsuccess']="Home product created Succesfully.";
 			$data['table']=$this->product_model->viewproductwaiting();
             $data['page']='viewproductwaiting';
     //		$data['page2']='block/productblock';
@@ -3443,9 +3451,9 @@ class Site extends CI_Controller
 			$user=$this->input->post('user');
 //			print_r($_POST);
 			if($this->product_model->editproductwaiting($id,$product,$user,$email)==0)
-			$data['alerterror']="Product Waiting Editing was unsuccesful";
+			$data['alerterror']="Home product created unsuccesfully";
 			else
-			$data['alertsuccess']="productwaiting edited Successfully.";
+			$data['alertsuccess']="Home product created Succesfully.";
 			$data['table']=$this->product_model->viewproductwaiting();
             $data['page']='viewproductwaiting';
     //		$data['page2']='block/productblock';
