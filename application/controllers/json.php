@@ -635,12 +635,13 @@ echo $filepath;
                     $where .= ",'$siz'";
                 }
             
-                if(count($size) > 0 )
+                
+            }
+            if(count($size) > 0 )
                 {
                     $where .= ") AND ";
 
                 }
-            }
         }
         
         //MICROPHONE
@@ -664,12 +665,13 @@ echo $filepath;
                     $where .= ",'$mic'";
                 }
             
-                if(count($microphone) > 0 )
+               
+            }
+             if(count($microphone) > 0 )
                 {
                     $where .= ") AND ";
 
                 }
-            }
         }
         
         //LENGTH
@@ -693,12 +695,13 @@ echo $filepath;
                     $where .= ",'$len'";
                 }
             
-                if(count($length) > 0 )
+                
+            }
+            if(count($length) > 0 )
                 {
                     $where .= ") AND ";
 
                 }
-            }
         }
         
         //VOLTAGE
@@ -722,12 +725,13 @@ echo $filepath;
                     $where .= ",'$vol'";
                 }
             
-                if(count($voltage) > 0 )
+               
+            }
+             if(count($voltage) > 0 )
                 {
                     $where .= ") AND ";
 
                 }
-            }
         }
         
        
@@ -754,12 +758,13 @@ echo $filepath;
                     $where .= ",'$cap'";
                 }
             
-                if(count($capacity) > 0 )
+                
+            }
+            if(count($capacity) > 0 )
                 {
                     $where .= ") AND ";
 
                 }
-            }
         }
         
         //filter for color begin
@@ -834,12 +839,13 @@ echo $filepath;
                     $where .= ",'$fin'";
                 }
             
-                if(count($material) > 0 )
+               
+            }
+             if(count($material) > 0 )
                 {
                     $where .= ") AND ";
 
                 }
-            }
         }
         
         // DESIGN
@@ -862,12 +868,13 @@ echo $filepath;
                     $where .= ",'$deg'";
                 }
             
-                if(count($design) > 0 )
+               
+            }
+             if(count($design) > 0 )
                 {
                     $where .= ") AND ";
 
                 }
-            }
         }
         
         //FINISH
@@ -889,13 +896,13 @@ echo $filepath;
                 {
                     $where .= ",'$fin'";
                 }
-            
-                if(count($finish) > 0 )
+                
+            }
+            if(count($finish) > 0 )
                 {
                     $where .= ") AND ";
 
                 }
-            }
         }
         
         
