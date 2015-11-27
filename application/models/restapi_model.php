@@ -178,6 +178,11 @@ INNER JOIN `type` ON `type`.`id` = `producttype`.`type`")->result();
         
         $query['design']=$this->db->query("SELECT DISTINCT `product`.`design` FROM `product` $where")->result(); 
         $query['finish']=$this->db->query("SELECT DISTINCT `product`.`finish` FROM `product` $where")->result();
+        $query['size']=$this->db->query("SELECT DISTINCT `product`.`size` FROM `product` $where")->result();
+        $query['microphone']=$this->db->query("SELECT DISTINCT `product`.`microphone` FROM `product` $where")->result();
+        $query['length']=$this->db->query("SELECT DISTINCT `product`.`length` FROM `product` $where")->result();
+        $query['voltage']=$this->db->query("SELECT DISTINCT `product`.`voltage` FROM `product` $where")->result();
+        $query['capacity']=$this->db->query("SELECT DISTINCT `product`.`capacity` FROM `product` $where")->result();
         $query['compatibledevice']=$this->db->query("SELECT DISTINCT `product`.`compatibledevice` FROM `product` $where
             ")->result(); 
         $query['compatiblewith']=$this->db->query("SELECT DISTINCT `product`.`compatiblewith` FROM `product` 

@@ -568,6 +568,11 @@ echo $filepath;
         $materialstr = $this->input->get_post("material");
         $designstr = $this->input->get_post("design");
         $finishstr = $this->input->get_post("finish");
+        $sizestr = $this->input->get_post("size");
+        $microphonestr = $this->input->get_post("microphone");
+        $lengthstr = $this->input->get_post("length");
+        $voltagestr = $this->input->get_post("voltage");
+        $capacitystr = $this->input->get_post("capacity");
             
         $color = explode(",",$colorstr);
         $type = explode(",",$typestr);
@@ -576,6 +581,12 @@ echo $filepath;
         $material = explode(",",$materialstr);
         $design = explode(",",$designstr);
         $finish = explode(",",$finishstr);
+        
+        $size = explode(",",$sizestr);
+        $microphone = explode(",",$microphonestr);
+        $length = explode(",",$lengthstr);
+        $voltage = explode(",",$voltagestr);
+        $capacity = explode(",",$capacitystr);
         
         $where = " AND ";
         
@@ -601,6 +612,152 @@ echo $filepath;
         {
             
             $where .= " `productbrand`.`brand` IN ($brandstr) AND ";
+        }
+        
+        // SIZE 
+        
+         if($sizestr != "")
+        {
+            if(count($size) > 0 )
+            {
+                $where .= " `product`.`size` IN (";
+
+            }
+            $i=0;
+            foreach($size as $siz)
+            {
+                if($i++ == 0)
+                {
+                    $where .= "'$siz'";
+                }
+                else
+                {
+                    $where .= ",'$siz'";
+                }
+            
+                if(count($size) > 0 )
+                {
+                    $where .= ") AND ";
+
+                }
+            }
+        }
+        
+        //MICROPHONE
+        
+         if($microphonestr != "")
+        {
+            if(count($microphone) > 0 )
+            {
+                $where .= " `product`.`microphone` IN (";
+
+            }
+            $i=0;
+            foreach($microphone as $mic)
+            {
+                if($i++ == 0)
+                {
+                    $where .= "'$mic'";
+                }
+                else
+                {
+                    $where .= ",'$mic'";
+                }
+            
+                if(count($microphone) > 0 )
+                {
+                    $where .= ") AND ";
+
+                }
+            }
+        }
+        
+        //LENGTH
+        
+         if($lengthstr != "")
+        {
+            if(count($length) > 0 )
+            {
+                $where .= " `product`.`length` IN (";
+
+            }
+            $i=0;
+            foreach($length as $len)
+            {
+                if($i++ == 0)
+                {
+                    $where .= "'$len'";
+                }
+                else
+                {
+                    $where .= ",'$len'";
+                }
+            
+                if(count($length) > 0 )
+                {
+                    $where .= ") AND ";
+
+                }
+            }
+        }
+        
+        //VOLTAGE
+        
+         if($voltagestr != "")
+        {
+            if(count($voltage) > 0 )
+            {
+                $where .= " `product`.`voltage` IN (";
+
+            }
+            $i=0;
+            foreach($voltage as $vol)
+            {
+                if($i++ == 0)
+                {
+                    $where .= "'$vol'";
+                }
+                else
+                {
+                    $where .= ",'$vol'";
+                }
+            
+                if(count($voltage) > 0 )
+                {
+                    $where .= ") AND ";
+
+                }
+            }
+        }
+        
+        //CAPACITY
+        
+        
+         if($capacitystr != "")
+        {
+            if(count($capacity) > 0 )
+            {
+                $where .= " `product`.`capacity` IN (";
+
+            }
+            $i=0;
+            foreach($capacity as $cap)
+            {
+                if($i++ == 0)
+                {
+                    $where .= "'$cap'";
+                }
+                else
+                {
+                    $where .= ",'$cap'";
+                }
+            
+                if(count($capacity) > 0 )
+                {
+                    $where .= ") AND ";
+
+                }
+            }
         }
         
         //filter for color begin
