@@ -788,33 +788,42 @@ echo $filepath;
         }
         
         // COMPATIBLE WITH
-        
-         if($compatiblewithstr != "")
+//        
+          if($compatiblewithstr != "")
         {
-            if(count($compatiblewith) > 0 )
-            {
-                $where .= " `product`.`compatiblewith` IN (";
-
-            }
-            $i=0;
+            
             foreach($compatiblewith as $compwith)
             {
-                if($i++ == 0)
-                {
-                    $where .= "'$compwith'";
-                }
-                else
-                {
-                    $where .= ",'$compwith'";
-                }
-            
-                if(count($compatiblewith) > 0 )
-                {
-                    $where .= ") AND ";
-
-                }
+                
+                $where .= " `product`.`compatiblewith` LIKE '%$compwith%' ";
             }
         }
+//         if($compatiblewithstr != "")
+//        {
+//            if(count($compatiblewith) > 0 )
+//            {
+//                $where .= " `product`.`compatiblewith` IN (";
+//
+//            }
+//            $i=0;
+//            foreach($compatiblewith as $compwith)
+//            {
+//                if($i++ == 0)
+//                {
+//                    $where .= "'$compwith'";
+//                }
+//                else
+//                {
+//                    $where .= ",'$compwith'";
+//                }
+//            
+//                if(count($compatiblewith) > 0 )
+//                {
+//                    $where .= ") AND ";
+//
+//                }
+//            }
+//        }
         // COMPATIBLE DEVICE
          if($compatibledevicestr != "")
         {
