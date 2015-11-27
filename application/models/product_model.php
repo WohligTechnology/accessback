@@ -530,7 +530,7 @@ class Product_model extends CI_Model
         $colormatch=$query['product']->colormatch;
         if($colormatch!="")
         {
-        $query['samecolor'] = $this->db->query("SELECT `id`, `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`, `size`, `typename` FROM `product` WHERE `colormatch`='$colormatch'
+        $query['samecolor'] = $this->db->query("SELECT `id`, `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`, `size` FROM `product` WHERE `colormatch`='$colormatch'
 ")->result();
         foreach($query['samecolor'] as $row){
            $row->samecolorimages = array();
@@ -674,7 +674,6 @@ $timestamp=new DateTime();
 	public function createbycsv($file)
 	{
 //        echo "in Model";
-//            print_r($file);
         
         foreach ($file as $row)
         {
@@ -744,17 +743,16 @@ $timestamp=new DateTime();
             $coveredinwarranty=$row['Covered In Warranty'];
             $notcoveredinwarranty=$row['Not Covered In Warranty'];
             $size=$row['Size'];
-            $typename=$row['Typename'];
             $subcategory=$row['Sub-Category'];
-            $dimension=$row['dimension'];
-            $colormatch=$row['colormatch'];
-            $microphone=$row['microphone'];
-            $length=$row['length'];
-            $capacity=$row['capacity'];
-            $voltage=$row['voltage'];
+            $dimension=$row['Dimension'];
+            $colormatch=$row['Color Match'];
+            $microphone=$row['Microphone'];
+            $length=$row['Length'];
+            $capacity=$row['Capacity'];
+            $voltage=$row['Voltage'];
 //            $allsubcategories=explode(",",$subcategory);
             
-            $q="INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`,`typename`,`dimension`,`colormatch`,`microphone`,`length`,`capacity`,`voltage`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$typename','$dimension','$colormatch','$microphone','$length','$capacity','$voltage')";
+            $q="INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`,`dimension`,`colormatch`,`microphone`,`length`,`capacity`,`voltage`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$dimension','$colormatch','$microphone','$length','$capacity','$voltage')";
 
             $data  = array(
 			'name' => $row['name'],
@@ -774,7 +772,7 @@ $timestamp=new DateTime();
 			'quantity' => $row['quantity'],
 			'status' => 1
 		);
-            $q1="SELECT COUNT(`id`) as `count1` FROM `product` WHERE `name` LIKE '$name'";
+//            $q1="SELECT COUNT(`id`) as `count1` FROM `product` WHERE `name` LIKE '$name'";
             
             $checkproductpresent=$this->db->query("SELECT COUNT(`id`) as `count1` FROM `product` WHERE `name` LIKE '$name'")->row();
             
@@ -785,7 +783,7 @@ $timestamp=new DateTime();
 //                print_r($subcategory);
                 
 //                $query=$this->db->insert('product', $data );
-                $query=$this->db->query("INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`,`size`,`typename`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$modelnumber','$brandcolor','$eanorupc','$eanorupcmeasuringunits','$type','$compatibledevice','$compatiblewith','$material','$color','$design','$width','$height','$depth','$portsize','$packof','$salespackage','$keyfeatures','$videourl','$modelname','$finish','$weight','$domesticwarranty','$domesticwarrantymeasuringunits','$internationalwarranty','$internationalwarrantymeasuringunits','$warrantysummary','$warrantyservicetype','$coveredinwarranty','$notcoveredinwarranty','$size','$typename')");
+                $query=$this->db->query("INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`,`size`,`dimension`,`colormatch`,`microphone`,`length`,`capacity`,`voltage`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$modelnumber','$brandcolor','$eanorupc','$eanorupcmeasuringunits','$type','$compatibledevice','$compatiblewith','$material','$color','$design','$width','$height','$depth','$portsize','$packof','$salespackage','$keyfeatures','$videourl','$modelname','$finish','$weight','$domesticwarranty','$domesticwarrantymeasuringunits','$internationalwarranty','$internationalwarrantymeasuringunits','$warrantysummary','$warrantyservicetype','$coveredinwarranty','$notcoveredinwarranty','$size','$dimension','$colormatch','$microphone','$length','$capacity','$voltage')");
                 $productid=$this->db->insert_id();
 //                echo "pid".$productid;
                 if($image1!=""){
@@ -942,77 +940,77 @@ $timestamp=new DateTime();
 			}
                 
             }   //product insert end
-            else
-            {
-                // update product
-                
-                $getprod=$this->db->query("SELECT * FROM `product` WHERE `name` LIKE '$name'")->row();
-                $getprodid=$getprod->id;
-                $data = array(
-               'name' => $name,
-			'sku' => $sku,
-			'description' => $description,
-			'url' => $url,
-			'visibility' => $visibility,
-			'price' => $price,
-			'wholesaleprice' => $wholesaleprice,
-			'firstsaleprice' => $firstsaleprice,
-			'secondsaleprice' => $secondsaleprice,
-			'specialpricefrom' => $specialpricefrom,
-			'specialpriceto' => $specialpriceto,
-			'metatitle' => $metatitle,
-			'metadesc' => $metadesc,
-			'metakeyword' => $metakeyword,
-			'quantity' => $quantity,
-			'status' => $status,
-            'modelnumber' => $modelnumber,
-			'brandcolor' => $brandcolor,
-			'eanorupc' => $eanorupc,
-			'eanorupcmeasuringunits' => $eanorupcmeasuringunits,
-			'compatibledevice' => $compatibledevice,
-			'compatiblewith' => $compatiblewith,
-			'material' => $material,
-			'color' => $color,
-			'width' => $width,
-			'height' => $height,
-			'depth' => $depth,
-			'salespackage' => $salespackage,
-			'keyfeatures' => $keyfeatures,
-			'videourl' => $videourl,
-			'modelname' => $modelname,
-			'finish' => $finish,
-			'weight' => $weight,
-			'domesticwarranty' => $domesticwarranty,
-			'warrantysummary' => $warrantysummary,
-			'size' => $size,
-			'typename' => $typename,
-			'type' => $type,
-			'design' => $design,
-			'portsize' => $portsize,
-			'packof' => $packof,
-			'domesticwarrantymeasuringunits' => $domesticwarrantymeasuringunits,
-			'internationalwarranty' => $internationalwarranty,
-			'internationalwarrantymeasuringunits' => $internationalwarrantymeasuringunits,
-			'warrantyservicetype' => $warrantyservicetype,
-			'coveredinwarranty' => $coveredinwarranty,
-			'notcoveredinwarranty' => $notcoveredinwarranty,
-			'dimension' => $dimension,
-			'colormatch' => $colormatch,
-            'microphone' => $microphone,
-			'length' => $length,
-			'capacity' => $capacity,
-			'voltage' => $voltage
-            );
-
-                $this->db->where('name', $name);
-                $this->db->update('product', $data);
-               
+//            else
+//            {
+//                // update product
+//                
+//                $getprod=$this->db->query("SELECT * FROM `product` WHERE `name` LIKE '$name'")->row();
+//                $getprodid=$getprod->id;
+//                $data = array(
+//               'name' => $name,
+//			'sku' => $sku,
+//			'description' => $description,
+//			'url' => $url,
+//			'visibility' => $visibility,
+//			'price' => $price,
+//			'wholesaleprice' => $wholesaleprice,
+//			'firstsaleprice' => $firstsaleprice,
+//			'secondsaleprice' => $secondsaleprice,
+//			'specialpricefrom' => $specialpricefrom,
+//			'specialpriceto' => $specialpriceto,
+//			'metatitle' => $metatitle,
+//			'metadesc' => $metadesc,
+//			'metakeyword' => $metakeyword,
+//			'quantity' => $quantity,
+//			'status' => $status,
+//            'modelnumber' => $modelnumber,
+//			'brandcolor' => $brandcolor,
+//			'eanorupc' => $eanorupc,
+//			'eanorupcmeasuringunits' => $eanorupcmeasuringunits,
+//			'compatibledevice' => $compatibledevice,
+//			'compatiblewith' => $compatiblewith,
+//			'material' => $material,
+//			'color' => $color,
+//			'width' => $width,
+//			'height' => $height,
+//			'depth' => $depth,
+//			'salespackage' => $salespackage,
+//			'keyfeatures' => $keyfeatures,
+//			'videourl' => $videourl,
+//			'modelname' => $modelname,
+//			'finish' => $finish,
+//			'weight' => $weight,
+//			'domesticwarranty' => $domesticwarranty,
+//			'warrantysummary' => $warrantysummary,
+//			'size' => $size,
+//			'type' => $type,
+//			'design' => $design,
+//			'portsize' => $portsize,
+//			'packof' => $packof,
+//			'domesticwarrantymeasuringunits' => $domesticwarrantymeasuringunits,
+//			'internationalwarranty' => $internationalwarranty,
+//			'internationalwarrantymeasuringunits' => $internationalwarrantymeasuringunits,
+//			'warrantyservicetype' => $warrantyservicetype,
+//			'coveredinwarranty' => $coveredinwarranty,
+//			'notcoveredinwarranty' => $notcoveredinwarranty,
+//			'dimension' => $dimension,
+//			'colormatch' => $colormatch,
+//            'microphone' => $microphone,
+//			'length' => $length,
+//			'capacity' => $capacity,
+//			'voltage' => $voltage
+//            );
+//
+//                $this->db->where('name', $name);
+//                $this->db->update('product', $data);
+//               
+//        }
         }
 		if(!$query)
 			return  0;
 		else
 			return  1;
-	}
+	
     }
     //new functions by avinash
     
