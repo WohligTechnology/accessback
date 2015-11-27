@@ -251,7 +251,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="col-sm-2 control-label">modelname</label>
+						<label class="col-sm-2 control-label">Model Type</label>
 						<div class="col-sm-4">
 						  <input type="text" id="normal-field" class="form-control" name="modelname" value="<?php echo set_value('modelname',$before['product']->modelname);?>">
 						</div>
@@ -291,7 +291,18 @@
 						  <input type="text" id="normal-field" class="form-control" name="size" value="<?php echo set_value('size',$before['product']->size);?>">
 						</div>
 					</div>
-					
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Dimensions</label>
+						<div class="col-sm-4">
+						  <input type="text" id="normal-field" class="form-control" name="dimension" value="<?php echo set_value('dimension',$before['product']->dimension);?>">
+						</div>
+					</div>
+                    <div class="form-group">
+						<label class="col-sm-2 control-label">Color Match</label>
+						<div class="col-sm-4">
+						  <input type="text" id="normal-field" class="form-control" name="colormatch" value="<?php echo set_value('colormatch',$before['product']->colormatch);?>">
+						</div>
+					</div>
 					
 					<div class=" form-group">
 					  <label class="col-sm-2 control-label">Status</label>
