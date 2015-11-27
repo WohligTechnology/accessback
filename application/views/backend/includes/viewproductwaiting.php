@@ -1,4 +1,5 @@
 <div class="col-md-12">
+    <h4>Maximum 4 Products Only</h4>
 	<div class=" pull-right col-md-1 createbtn" ><a class="btn btn-primary" href="<?php echo site_url('site/createproductwaiting'); ?>"><i class="icon-plus"></i>Create </a></div>
 	</div>
 		<section class="panel">
