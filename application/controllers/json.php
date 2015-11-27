@@ -795,7 +795,7 @@ echo $filepath;
             foreach($compatiblewith as $compwith)
             {
                 
-                $where .= " `product`.`compatiblewith` LIKE '%$compwith%' ";
+                $where .= " `product`.`compatiblewith` LIKE '%$compwith%' AND";
             }
         }
 //         if($compatiblewithstr != "")
@@ -831,7 +831,7 @@ echo $filepath;
             foreach($compatibledevice as $compdevice)
             {
                 
-                $where .= " `product`.`compatibledevice` LIKE '%$compdevice%' ";
+                $where .= " `product`.`compatibledevice` LIKE '%$compdevice%' AND ";
             }
         }
        
