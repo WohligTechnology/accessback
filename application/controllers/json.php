@@ -1006,7 +1006,7 @@ echo $filepath;
         $orderorder = $this->input->get_post("orderorder");
         $maxrow = $this->input->get_post("maxrow");
         if ($maxrow == "") {
-            $maxrow = 5;
+            $maxrow = 6;
         }
         $data3["data"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product`
         INNER JOIN `productcategory` ON `productcategory`.`product`=`product`.`id`
