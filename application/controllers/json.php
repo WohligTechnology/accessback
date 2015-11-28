@@ -999,6 +999,7 @@ echo $filepath;
         $elements[13]->sort = "1";
         $elements[13]->header = "isfavid";
         $elements[13]->alias = "isfavid";
+        
         $search = $this->input->get_post("search");
         $pageno = $this->input->get_post("pageno");
         $orderby = $this->input->get_post("orderby");
@@ -1007,13 +1008,16 @@ echo $filepath;
         if ($maxrow == "") {
             $maxrow = 5;
         }
-        $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product`
+        $data3["data"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product`
         INNER JOIN `productcategory` ON `productcategory`.`product`=`product`.`id`
         INNER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id`
         INNER JOIN `producttype` ON `producttype`.`product`=`product`.`id`
         LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid' 
         LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1 
         LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=0", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 $where 1 " , ' GROUP BY `product`.`id` ');
+        $data3["filter"] = $this->restapi_model->getFiltersLater($data3["data"]->querycomplete);
+        
+        $data["message"] = $data3;
         
         $this->load->view("json", $data);
     }

@@ -74,6 +74,7 @@ class Chintantable {
         }
         $orderquery.= " 1 ";
         $return = new stdClass();
+        $return->querycomplete = $selectquery . $fromquery . $wherequery . $groupquery . $havingquery;
         $return->query = $selectquery . $fromquery . $wherequery . $groupquery . $havingquery . $orderquery . $limitquery;
         $return->queryresult = $this->CI->db->query($return->query)->result();
         $return->totalvalues = $this->CI->db->query($selectquery . $fromquery . $wherequery . $groupquery . $havingquery);
