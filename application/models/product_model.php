@@ -940,71 +940,71 @@ $timestamp=new DateTime();
 			}
                 
             }   //product insert end
-//            else
-//            {
-//                // update product
-//                
-//                $getprod=$this->db->query("SELECT * FROM `product` WHERE `name` LIKE '$name'")->row();
-//                $getprodid=$getprod->id;
-//                $data = array(
-//               'name' => $name,
-//			'sku' => $sku,
-//			'description' => $description,
-//			'url' => $url,
-//			'visibility' => $visibility,
-//			'price' => $price,
-//			'wholesaleprice' => $wholesaleprice,
-//			'firstsaleprice' => $firstsaleprice,
-//			'secondsaleprice' => $secondsaleprice,
-//			'specialpricefrom' => $specialpricefrom,
-//			'specialpriceto' => $specialpriceto,
-//			'metatitle' => $metatitle,
-//			'metadesc' => $metadesc,
-//			'metakeyword' => $metakeyword,
-//			'quantity' => $quantity,
-//			'status' => $status,
-//            'modelnumber' => $modelnumber,
-//			'brandcolor' => $brandcolor,
-//			'eanorupc' => $eanorupc,
-//			'eanorupcmeasuringunits' => $eanorupcmeasuringunits,
-//			'compatibledevice' => $compatibledevice,
-//			'compatiblewith' => $compatiblewith,
-//			'material' => $material,
-//			'color' => $color,
-//			'width' => $width,
-//			'height' => $height,
-//			'depth' => $depth,
-//			'salespackage' => $salespackage,
-//			'keyfeatures' => $keyfeatures,
-//			'videourl' => $videourl,
-//			'modelname' => $modelname,
-//			'finish' => $finish,
-//			'weight' => $weight,
-//			'domesticwarranty' => $domesticwarranty,
-//			'warrantysummary' => $warrantysummary,
-//			'size' => $size,
-//			'type' => $type,
-//			'design' => $design,
-//			'portsize' => $portsize,
-//			'packof' => $packof,
-//			'domesticwarrantymeasuringunits' => $domesticwarrantymeasuringunits,
-//			'internationalwarranty' => $internationalwarranty,
-//			'internationalwarrantymeasuringunits' => $internationalwarrantymeasuringunits,
-//			'warrantyservicetype' => $warrantyservicetype,
-//			'coveredinwarranty' => $coveredinwarranty,
-//			'notcoveredinwarranty' => $notcoveredinwarranty,
-//			'dimension' => $dimension,
-//			'colormatch' => $colormatch,
-//            'microphone' => $microphone,
-//			'length' => $length,
-//			'capacity' => $capacity,
-//			'voltage' => $voltage
-//            );
-//
-//                $this->db->where('name', $name);
-//                $this->db->update('product', $data);
-//               
-//        }
+            else
+            {
+                // update product
+                
+                $getprod=$this->db->query("SELECT * FROM `product` WHERE `name` LIKE '$name'")->row();
+                $getprodid=$getprod->id;
+                $data = array(
+               'name' => $name,
+			'sku' => $sku,
+			'description' => $description,
+			'url' => $url,
+			'visibility' => $visibility,
+			'price' => $price,
+			'wholesaleprice' => $wholesaleprice,
+			'firstsaleprice' => $firstsaleprice,
+			'secondsaleprice' => $secondsaleprice,
+			'specialpricefrom' => $specialpricefrom,
+			'specialpriceto' => $specialpriceto,
+			'metatitle' => $metatitle,
+			'metadesc' => $metadesc,
+			'metakeyword' => $metakeyword,
+			'quantity' => $quantity,
+			'status' => $status,
+            'modelnumber' => $modelnumber,
+			'brandcolor' => $brandcolor,
+			'eanorupc' => $eanorupc,
+			'eanorupcmeasuringunits' => $eanorupcmeasuringunits,
+			'compatibledevice' => $compatibledevice,
+			'compatiblewith' => $compatiblewith,
+			'material' => $material,
+			'color' => $color,
+			'width' => $width,
+			'height' => $height,
+			'depth' => $depth,
+			'salespackage' => $salespackage,
+			'keyfeatures' => $keyfeatures,
+			'videourl' => $videourl,
+			'modelname' => $modelname,
+			'finish' => $finish,
+			'weight' => $weight,
+			'domesticwarranty' => $domesticwarranty,
+			'warrantysummary' => $warrantysummary,
+			'size' => $size,
+			'type' => $type,
+			'design' => $design,
+			'portsize' => $portsize,
+			'packof' => $packof,
+			'domesticwarrantymeasuringunits' => $domesticwarrantymeasuringunits,
+			'internationalwarranty' => $internationalwarranty,
+			'internationalwarrantymeasuringunits' => $internationalwarrantymeasuringunits,
+			'warrantyservicetype' => $warrantyservicetype,
+			'coveredinwarranty' => $coveredinwarranty,
+			'notcoveredinwarranty' => $notcoveredinwarranty,
+			'dimension' => $dimension,
+			'colormatch' => $colormatch,
+            'microphone' => $microphone,
+			'length' => $length,
+			'capacity' => $capacity,
+			'voltage' => $voltage
+            );
+
+                $this->db->where('name', $name);
+                $this->db->update('product', $data);
+               
+        }
         }
 		if(!$query)
 			return  0;
