@@ -2106,6 +2106,18 @@ echo $filepath;
      $data['message']=$this->restapi_model->getHomeSlider();
         $this->load->view("json", $data);
     }
+     public function checkstatus() {
+      $orderid=$this->input->get('orderid');
+    $data['message']=$this->restapi_model->checkstatus($orderid);
+	 $this->load->view('json',$data);
+        }
+    public function payumoneysuccess()
+ {
+     $orderid=$this->input->get('orderid');
+     $transactionid=$this->input->get_post('transactionid');
+     $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid);
+	 $this->load->view('json',$data);
+ }
     
 }
 ?>

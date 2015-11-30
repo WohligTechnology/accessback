@@ -243,5 +243,21 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
          $query=$this->db->query("SELECT `id`, `order`, `image`,`product` FROM `homeslider`")->result();
         return $query;
     }
+     public function checkstatus($orderid){
+      $query=$this->db->query("SELECT * FROM `order` WHERE `id`='$orderid'")->row;
+        $orderstatus=$query->orderstatus;
+        if($orderstatus==1){
+        return 1;
+        }
+        else
+        {
+        return 0;
+        }
+    }
+    public function updateorderstatusafterpayment($orderid,$transactionid){
+          $query=$this->db->query("UPDATE `paymentorder` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
+        return 1;
+    
+    }
 }
 ?>
