@@ -105,11 +105,11 @@ LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` 
         }
     }
     public function getallcategory(){
-    $query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=0")->result();
+    $query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=0 ORDER BY `order`")->result();
         $query->subcategory=array();
         foreach($query as $row){
             
-             $row->subcategory=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=$row->id")->result();
+             $row->subcategory=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=$row->id ORDER BY `order`")->result();
 //            print_r($query1);
             array_push($query->subcategory,$row->subcategory);
         }
@@ -171,7 +171,7 @@ $where
         $query['type']=$this->db->query("SELECT DISTINCT  `type`.`id`,`type`.`name` FROM `product` 
 $where
 INNER JOIN `producttype` ON `producttype`.`product` = `product`.`id`
-INNER JOIN `type` ON `type`.`id` = `producttype`.`type`")->result(); 
+INNER JOIN `type` ON `type`.`id` = `producttype`.`type` WHERE `type`.`name` <> ''")->result(); 
         
         $query['material']=$this->db->query("SELECT DISTINCT `product`.`material` FROM `product`
          $where")->result();
@@ -214,25 +214,25 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
         
         $query2 = "SELECT `id` FROM ($query) as `tab1` "; 
         
-        $query3['category'] = $this->db->query(" SELECT DISTINCT `category`.`id`,`category`.`name` FROM `category` INNER JOIN `productcategory` ON `category`.`id` = `productcategory`.`category` AND `productcategory`.`product` IN ($query2)")->result();
+        $query3['category'] = $this->db->query(" SELECT DISTINCT `category`.`id`,`category`.`name` FROM `category` INNER JOIN `productcategory` ON `category`.`id` = `productcategory`.`category` AND `productcategory`.`product` IN ($query2) WHERE `category`.`name` <> ''")->result();
         
-        $query3['brand'] = $this->db->query(" SELECT DISTINCT `brand`.`id`,`brand`.`name` FROM `brand` INNER JOIN `productbrand` ON `brand`.`id` = `productbrand`.`brand` AND `productbrand`.`product` IN ($query2)")->result(); 
+        $query3['brand'] = $this->db->query(" SELECT DISTINCT `brand`.`id`,`brand`.`name` FROM `brand` INNER JOIN `productbrand` ON `brand`.`id` = `productbrand`.`brand` AND `productbrand`.`product` IN ($query2) WHERE `brand`.`name` <> ''")->result(); 
         
-        $query3['type'] = $this->db->query(" SELECT DISTINCT `type`.`id`,`type`.`name` FROM `type` INNER JOIN `producttype` ON `type`.`id` = `producttype`.`type` AND `producttype`.`product` IN ($query2)")->result();
+        $query3['type'] = $this->db->query(" SELECT DISTINCT `type`.`id`,`type`.`name` FROM `type` INNER JOIN `producttype` ON `type`.`id` = `producttype`.`type` AND `producttype`.`product` IN ($query2) WHERE `type`.`name` <> ''")->result();
         
         
-        $query3['price'] = $this->db->query(" SELECT MIN(`price`) as `min`,MAX(`price`) as `max` FROM ($query) as `tab3` ")->result();
-        $query3['microphone'] = $this->db->query(" SELECT DISTINCT `product`.`microphone` as `microphone` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
-        $query3['color'] = $this->db->query(" SELECT DISTINCT `product`.`color` as `color` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
-        $query3['material'] = $this->db->query(" SELECT DISTINCT `product`.`material` as `material` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
-        $query3['design'] = $this->db->query(" SELECT DISTINCT `product`.`design` as `design` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
-        $query3['finish'] = $this->db->query(" SELECT DISTINCT `product`.`finish` as `finish` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
-        $query3['size'] = $this->db->query(" SELECT DISTINCT `product`.`size` as `size` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
-        $query3['clength'] = $this->db->query(" SELECT DISTINCT `product`.`length` as `clength` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
-        $query3['voltage'] = $this->db->query(" SELECT DISTINCT `product`.`voltage` as `voltage` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
-        $query3['capacity'] = $this->db->query(" SELECT DISTINCT `product`.`capacity` as `capacity` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
-        $query3['compatibledevice'] = $this->db->query(" SELECT DISTINCT `product`.`compatibledevice` as `compatibledevice` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
-        $query3['compatiblewith'] = $this->db->query(" SELECT DISTINCT `product`.`compatiblewith` as `compatiblewith` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` ")->result();
+        $query3['price'] = $this->db->query(" SELECT MIN(`price`) as `min`,MAX(`price`) as `max` FROM ($query) as `tab3`")->result();
+        $query3['microphone'] = $this->db->query(" SELECT DISTINCT `product`.`microphone` as `microphone` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`microphone` <> ''")->result();
+        $query3['color'] = $this->db->query(" SELECT DISTINCT `product`.`color` as `color` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`color` <> ''")->result();
+        $query3['material'] = $this->db->query(" SELECT DISTINCT `product`.`material` as `material` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`material` <> ''")->result();
+        $query3['design'] = $this->db->query(" SELECT DISTINCT `product`.`design` as `design` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id`WHERE `product`.`design` <> ''")->result();
+        $query3['finish'] = $this->db->query(" SELECT DISTINCT `product`.`finish` as `finish` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`finish` <> ''")->result();
+        $query3['size'] = $this->db->query(" SELECT DISTINCT `product`.`size` as `size` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`size` <> ''")->result();
+        $query3['clength'] = $this->db->query(" SELECT DISTINCT `product`.`length` as `clength` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`length` <> ''")->result();
+        $query3['voltage'] = $this->db->query(" SELECT DISTINCT `product`.`voltage` as `voltage` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`voltage` <> ''")->result();
+        $query3['capacity'] = $this->db->query(" SELECT DISTINCT `product`.`capacity` as `capacity` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`capacity` <> ''")->result();
+        $query3['compatibledevice'] = $this->db->query(" SELECT DISTINCT `product`.`compatibledevice` as `compatibledevice` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`compatibledevice` <> ''")->result();
+        $query3['compatiblewith'] = $this->db->query(" SELECT DISTINCT `product`.`compatiblewith` as `compatiblewith` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`compatiblewith` <> ''")->result();
         
         return $query3;
         
