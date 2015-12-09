@@ -105,11 +105,11 @@ LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` 
         }
     }
     public function getallcategory(){
-    $query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=0 ORDER BY `order`")->result();
+    $query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=0 AND `status`=1 ORDER BY `order`")->result();
         $query->subcategory=array();
         foreach($query as $row){
             
-             $row->subcategory=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=$row->id ORDER BY `order`")->result();
+             $row->subcategory=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `order`, `image1`, `image2` FROM `category` WHERE `parent`=$row->id AND `status`=1 ORDER BY `order`")->result();
 //            print_r($query1);
             array_push($query->subcategory,$row->subcategory);
         }

@@ -805,35 +805,40 @@ $timestamp=new DateTime();
                 if($image3!=""){
 				$dataimg  = array(
 					'image' => $image3,
-					'product' => $productid
+					'product' => $productid,
+                    'order' => 2
 				);
 				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
                 }
                 if($image4!=""){
 				$dataimg  = array(
 					'image' => $image4,
-					'product' => $productid
+					'product' => $productid,
+                    'order' => 3
 				);
 				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
                 }
                 if($image5!=""){
 				$dataimg  = array(
 					'image' => $image5,
-					'product' => $productid
+					'product' => $productid,
+                    'order' => 4
 				);
 				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
                 }
                 if($image6!=""){
 				$dataimg  = array(
 					'image' => $image6,
-					'product' => $productid
+					'product' => $productid,
+                    'order' => 5
 				);
 				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
                 }
                 if($image7!=""){
 				$dataimg  = array(
 					'image' => $image7,
-					'product' => $productid
+					'product' => $productid,
+                    'order' => 6
 				);
 				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
                 }
