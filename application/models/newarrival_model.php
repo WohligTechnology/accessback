@@ -42,9 +42,7 @@ class newarrival_model extends CI_Model
 	}
     function gettypedropdown(){
     $type= array(
-			 "1" => "Exclusive",
-			 "2" => "New Arrival",
-			 "3" => "Both"
+			 "1" => "Exclusive"
 			);
 		return $type;
     }
