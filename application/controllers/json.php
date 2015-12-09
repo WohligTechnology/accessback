@@ -1465,7 +1465,7 @@ echo $filepath;
         $elements[2]->field = "`brand`.`order`";
         $elements[2]->sort = "1";
         $elements[2]->header = "order";
-        $elements[2]->alias = "order";
+        $elements[2]->alias = "orderbrand";
         
         $elements[3] = new stdClass();
         $elements[3]->field = "`brand`.`logo`";
@@ -1488,7 +1488,7 @@ echo $filepath;
             $maxrow = 20;
         }
         if ($orderby == "") {
-            $orderby = "id";
+            $orderby = "orderbrand";
             $orderorder = "ASC";
         }
         $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `brand`");
@@ -1710,7 +1710,7 @@ echo $filepath;
         if ($maxrow == "") {
             $maxrow = 20;
         }
-        $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `newarrival` ON `newarrival`.`product`=`product`.`id` LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid' LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=2", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND  `product`.`id` IN $productids", ' GROUP BY `product`.`id` ');
+        $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `newarrival` ON `newarrival`.`product`=`product`.`id` LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid' LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=0", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND  `product`.`id` IN $productids", ' GROUP BY `product`.`id` ');
         $this->load->view("json", $data);
     }
 
