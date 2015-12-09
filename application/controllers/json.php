@@ -1740,7 +1740,7 @@ echo $filepath;
         $elements[3]->field = "`about`.`order`";
         $elements[3]->sort = "1";
         $elements[3]->header = "order";
-        $elements[3]->alias = "order";
+        $elements[3]->alias = "orderabout";
         $elements[4] = new stdClass();
         $elements[4]->field = "`about`.`status`";
         $elements[4]->sort = "1";
@@ -1755,7 +1755,12 @@ echo $filepath;
         if ($maxrow == "") {
             $maxrow = 20;
         }
-        $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `about`");
+        if($orderby=="")
+        {
+        $orderby="orderabout";
+        $orderorder="ASC";
+        }
+        $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `about`","WHERE `about`.`status`=1");
         $this->load->view("json", $data);
     }
     
