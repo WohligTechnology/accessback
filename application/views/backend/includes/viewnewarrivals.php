@@ -26,7 +26,7 @@
 						<td><?php echo $row->name; ?></td>
 						<td><?php echo $row->type; ?></td>
 						<td> <a class="btn btn-primary btn-xs" href="<?php echo site_url('site/editnewarrival?id=').$row->newarrivalid;?>"><i class="icon-pencil"></i></a>
-                                      <a class="btn btn-danger btn-xs" href="<?php echo site_url('site/deletenewarrival?id=').$row->id; ?>"><i class="icon-trash "></i></a>
+                                      <a class="btn btn-danger btn-xs" href="<?php echo site_url('site/deletenewarrival?id=').$row->newarrivalid; ?>"><i class="icon-trash "></i></a>
 									 
 					  </td>
 					</tr>

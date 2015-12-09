@@ -4657,12 +4657,14 @@ class Site extends CI_Controller
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->newarrival_model->deletenewarrival($this->input->get('id'));
-		$data['table']=$this->newarrival_model->viewnewarrivals();
+		$data['table']=$this->newarrival_model->viewnewarrival();
 		$data['alertsuccess']="newarrival Deleted Successfully";
-		$data['page']='viewnewarrival';
+		$data['page']='viewnewarrivals';
 		$data['title']='View newarrivals';
 		$this->load->view('template',$data);
 	}
+    
+    
     
       public function viewsubscribe()
     {
