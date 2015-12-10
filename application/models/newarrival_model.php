@@ -3,18 +3,18 @@ if ( !defined( 'BASEPATH' ) )
 	exit( 'No direct script access allowed' );
 class newarrival_model extends CI_Model
 {
-    public function create($product,$type)
+    public function create($product,$order)
 	{
 		$data  = array(
 			'product' => $product,
-			'type' => $type
+			'order' => $order
 		);
 		$query=$this->db->insert( 'newarrival', $data );
 		return  1;
 	}
 	function viewnewarrival()
 	{
-		$query=$this->db->query("SELECT `newarrival`.`id` AS `newarrivalid`,`newarrival`.`product`,`newarrival`.`type`,`product`.`name` FROM `newarrival` LEFT OUTER JOIN `product` ON `product`.`id`=`newarrival`.`product` 
+		$query=$this->db->query("SELECT `newarrival`.`id` AS `newarrivalid`,`newarrival`.`product`,`newarrival`.`order`,`product`.`name` FROM `newarrival` LEFT OUTER JOIN `product` ON `product`.`id`=`newarrival`.`product` 
 		ORDER BY `newarrival`.`id` ASC")->result();
 //        print_r($query);
 		return $query;
@@ -26,11 +26,11 @@ class newarrival_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit( $id,$product,$type)
+	public function edit( $id,$product,$order)
 	{
 		$data = array(
 			'product' => $product,
-			'type' => $type
+			'order' => $order
 		);
 		$this->db->where( 'id', $id );
 		$this->db->update( 'newarrival', $data );

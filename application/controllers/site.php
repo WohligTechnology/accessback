@@ -4562,8 +4562,8 @@ class Site extends CI_Controller
 		$access = array("1");
 		$this->checkaccess($access);
 			$product=$this->input->post('product');
-			$type=$this->input->post('type');
-			if($this->newarrival_model->create($product,$type)==0)
+			$order=$this->input->post('order');
+			if($this->newarrival_model->create($product,$order)==0)
 			$data['alerterror']="New newarrival could not be created.";
 			else
 			$data['alertsuccess']="newarrival created Successfully.";
@@ -4601,10 +4601,10 @@ class Site extends CI_Controller
         $elements[1]->alias="product";
         
         $elements[2]=new stdClass();
-        $elements[2]->field="`newarrival`.`type`";
+        $elements[2]->field="`newarrival`.`order`";
         $elements[2]->sort="1";
-        $elements[2]->header="type";
-        $elements[2]->alias="type";
+        $elements[2]->header="order";
+        $elements[2]->alias="order";
         
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
@@ -4641,9 +4641,9 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
             $id=$this->input->get_post('id');
             $product=$this->input->post('product');
-			$type=$this->input->post('type');
+			$order=$this->input->post('order');
        
-			if($this->newarrival_model->edit($id,$product,$type)==0)
+			if($this->newarrival_model->edit($id,$product,$order)==0)
 			$data['alerterror']="newarrival Editing was unsuccesful";
 			else
 			$data['alertsuccess']="newarrival edited Successfully.";
