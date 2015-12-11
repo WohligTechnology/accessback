@@ -798,13 +798,13 @@ echo $filepath;
 //        
           if($compatiblewithstr != "")
         {
-            
+            $where .= " ( ";
             foreach($compatiblewith as $compwith)
             {
                 
-                $where .= " `product`.`compatiblewith` LIKE '%$compwith%' OR ";
+                $where .= " (`product`.`compatiblewith` LIKE '%$compwith,%' OR `product`.`compatiblewith` LIKE '%,$compwith%'  OR `product`.`compatiblewith` LIKE  '$compwith' ) OR ";
             }
-              $where .=" 0 AND";
+              $where .=" 0 ) AND";
         }
 
         // COMPATIBLE DEVICE
