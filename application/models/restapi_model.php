@@ -134,7 +134,7 @@ WHERE `order`.`user`='$userid'")->result();
         
     }
     public function getHomeProducts(){
-      $query=$this->db->query("SELECT `productwaiting`.`product`,`product`.`name`,`product`.`id`, `product`.`name`,  `product`.`price` FROM `productwaiting` LEFT OUTER JOIN `product` ON `product`.`id`=`productwaiting`.`product` ")->result();
+      $query=$this->db->query("SELECT `productwaiting`.`product`,`product`.`name`,`product`.`id`, `product`.`name`,  `product`.`price`, `product`.`price`, `product`.`wholesaleprice`, `product`.`firstsaleprice`, `product`.`secondsaleprice`, `product`.`specialpriceto`, `product`.`specialpricefrom` FROM `productwaiting` LEFT OUTER JOIN `product` ON `product`.`id`=`productwaiting`.`product` ")->result();
         foreach($query as $row){
             $row->images=array();
             $product=$row->product;
