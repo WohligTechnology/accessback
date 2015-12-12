@@ -1008,6 +1008,67 @@ $timestamp=new DateTime();
 
                 $this->db->where('name', $name);
                 $this->db->update('product', $data);
+                
+                //UPDATE IMAGE
+                
+                $query=$this->db->query("DELETE FROM `productimage` WHERE `product`='$getprodid'");
+                
+                if($image1!=""){
+				$dataimg  = array(
+					'image' => $image1,
+					'product' => $productid,
+					'order' => 0
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image2!=""){
+				$dataimg  = array(
+					'image' => $image2,
+					'product' => $productid,
+					'order' => 1
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image3!=""){
+				$dataimg  = array(
+					'image' => $image3,
+					'product' => $productid,
+                    'order' => 2
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image4!=""){
+				$dataimg  = array(
+					'image' => $image4,
+					'product' => $productid,
+                    'order' => 3
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image5!=""){
+				$dataimg  = array(
+					'image' => $image5,
+					'product' => $productid,
+                    'order' => 4
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image6!=""){
+				$dataimg  = array(
+					'image' => $image6,
+					'product' => $productid,
+                    'order' => 5
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image7!=""){
+				$dataimg  = array(
+					'image' => $image7,
+					'product' => $productid,
+                    'order' => 6
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
                
         }
         }

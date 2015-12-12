@@ -24,7 +24,7 @@
 						<td><?php echo $row->telephone; ?></td>
 						<td><?php echo $row->comment; ?></td>
 						<td><?php echo $row->timestamp; ?></td>
-						<td> <a class="btn btn-danger btn-xs" href="<?php echo site_url('site/deletecontact?id=').$row->id; ?>"><i class="icon-trash "></i></a>		 
+						<td> <a class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete?');" href="<?php echo site_url('site/deletecontact?id=').$row->id; ?>"><i class="icon-trash "></i></a>		 
 					  </td>
 					</tr>
 					<?php } ?>

@@ -26,7 +26,7 @@
 						<td><?php echo $row->coupontype; ?></td>
 						<td><?php echo $row->couponcode; ?></td>
 						<td> <a class="btn btn-primary btn-xs" href="<?php echo site_url('site/editdiscountcoupon?id=').$row->id;?>"><i class="icon-pencil"></i></a>
-                                      <a class="btn btn-danger btn-xs" href="<?php echo site_url('site/deletediscountcoupon?id=').$row->id; ?>"><i class="icon-trash "></i></a>
+                                      <a onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-xs" href="<?php echo site_url('site/deletediscountcoupon?id=').$row->id; ?>"><i class="icon-trash "></i></a>
 									 
 					  </td>
 					</tr>

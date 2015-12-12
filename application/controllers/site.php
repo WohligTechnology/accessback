@@ -439,11 +439,13 @@ class Site extends CI_Controller
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->user_model->deleteuser($this->input->get('id'));
-		$data['table']=$this->user_model->viewusers();
+//		$data['table']=$this->user_model->viewusers();
 		$data['alertsuccess']="User Deleted Successfully";
-		$data['page']='viewusers';
-		$data['title']='View Users';
-		$this->load->view('template',$data);
+//		$data['page']='viewusers';
+//		$data['title']='View Users';
+		$data['redirect']="site/viewusers";
+			//$data['other']="template=$template";
+        $this->load->view("redirect",$data);
 	}
 	function changeuserstatus()
 	{

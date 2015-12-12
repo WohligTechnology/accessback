@@ -31,7 +31,7 @@
 							<a href="<?php echo site_url('site/editproductimage?id=').$row->product.'&productimageid='.$row->id;?>" class="btn btn-primary btn-xs">
 								<i class="icon-pencil"></i>
 							</a>
-							<a href="<?php echo site_url('site/deleteproductimage?id=').$row->product.'&productimageid='.$row->id; ?>" class="btn btn-danger btn-xs">
+							<a onclick="return confirm('Are you sure you want to delete?');"  href="<?php echo site_url('site/deleteproductimage?id=').$row->product.'&productimageid='.$row->id; ?>" class="btn btn-danger btn-xs">
 								<i class="icon-trash "></i>
 							</a> 
 							

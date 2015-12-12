@@ -26,9 +26,9 @@
 						<td><?php echo $row->parent; ?></td>
 						<td><?php echo $row->order; ?></td>
 						<td> <a class="btn btn-primary btn-xs" href="<?php echo site_url('site/editcategory?id=').$row->id;?>"><i class="icon-pencil"></i></a>
-                                      <a class="btn btn-danger btn-xs" href="<?php echo site_url('site/deletecategory?id=').$row->id; ?>"><i class="icon-trash "></i></a>
+                                      <a class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete?');" href="<?php echo site_url('site/deletecategory?id=').$row->id; ?>"><i class="icon-trash "></i></a>
 									 
-					  </td>
+                        </td>
 					</tr>
 					<?php } ?>
 			</tbody>

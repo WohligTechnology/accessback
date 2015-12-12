@@ -42,7 +42,7 @@
             resultrow.isdistributer="No";
             }
             var logo="<a href='<?php echo base_url('uploads').'/'; ?>"+resultrow.logo+"' target='_blank'><img src='<?php echo base_url('uploads').'/'; ?>"+resultrow.logo+"' width='80px' height='80px'></a>";
-            return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.order + "</td><td>" + logo + "</td><td>" + resultrow.isdistributer + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editbrand?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deletebrand?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
+            return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.order + "</td><td>" + logo + "</td><td>" + resultrow.isdistributer + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editbrand?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=\"return confirm('Are you sure you want to delete?');\" href='<?php echo site_url('site/deletebrand?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
         }
         generatejquery("<?php echo $base_url;?>");
     </script>

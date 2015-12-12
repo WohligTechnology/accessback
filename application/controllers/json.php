@@ -1756,7 +1756,7 @@ echo $filepath;
         $orderorder = $this->input->get_post("orderorder");
         $maxrow = $this->input->get_post("maxrow");
         if ($maxrow == "") {
-            $maxrow = 20;
+            $maxrow = 50000;
         }
         if($orderby=="")
         {
