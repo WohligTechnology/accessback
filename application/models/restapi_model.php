@@ -255,7 +255,7 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
         }
     }
     public function updateorderstatusafterpayment($orderid,$transactionid){
-          $query=$this->db->query("UPDATE `paymentorder` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
+          $query=$this->db->query("UPDATE `order` SET `orderstatus`=2,`transactionid`='$transactionid' WHERE `id`='$orderid'");
         return 1;
     
     }
