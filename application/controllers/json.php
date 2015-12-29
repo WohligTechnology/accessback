@@ -59,10 +59,10 @@ class Json extends CI_Controller {
     public function orderemail() {
         $email = $this->input->get('email');
         $orderid = $this->input->get('orderid');
-        
+
 		$table =$this->order_model->getorderitem($this->input->get('orderid'));
 		$before=$this->order_model->beforeedit($this->input->get('orderid'));
-        
+
         $todaydata=date("Y-m-d");
         $this->load->library('email');
         $this->email->from('info@magicmirror.in', 'Magicmirror');
@@ -71,7 +71,7 @@ class Json extends CI_Controller {
         if($before['order']->billingaddress=="")
                         {
             $billingaddress=$before['order']->firstname." ".$before['order']->lastname."<br>".$before['order']->shippingaddress."<br>".$before['order']->shippingcity."<br>".$before['order']->shippingstate."<br>".$before['order']->shippingpincode;
-                        
+
                         }
                         else
                         {
@@ -85,7 +85,7 @@ class Json extends CI_Controller {
                         {
                              $shippingaddress=$before['order']->firstname." ".$before['order']->lastname."<br>".$before['order']->shippingaddress."<br>".$before['order']->shippingcity."<br>".$before['order']->shippingstate."<br>".$before['order']->shippingpincode;
                         }
-        
+
         $message="<html><body style=\"background:url('http://magicmirror.in/emaildata/emailer.jpg')no-repeat center; background-size:cover;\">
     <div text-align: center; width: 60%; margin: 0 auto; padding-left: 65px;'>
         <img src='http://magicmirror.in/emaildata/email.png'>
@@ -96,25 +96,25 @@ class Json extends CI_Controller {
             <tr align='right' style='border: 0px;'>
                 <td width='70%' style='border: 0px;'>
 &nbsp;
-                </td>             
-                     <td width='30%' style='border: 0px;'>
-                   Date :<span>$todaydata</span> 
                 </td>
-                                                   </tr> 
+                     <td width='30%' style='border: 0px;'>
+                   Date :<span>$todaydata</span>
+                </td>
+                                                   </tr>
                                                    <tr align='right' style='border: 0px;'>
                                                   <td width='70%' style='border: 0px;'>
 &nbsp;
-                </td> 
+                </td>
                                 <td width='30%' style='border: 0px;'>
                   Invoice No.:<span>$orderid</span>
                 </td>
             </tr>
         </table>
-        
+
         <table align='center' border='1' cellpadding='0' cellspacing='0' width='100%' style='border: 0px solid black;padding-bottom: 40px;'>
            <tr>
     <th style='padding: 10px 0;'>Billing Address</th>
-    <th style='padding: 10px 0;'>Shipping Address</th> 
+    <th style='padding: 10px 0;'>Shipping Address</th>
   </tr>
           <tr >
               <td width='50%' style='padding: 10px 15px;'>
@@ -122,14 +122,14 @@ class Json extends CI_Controller {
 </td>
               <td width='50%' style='padding: 10px 15px;'>
 <p>$shippingaddress</p>
- </td> 
-  </tr>  
+ </td>
+  </tr>
         </table>
-         
+
                  <table align='center' border='1' cellpadding='0' cellspacing='0' width='100%' style='border: 0px solid black;padding-bottom: 30px;'>
   <tr>
     <th style='padding: 10px 0;'>Id</th>
-    <th style='padding: 10px 0;'>Product</th> 
+    <th style='padding: 10px 0;'>Product</th>
     <th style='padding: 10px 0;'>Quantity</th>
     <th style='padding: 10px 0;'>Price</th>
     <th style='padding: 10px 0;'>Total Amount</th>
@@ -145,7 +145,7 @@ class Json extends CI_Controller {
             $message.="
             <tr>
                 <td align='center' style='padding: 10px 0;'>$count</td>
-                <td align='center' style='padding: 10px 0;'>$namesku</td> 
+                <td align='center' style='padding: 10px 0;'>$namesku</td>
                 <td align='center' style='padding: 10px 0;'>$quantity</td>
                 <td align='center' style='padding: 10px 0;'>$price</td>
                 <td align='center' style='padding: 10px 0;'>$finalprice</td>
@@ -154,7 +154,7 @@ class Json extends CI_Controller {
                             $counter++;
         }
   $message.="
-      
+
         </table>
     </div>
     <div style='text-align:center;position: relative;'>
@@ -178,13 +178,13 @@ class Json extends CI_Controller {
         $phone = $this->input->get_post('phone');
         $comment = $this->input->get_post('comment');
         $data["message"] = $this->user_model->usercontact($id, $name, $email, $phone, $comment);
-        
+
 //        $toemail="support@magicmirror.in";
 //        $this->load->library('email');
 //        $this->email->from($email, 'Magic Mirror');
 //        $this->email->to($toemail);
-//        $this->email->subject('Magic Mirror Contact');   
-//            
+//        $this->email->subject('Magic Mirror Contact');
+//
 //        $message = "<html>
 //
 //<body style=\"background:url('http://magicmirror.in/emaildata/emailer.jpg')no-repeat center; background-size:cover;\">
@@ -357,7 +357,7 @@ class Json extends CI_Controller {
       $product=$data["product"];
         $data["message"] = $this->product_model->addtowishlist($user, $product);
         $this->load->view("json", $data);
-    } 
+    }
     function removefromwishlist() {
          $data = json_decode(file_get_contents('php://input'), true);
       $user=$data["user"];
@@ -406,7 +406,7 @@ class Json extends CI_Controller {
         $data["message"] = $this->navigation_model->getnavigation();
         $this->load->view("json", $data);
     }
-   
+
     function getproductdetails() {
          $id = $this->input->get_post("id");
          $user = $this->input->get_post("user");
@@ -487,7 +487,7 @@ class Json extends CI_Controller {
 //        print_r($data);
         $data['redirect']="site/viewproduct";
         $this->load->view("redirect",$data);
-        
+
 //        $image = $this->input->get_post("image");
 //        $order = $this->input->get_post("order");
 //        if ($order == "1") {
@@ -495,7 +495,7 @@ class Json extends CI_Controller {
 //        } else {
 //            $default = 0;
 //        }
-//        $filepath="http://magicmirror.in/servepublicother?name=$filename"; 
+//        $filepath="http://magicmirror.in/servepublicother?name=$filename";
 //echo $filepath;
 //        $file = $this->csvreader->parse_file($filepath);
 //        print_r($file);
@@ -511,7 +511,7 @@ class Json extends CI_Controller {
     }
     public function getfile()
     {
-    $filepath="http://magicmirror.in/servepublicother?name=product (11).csv"; 
+    $filepath="http://magicmirror.in/servepublicother?name=product (11).csv";
 echo $filepath;
         $file = $this->csvreader->parse_file($filepath);
         print_r($file);
@@ -573,7 +573,7 @@ echo $filepath;
         $lengthstr = $this->input->get_post("length");
         $voltagestr = $this->input->get_post("voltage");
         $capacitystr = $this->input->get_post("capacity");
-            
+
         $color = explode(",",$colorstr);
         $type = explode(",",$typestr);
         $compatiblewith = explode(",",$compatiblewithstr);
@@ -581,17 +581,17 @@ echo $filepath;
         $material = explode(",",$materialstr);
         $design = explode(",",$designstr);
         $finish = explode(",",$finishstr);
-        
+
         $size = explode(",",$sizestr);
         $microphone = explode(",",$microphonestr);
         $length = explode(",",$lengthstr);
         $voltage = explode(",",$voltagestr);
         $capacity = explode(",",$capacitystr);
-        
+
         $where = " AND ";
-        
+
         //filter for category begin
-        
+
         if($catidstr != "" )
         {
             $subCat = $this->db->query("SELECT * FROM `category` WHERE `parent` IN ('$catidstr')");
@@ -607,15 +607,15 @@ echo $filepath;
 
             $where .= " `productcategory`.`category` IN ($subCatString) AND ";
         }
-        
+
         if($brandstr != "" )
         {
-            
+
             $where .= " `productbrand`.`brand` IN ($brandstr) AND ";
         }
-        
-        // SIZE 
-        
+
+        // SIZE
+
          if($sizestr != "")
         {
             if(count($size) > 0 )
@@ -634,8 +634,8 @@ echo $filepath;
                 {
                     $where .= ",'$siz'";
                 }
-            
-                
+
+
             }
             if(count($size) > 0 )
                 {
@@ -643,9 +643,9 @@ echo $filepath;
 
                 }
         }
-        
+
         //MICROPHONE
-        
+
          if($microphonestr != "")
         {
             if(count($microphone) > 0 )
@@ -664,8 +664,8 @@ echo $filepath;
                 {
                     $where .= ",'$mic'";
                 }
-            
-               
+
+
             }
              if(count($microphone) > 0 )
                 {
@@ -673,9 +673,9 @@ echo $filepath;
 
                 }
         }
-        
+
         //LENGTH
-        
+
          if($lengthstr != "")
         {
             if(count($length) > 0 )
@@ -694,8 +694,8 @@ echo $filepath;
                 {
                     $where .= ",'$len'";
                 }
-            
-                
+
+
             }
             if(count($length) > 0 )
                 {
@@ -703,9 +703,9 @@ echo $filepath;
 
                 }
         }
-        
+
         //VOLTAGE
-        
+
          if($voltagestr != "")
         {
             if(count($voltage) > 0 )
@@ -724,8 +724,8 @@ echo $filepath;
                 {
                     $where .= ",'$vol'";
                 }
-            
-               
+
+
             }
              if(count($voltage) > 0 )
                 {
@@ -733,12 +733,12 @@ echo $filepath;
 
                 }
         }
-        
-       
-        
+
+
+
         //CAPACITY
-        
-        
+
+
          if($capacitystr != "")
         {
             if(count($capacity) > 0 )
@@ -757,8 +757,8 @@ echo $filepath;
                 {
                     $where .= ",'$cap'";
                 }
-            
-                
+
+
             }
             if(count($capacity) > 0 )
                 {
@@ -766,7 +766,7 @@ echo $filepath;
 
                 }
         }
-        
+
         //filter for color begin
         if( $colorstr != "" )
         {
@@ -793,15 +793,15 @@ echo $filepath;
 
             }
         }
-        
+
         // COMPATIBLE WITH
-//        
+//
           if($compatiblewithstr != "")
         {
             $where .= " ( ";
             foreach($compatiblewith as $compwith)
             {
-                
+
                 $where .= " (`product`.`compatiblewith` LIKE '%$compwith,%' OR `product`.`compatiblewith` LIKE '%,$compwith%'  OR `product`.`compatiblewith` LIKE  '$compwith' ) OR ";
             }
               $where .=" 0 ) AND";
@@ -810,16 +810,16 @@ echo $filepath;
         // COMPATIBLE DEVICE
          if($compatibledevicestr != "")
         {
-            
+
             foreach($compatibledevice as $compdevice)
             {
-                
+
                 $where .= " `product`.`compatibledevice` LIKE '%$compdevice%' AND ";
             }
         }
-       
+
         //MATERIAL
-        
+
          if($materialstr != "")
         {
             if(count($material) > 0 )
@@ -838,8 +838,8 @@ echo $filepath;
                 {
                     $where .= ",'$fin'";
                 }
-            
-               
+
+
             }
              if(count($material) > 0 )
                 {
@@ -847,7 +847,7 @@ echo $filepath;
 
                 }
         }
-        
+
         // DESIGN
          if($designstr != "")
         {
@@ -867,8 +867,8 @@ echo $filepath;
                 {
                     $where .= ",'$deg'";
                 }
-            
-               
+
+
             }
              if(count($design) > 0 )
                 {
@@ -876,7 +876,7 @@ echo $filepath;
 
                 }
         }
-        
+
         //FINISH
         if($finishstr != "")
         {
@@ -896,7 +896,7 @@ echo $filepath;
                 {
                     $where .= ",'$fin'";
                 }
-                
+
             }
             if(count($finish) > 0 )
                 {
@@ -904,30 +904,30 @@ echo $filepath;
 
                 }
         }
-        
-        
+
+
         //filter for type begin
         if($typestr != "" )
         {
-            
+
             $where .= " `producttype`.`type` IN ($typestr) AND ";
         }
-        
-        
+
+
         //filter for color end
-        
+
         //filter for type begin
-        
+
         if($pricemin != "" && $pricemax != "")
         {
-            $where .= " `product`.`price` BETWEEN '$pricemin' AND '$pricemax' AND "; 
+            $where .= " `product`.`price` BETWEEN '$pricemin' AND '$pricemax' AND ";
         }
-        
+
         //filter for color end
-        
-            
-        
-        
+
+
+
+
         $elements = array();
         $elements[0] = new stdClass();
         $elements[0]->field = "`product`.`id`";
@@ -999,7 +999,7 @@ echo $filepath;
         $elements[13]->sort = "1";
         $elements[13]->header = "isfavid";
         $elements[13]->alias = "isfavid";
-        
+
         $search = $this->input->get_post("search");
         $pageno = $this->input->get_post("pageno");
         $orderby = $this->input->get_post("orderby");
@@ -1012,13 +1012,13 @@ echo $filepath;
         INNER JOIN `productcategory` ON `productcategory`.`product`=`product`.`id`
         INNER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id`
         INNER JOIN `producttype` ON `producttype`.`product`=`product`.`id`
-        LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid' 
-        LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1 
+        LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid'
+        LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1
         LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=0", "WHERE `product`.`status`=1 $where 1 " , ' GROUP BY `product`.`id` ');
         $data3["filter"] = $this->restapi_model->getFiltersLater($data3["data"]->querycomplete);
-        
+
         $data["message"] = $data3;
-        
+
         $this->load->view("json", $data);
     }
     function login() {
@@ -1038,14 +1038,14 @@ echo $filepath;
         $orderid = $_POST["orderid"];
         $email=$this->db->query("SELECT `email` FROM `order` WHERE `id`='$orderid'")->row();
         $email=$email->email;
-        
-        
+
+
 //        $email = $this->input->get('email');
         $orderid = $this->input->get('orderid');
-        
+
 		$table =$this->order_model->getorderitem($this->input->get('orderid'));
 		$before=$this->order_model->beforeedit($this->input->get('orderid'));
-        
+
         $todaydata=date("Y-m-d");
         $this->load->library('email');
         $this->email->from('info@magicmirror.in', 'Magicmirror');
@@ -1054,7 +1054,7 @@ echo $filepath;
         if($before['order']->billingaddress=="")
                         {
             $billingaddress=$before['order']->firstname." ".$before['order']->lastname."<br>".$before['order']->shippingaddress."<br>".$before['order']->shippingcity."<br>".$before['order']->shippingstate."<br>".$before['order']->shippingpincode;
-                        
+
                         }
                         else
                         {
@@ -1068,7 +1068,7 @@ echo $filepath;
                         {
                              $shippingaddress=$before['order']->firstname." ".$before['order']->lastname."<br>".$before['order']->shippingaddress."<br>".$before['order']->shippingcity."<br>".$before['order']->shippingstate."<br>".$before['order']->shippingpincode;
                         }
-        
+
         $message="<html><body style=\"background:url('http://magicmirror.in/emaildata/emailer.jpg')no-repeat center; background-size:cover;\">
     <div text-align: center; width: 60%; margin: 0 auto; padding-left: 65px;'>
         <img src='http://magicmirror.in/emaildata/email.png'>
@@ -1079,25 +1079,25 @@ echo $filepath;
             <tr align='right' style='border: 0px;'>
                 <td width='70%' style='border: 0px;'>
 &nbsp;
-                </td>             
-                     <td width='30%' style='border: 0px;'>
-                   Date :<span>$todaydata</span> 
                 </td>
-                                                   </tr> 
+                     <td width='30%' style='border: 0px;'>
+                   Date :<span>$todaydata</span>
+                </td>
+                                                   </tr>
                                                    <tr align='right' style='border: 0px;'>
                                                   <td width='70%' style='border: 0px;'>
 &nbsp;
-                </td> 
+                </td>
                                 <td width='30%' style='border: 0px;'>
                   Invoice No.:<span>$orderid</span>
                 </td>
             </tr>
         </table>
-        
+
         <table align='center' border='1' cellpadding='0' cellspacing='0' width='100%' style='border: 0px solid black;padding-bottom: 40px;'>
            <tr>
     <th style='padding: 10px 0;'>Billing Address</th>
-    <th style='padding: 10px 0;'>Shipping Address</th> 
+    <th style='padding: 10px 0;'>Shipping Address</th>
   </tr>
           <tr >
               <td width='50%' style='padding: 10px 15px;'>
@@ -1105,14 +1105,14 @@ echo $filepath;
 </td>
               <td width='50%' style='padding: 10px 15px;'>
 <p>$shippingaddress</p>
- </td> 
-  </tr>  
+ </td>
+  </tr>
         </table>
-         
+
                  <table align='center' border='1' cellpadding='0' cellspacing='0' width='100%' style='border: 0px solid black;padding-bottom: 30px;'>
   <tr>
     <th style='padding: 10px 0;'>Id</th>
-    <th style='padding: 10px 0;'>Product</th> 
+    <th style='padding: 10px 0;'>Product</th>
     <th style='padding: 10px 0;'>Quantity</th>
     <th style='padding: 10px 0;'>Price</th>
     <th style='padding: 10px 0;'>Total Amount</th>
@@ -1128,7 +1128,7 @@ echo $filepath;
             $message.="
             <tr>
                 <td align='center' style='padding: 10px 0;'>$count</td>
-                <td align='center' style='padding: 10px 0;'>$namesku</td> 
+                <td align='center' style='padding: 10px 0;'>$namesku</td>
                 <td align='center' style='padding: 10px 0;'>$quantity</td>
                 <td align='center' style='padding: 10px 0;'>$price</td>
                 <td align='center' style='padding: 10px 0;'>$finalprice</td>
@@ -1137,7 +1137,7 @@ echo $filepath;
                             $counter++;
         }
   $message.="
-      
+
         </table>
     </div>
     <div style='text-align:center;position: relative;'>
@@ -1154,7 +1154,7 @@ echo $filepath;
         $this->email->send();
 //        $data['message'] = $this->email->print_debugger();
 //        $this->load->view('json', $data);
-        
+
         $returnvalue = $this->order_model->updateorderstatusafterpayment($orderid);
         return $returnvalue;
     }
@@ -1246,7 +1246,7 @@ echo $filepath;
             $this->load->view("json", $data);
         }
     }
-    
+
     public function forgotpassword()
     {
          $data = json_decode(file_get_contents('php://input'), true);
@@ -1262,12 +1262,12 @@ echo $filepath;
         {
         $hashvalue=base64_encode ($userid."&access");
         $link="<a href='http://localhost/pav-bhaji/#/resetpassword/$hashvalue'>Click here </a> To Reset Your Password.";
-            
+
         $this->load->library('email');
         $this->email->from('pooja.wohlig@gmail.com', 'Access');
         $this->email->to($email);
-        $this->email->subject('Forgot Password');   
-            
+        $this->email->subject('Forgot Password');
+
         $message = "<html>
 
 <body style=\"background:url('http://magicmirror.in/emaildata/emailer.jpg')no-repeat center; background-size:cover;\">
@@ -1294,10 +1294,10 @@ echo $filepath;
 //        $data["message"] = $this->email->print_debugger();
 //        $data["message"] = 'true';
 //        $this->load->view("json", $data);
-        
+
     }
     }
-    
+
     public function forgotpasswordsubmit()
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -1306,61 +1306,61 @@ echo $filepath;
         $data['message']=$this->user_model->forgotpasswordsubmit($hashcode,$password);
         $this->load->view('json',$data);
     }
-    
-    function getuserorders() 
+
+    function getuserorders()
     {
         $userid = $this->input->get_post('user');
-        
+
         $elements = array();
-        
+
         $elements[0] = new stdClass();
         $elements[0]->field = "`order`.`id`";
         $elements[0]->sort = "1";
         $elements[0]->header = "ID";
         $elements[0]->alias = "id";
-        
+
         $elements[1] = new stdClass();
         $elements[1]->field = "`product`.`name`";
         $elements[1]->sort = "1";
         $elements[1]->header = "Product Name";
         $elements[1]->alias = "productname";
-        
+
         $elements[2] = new stdClass();
         $elements[2]->field = "DATE(`order`.`timestamp`)";
         $elements[2]->sort = "1";
         $elements[2]->header = "Date";
         $elements[2]->alias = "date";
-        
+
         $elements[3] = new stdClass();
         $elements[3]->field = "`product`.`sku`";
         $elements[3]->sort = "1";
         $elements[3]->header = "sku";
         $elements[3]->alias = "sku";
-        
+
         $elements[4] = new stdClass();
         $elements[4]->field = "`orderitems`.`quantity`";
         $elements[4]->sort = "1";
         $elements[4]->header = "quantity";
         $elements[4]->alias = "quantity";
-        
+
         $elements[5] = new stdClass();
         $elements[5]->field = "`orderitems`.`price`";
         $elements[5]->sort = "1";
         $elements[5]->header = "price";
         $elements[5]->alias = "price";
-        
+
         $elements[6] = new stdClass();
         $elements[6]->field = "`order`.`orderstatus`";
         $elements[6]->sort = "1";
         $elements[6]->header = "status";
         $elements[6]->alias = "status";
-        
+
         $elements[7] = new stdClass();
         $elements[7]->field = "`orderstatus`.`name`";
         $elements[7]->sort = "1";
         $elements[7]->header = "orderstatusname";
         $elements[7]->alias = "orderstatusname";
-        
+
         $search = $this->input->get_post("search");
         $pageno = $this->input->get_post("pageno");
         $orderby = $this->input->get_post("orderby");
@@ -1376,8 +1376,8 @@ echo $filepath;
         $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `orderitems` INNER JOIN `order` ON `order`.`id`=`orderitems`.`order` LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","WHERE `order`.`user`='$userid'");
         $this->load->view("json", $data);
     }
-    
-    
+
+
     function getordertrace() {
         $data = json_decode(file_get_contents('php://input'), true);
         $orderid=$data['order'];
@@ -1425,20 +1425,20 @@ echo $filepath;
         $data['message']=$this->user_model->beforeedit($id);
         $this->load->view("json", $data);
     }
-    
+
      public function checkorderstatus()
      {
          $orderid=$this->input->get('orderid');
          $data['message']=$this->order_model->checkorderstatus($orderid);
          $this->load->view('json',$data);
      }
-    
+
      public function getorderforpayment()
      {
          $data['data']=$_GET;
          $this->load->view('paymentpage',$data);
      }
-    
+
     public function productimagereorderbyid()
     {
         $id=$this->input->get_post("id");
@@ -1448,37 +1448,37 @@ echo $filepath;
     public function getbrand()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        $elements = array();      
+        $elements = array();
         $elements[0] = new stdClass();
         $elements[0]->field = "`brand`.`id`";
         $elements[0]->sort = "1";
         $elements[0]->header = "ID";
         $elements[0]->alias = "id";
-        
+
         $elements[1] = new stdClass();
         $elements[1]->field = "`brand`.`name`";
         $elements[1]->sort = "1";
         $elements[1]->header = "Name";
         $elements[1]->alias = "name";
-        
+
         $elements[2] = new stdClass();
         $elements[2]->field = "`brand`.`order`";
         $elements[2]->sort = "1";
         $elements[2]->header = "order";
         $elements[2]->alias = "orderbrand";
-        
+
         $elements[3] = new stdClass();
         $elements[3]->field = "`brand`.`logo`";
         $elements[3]->sort = "1";
         $elements[3]->header = "logo";
-        $elements[3]->alias = "logo"; 
-        
+        $elements[3]->alias = "logo";
+
         $elements[4] = new stdClass();
         $elements[4]->field = "`brand`.`isdistributer`";
         $elements[4]->sort = "1";
         $elements[4]->header = "isdistributer";
         $elements[4]->alias = "isdistributer";
-        
+
         $search = $this->input->get_post("search");
         $pageno = $this->input->get_post("pageno");
         $orderby = $this->input->get_post("orderby");
@@ -1494,12 +1494,12 @@ echo $filepath;
         $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `brand`");
         $this->load->view("json", $data);
     }
-    
-    
+
+
        public function getproduct()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-           
+
         $brand = $data['brand'];
         $price1 = $data['price1'];
         $price2 = $data['price2'];
@@ -1598,11 +1598,11 @@ echo $filepath;
         }
         $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` INNER JOIN `productcategory` ON `product`.`id`=`productcategory`.`product` INNER JOIN `category` ON `category`.`id`=`productcategory`.`category` LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1  AND `product`.`name` LIKE '%$color%' $pricefilter AND (   $iscategory )", ' GROUP BY `product`.`id` ');
         $this->load->view("json", $data);
-    } 
-  
-    
+    }
+
+
     // EXCLUSIVE AND NEW ARRIVALS
-    
+
      public function getexclusiveandnewarrival()
     {
           $userid=$this->session->userdata("id");
@@ -1682,19 +1682,19 @@ echo $filepath;
         $elements[11]->sort = "1";
         $elements[11]->header = "image2";
         $elements[11]->alias = "image2";
-         
+
         $elements[12] = new stdClass();
         $elements[12]->field = "`product`.`quantity`";
         $elements[12]->sort = "1";
         $elements[12]->header = "quantity";
         $elements[12]->alias = "quantity";
-         
+
         $elements[13] = new stdClass();
         $elements[13]->field = "`newarrival`.`order`";
         $elements[13]->sort = "1";
         $elements[13]->header = "ordern";
         $elements[13]->alias = "ordern";
-         
+
         $elements[14] = new stdClass();
         $elements[14]->field = "`userwishlist`.`user`";
         $elements[14]->sort = "1";
@@ -1717,12 +1717,12 @@ echo $filepath;
         $this->load->view("json", $data);
     }
 
-    
+
     // CLIENTS
-    
+
      public function getaboutus()
     {
-        
+
         $elements = array();
         $elements[0] = new stdClass();
         $elements[0]->field = "`about`.`id`";
@@ -1749,7 +1749,7 @@ echo $filepath;
         $elements[4]->sort = "1";
         $elements[4]->header = "status";
         $elements[4]->alias = "status";
-       
+
         $search = $this->input->get_post("search");
         $pageno = $this->input->get_post("pageno");
         $orderby = $this->input->get_post("orderby");
@@ -1766,18 +1766,18 @@ echo $filepath;
         $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `about`","WHERE `about`.`status`=1");
         $this->load->view("json", $data);
     }
-    
+
     // BRANDED PRODUCTS
-    
-    
+
+
     public function getproductbybrand()
     {
         // $data = json_decode(file_get_contents('php://input'), true);
         $brandid=$this->input->get_post("brandid");
         $userid=$this->session->userdata("id");
-        
+
         // $brandid=$data['brandid'];
-        
+
          $getproductids=$this->db->query("SELECT `product` FROM `productbrand` WHERE `brand`='$brandid'")->result();
           $productids="(";
             foreach($getproductids as $key=>$value){
@@ -1866,7 +1866,7 @@ echo $filepath;
         $elements[13]->sort = "1";
         $elements[13]->header = "isfavid";
         $elements[13]->alias = "isfavid";
-       
+
         $search = $this->input->get_post("search");
         $pageno = $this->input->get_post("pageno");
         $orderby = $this->input->get_post("orderby");
@@ -1876,16 +1876,16 @@ echo $filepath;
             $maxrow = 5;
         }
               $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id`LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid'   LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND `product`.`id` IN $productids ", ' GROUP BY `product`.`id` ');
-        
+
         $this->load->view("json", $data);
     }
-    
+
     public function getofferdetails(){
          $userid=$this->session->userdata("id");
           $data["message"] = $this->restapi_model->getmultipleoffer($userid);
         $this->load->view("json", $data);
     }
-   
+
     public function getwishlistproduct(){
       $data = json_decode(file_get_contents('php://input'), true);
          $user=$data['user'];
@@ -1906,7 +1906,7 @@ echo $filepath;
         if($productids=="()"){
         $productids="(0)";
         }
-        
+
         $elements = array();
         $elements[0] = new stdClass();
         $elements[0]->field = "`product`.`id`";
@@ -1973,7 +1973,7 @@ echo $filepath;
         $elements[12]->sort = "1";
         $elements[12]->header = "quantity";
         $elements[12]->alias = "quantity";
-       
+
         $search = $this->input->get_post("search");
         $pageno = $this->input->get_post("pageno");
         $orderby = $this->input->get_post("orderby");
@@ -1983,12 +1983,12 @@ echo $filepath;
             $maxrow = 20;
         }
               $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id` LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND `product`.`id` IN $productids ", ' GROUP BY `product`.`id` ');
-        
+
 
         $this->load->view("json", $data);
     }
-    
-    
+
+
       public function getallproducts()
     {
         $userid=$this->session->userdata("id");
@@ -2063,7 +2063,7 @@ echo $filepath;
         $elements[13]->sort = "1";
         $elements[13]->header = "isfavid";
         $elements[13]->alias = "isfavid";
-       
+
         $search = $this->input->get_post("search");
         $pageno = $this->input->get_post("pageno");
         $orderby = $this->input->get_post("orderby");
@@ -2075,13 +2075,13 @@ echo $filepath;
               $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id` LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid'  LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1", ' GROUP BY `product`.`id` ');
         $this->load->view("json", $data);
     }
-    
+
     public function getsubscribe(){
         $email=$this->input->get('email');
         $data['message']=$this->restapi_model->getsubscribe($email);
         $this->load->view("json", $data);
     }
-    
+
     public function getofferproducts(){
       $offerid=$this->input->get('offerid');
         $data['message']=$this->restapi_model->getofferproducts($offerid);
@@ -2103,7 +2103,7 @@ echo $filepath;
     public function getHomeProducts(){
      $data['message']=$this->restapi_model->getHomeProducts();
         $this->load->view("json", $data);
-    } 
+    }
     public function getFilters(){
           $categoryid=$this->input->get('category');
           $brandid=$this->input->get('brand');
@@ -2119,13 +2119,19 @@ echo $filepath;
     $data['message']=$this->restapi_model->checkstatus($orderid);
 	 $this->load->view('json',$data);
         }
-    public function payumoneysuccess()
- {
-     $orderid=$this->input->get('orderid');
-     $transactionid=$this->input->get_post('transactionid');
-     $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid);
-	 $this->load->view('json',$data);
- }
-    
+        public function payumoneysuccess()
+   {
+          $workingKey='BA5A83DE5E895D2CA00652D19C51F89F';
+  	$encResponse=$this->input->post("encResp");
+  	$rcvdString=$this->ccavenue->decrypt($encResponse,$workingKey);
+          $decryptValues=explode('&', $rcvdString);
+  $json = json_encode($decryptValues);
+  $transactionid = explode('=',$decryptValues[1])[1];
+  echo explode('=',$decryptValues[3])[1];
+  $orderid = $this->input->post("orderNo");
+       //$data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json);
+  	 //$this->load->view('json',$data);
+   }
+
 }
 ?>

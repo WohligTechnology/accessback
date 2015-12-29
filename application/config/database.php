@@ -94,8 +94,8 @@ if($myserver!="localhost")
 //    $db['default']['dbcollat'] = 'utf8_general_ci';
 //    $db['default']['swap_pre'] = '';
 //    $db['default']['autoinit'] = TRUE;
-//    $db['default']['stricton'] = FALSE; 
-    
+//    $db['default']['stricton'] = FALSE;
+
     $db['default']['hostname'] = 'localhost';
     $db['default']['username'] = 'acceskq2_fynx';
     $db['default']['password'] = 'chintan123';
@@ -145,7 +145,7 @@ else
 //$db['testing']['swap_pre'] = '';
 //$db['testing']['autoinit'] = TRUE;
 //$db['testing']['stricton'] = FALSE;
-    
+
 
 // Production (App Engine Cloud SQL) DB Settings
 //$db['production']['hostname'] = 'localhost';
