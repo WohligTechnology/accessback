@@ -254,8 +254,8 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
         return 0;
         }
     }
-		public function updateorderstatusafterpayment($orderid,$transactionid,$json){
-          $query=$this->db->query("UPDATE `order` SET `orderstatus`=2, `trackingcode`='$transactionid', `json`='$json' WHERE `id`='$orderid'");
+		public function updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus){
+          $query=$this->db->query("UPDATE `order` SET `orderstatus`='$orderstatus', `trackingcode`='$transactionid', `json`='$json' WHERE `id`='$orderid'");
 redirect("http://accessinfoworld.com");
         //return 1;
 

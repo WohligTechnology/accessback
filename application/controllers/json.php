@@ -2119,18 +2119,22 @@ echo $filepath;
     $data['message']=$this->restapi_model->checkstatus($orderid);
 	 $this->load->view('json',$data);
         }
-        public function payumoneysuccess()
-   {
+        public function payumoneysuccess(){
           $workingKey='BA5A83DE5E895D2CA00652D19C51F89F';
-  	$encResponse=$this->input->post("encResp");
-  	$rcvdString=$this->ccavenue->decrypt($encResponse,$workingKey);
-          $decryptValues=explode('&', $rcvdString);
-  $json = json_encode($decryptValues);
-  $transactionid = explode('=',$decryptValues[1])[1];
-  echo explode('=',$decryptValues[3])[1];
-  $orderid = $this->input->post("orderNo");
-       //$data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json);
-  	 //$this->load->view('json',$data);
+  	       $encResponse=$this->input->post("encResp");
+  	        $rcvdString=$this->ccavenue->decrypt($encResponse,$workingKey);
+            $decryptValues=explode('&', $rcvdString);
+            $json = json_encode($decryptValues);
+            $transactionid = explode('=',$decryptValues[1])[1];
+            $status = explode('=',$decryptValues[3])[1];
+            if ($status=='Success') {
+              $orderstatus = 2;
+            }else {
+              $orderstatus = 5;
+            }
+            $orderid = $this->input->post("orderNo");
+            $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus);
+  	         $this->load->view('json',$data);
    }
 
 }
