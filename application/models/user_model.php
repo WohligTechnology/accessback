@@ -345,7 +345,7 @@ class User_model extends CI_Model
 
         if($num == 0)
         {
-             $this->db->query("INSERT INTO `user`(`firstname`, `lastname`, `email`, `password`) VALUE('$firstname','$lastname','$email','$password')");
+             $this->db->query("INSERT INTO `user`(`firstname`, `lastname`, `email`, `password`,`accesslevel`) VALUE('$firstname','$lastname','$email','$password','3')");
             $user=$this->db->insert_id();
             $this->db->query("INSERT INTO `newsletterusers`(`user`, `email`, `status`) VALUES ('$user','$email','0')");
             $newdata = array(
