@@ -933,9 +933,11 @@ class Site extends CI_Controller
 		$this->product_model->deleteproduct($this->input->get('id'));
 		$data['table']=$this->product_model->viewproduct();
 		$data['alertsuccess']="product Deleted Successfully";
-		$data['page']='viewproduct';
+		$data['page']='viewproductnew';
 		$data['title']='View product';
-		$this->load->view('template',$data);
+//		$this->load->view('template',$data);
+        $data["redirect"]="site/viewproduct";
+        $this->load->view("redirect",$data);
 	}
 	function uploadproductimage()
 	{
