@@ -66,7 +66,8 @@
         if (resultrow.image == "") {
             image = "No Receipt Available";
         }
-            return "<tr><a href='http://accessworld.in/#/productdetail/'"+resultrow.id+"'><td>" + resultrow.order + "</td><td>" + image + "</td><td>" + resultrow.product + "</td><td>" + resultrow.productid + "</td></a></tr>";
+            return "<tr><td>" + resultrow.order + "</td><td><a href='http://accessworld.in/#/productdetail/"+ resultrow.productid +"' target='_blank'>" + resultrow.product + "</a></td><td>" + image + "</td><td>" + resultrow.productid + "</td></tr>";
+//            <a href='http://accessworld.in/#/productdetail/158'></a>
         }
         generatejquery("<?php echo $base_url;?>");
     </script>
