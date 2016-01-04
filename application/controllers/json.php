@@ -421,7 +421,7 @@ class Json extends CI_Controller {
     }
     function getdiscountcoupon() {
         $couponcode = $this->input->get_post("couponcode");
-        $query = $this->db->query("SELECT * from `discountcoupon` WHERE `couponcode` LIKE '$couponcode' AND `status`=1 ");
+        $query = $this->db->query("SELECT * from `discountcoupon` WHERE `couponcode` LIKE '$couponcode' ");
         if ($query->num_rows() > 0) {
             $data['message'] = $query->row();
         } else {
@@ -2127,14 +2127,15 @@ echo $filepath;
             $decryptValues=explode('&', $rcvdString);
             $json = json_encode($decryptValues);
             $transactionid = explode('=',$decryptValues[1])[1];
+            $couponcode = explode('=',$decryptValues[26])[1];
             $status = explode('=',$decryptValues[3])[1];
             if ($status=='Success') {
-              $orderstatus = 2;
+             $orderstatus = 2;
             }else {
               $orderstatus = 5;
             }
             $orderid = $this->input->post("orderNo");
-            $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus);
+            $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus,$couponcode);
   	         $this->load->view('json',$data);
    }
 

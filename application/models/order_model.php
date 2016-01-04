@@ -94,13 +94,8 @@ class Order_model extends CI_Model
 
 
         }
-        
-        // COUPON CODE
-        
-        if($couponcode!="")
-        {
-             $updatecouponcode=$this->db->query("UPDATE `discountcoupon` SET `status`=0 WHERE `couponcode`='$couponcode'");
-        }
+
+
 		$table =$this->order_model->getorderitem($order);
 		$before=$this->order_model->beforeedit($order);
 
@@ -108,7 +103,7 @@ class Order_model extends CI_Model
         $this->load->library('email');
         $this->email->from('info@magicmirror.in', 'Magicmirror');
         $this->email->to($email);
-        $this->email->bcc('them@their-example.com'); 
+        $this->email->bcc('them@their-example.com');
         $this->email->subject('Magic Mirror Order');
         if($before['order']->billingaddress=="")
                         {
@@ -226,7 +221,8 @@ class Order_model extends CI_Model
 		$query=$this->db->query("INSERT INTO `order`(`user`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`) VALUES ('$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$shippingaddress','$shippingcity','$shippingcountry','$shippingstate','$shippingpincode','$billingpincode')");
 
 
-        $userquery=$this->db->query("UPDATE `user` SET `firstname`='$firstname',`lastname`='$lastname',`phone`='$phone',`status`='$status',`billingaddress`='$billingaddress',`billingcity`='$billingcity',`billingstate`='$billingstate',`billingcountry`='$billingcountry',`shippingaddress`='$shippingaddress',`shippingcity`='$shippingcity',`shippingcountry`='$shippingcountry',`shippingstate`='$shippingstate',`shippingpincode`='$shippingpincode',`companyname`='$company',`fax`='$fax' WHERE `id`='$user'");
+        $userquery=$this->db->query("UPDATE `user` SET
+`firstname`='$firstname',`lastname`='$lastname',`phone`='$phone',`status`='$status',`billingaddress`='$billingaddress',`billingcity`='$billingcity',`billingstate`='$billingstate',`billingcountry`='$billingcountry',`shippingaddress`='$shippingaddress',`shippingcity`='$shippingcity',`shippingcountry`='$shippingcountry',`shippingstate`='$shippingstate',`shippingpincode`='$shippingpincode',`companyname`='$company',`fax`='$fax' WHERE `id`='$user'");
 		return $order;
 	}*/
 
@@ -487,7 +483,7 @@ class Order_model extends CI_Model
         }
 	}
     function exportdateordercsv()
-	{ 
+	{
         $orderdate=$this->input->get('date');
         if($orderdate !=""){
             $where="WHERE DATE(`order`.`timestamp`)='$orderdate'";

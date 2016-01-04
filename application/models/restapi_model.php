@@ -254,7 +254,7 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
         return 0;
         }
     }
-		public function updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus)
+		public function updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus,$couponcode)
         {
           $query=$this->db->query("UPDATE `order` SET `orderstatus`='$orderstatus', `trackingcode`='$transactionid', `json`='$json' WHERE `id`='$orderid'");
             $query1=$this->db->query("SELECT SUM(`finalprice`) as `price` FROM `orderitems` WHERE `order`='$orderid'")->row();
@@ -266,7 +266,7 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
             if($credits < $finalprice)
             {
                 $queryuser=$this->db->query("UPDATE `user` SET `credits`=0 WHERE `id`='$user'");
-                
+
             }
             else if($credits == $finalprice)
             {
@@ -277,7 +277,13 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
                  $newcredits=$credits-$finalprice;
                  $queryuser=$this->db->query("UPDATE `user` SET `credits`='$newcredits' WHERE `id`='$user'");
             }
-            
+// COUPON CODE
+
+        if($couponcode!="")
+        {
+             $updatecouponcode=$this->db->query("UPDATE `discountcoupon` SET `status`=0 WHERE `couponcode`='$couponcode'");
+        }
+
             redirect("http://accessinfoworld.com");
         //return 1;
 
