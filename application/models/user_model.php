@@ -295,6 +295,13 @@ class User_model extends CI_Model
 		$usercount=$query->usercount;
 		return $usercount;
 	}
+    public function getmonthlysales($month,$year)
+	{
+		$query=$this->db->query("SELECT COUNT(*) as `usercount` FROM `user`")->row();
+		$usercount=$query->usercount;
+		return $usercount;
+	}
+    
 	function editaddress($id,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode)
 	{
 		$data  = array(
