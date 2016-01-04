@@ -2778,6 +2778,7 @@ class Site extends CI_Controller
 		$data[ 'country' ] =$this->user_model->getcountry();
 		$data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 		$data[ 'currency' ] =$this->currency_model->getcurrencydropdown();
+		$data[ 'trackingcompany' ] =$this->user_model->gettrackingcompanydropdown();
 		$data['before']=$this->order_model->beforeedit($this->input->get('id'));
 		$data['page']='createorder';
 		//$data['page2']='block/orderblock';
@@ -2809,6 +2810,7 @@ class Site extends CI_Controller
 			$data[ 'country' ] =$this->user_model->getcountry();
 			$data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 			$data[ 'currency' ] =$this->currency_model->getcurrencydropdown();
+            $data[ 'trackingcompany' ] =$this->user_model->gettrackingcompanydropdown();
 			$data['before']=$this->order_model->beforeedit($this->input->get('id'));
 			$data['page']='createorder';
 			$data['page2']='block/orderblock';
@@ -2836,7 +2838,8 @@ class Site extends CI_Controller
 			$trackingcode=$this->input->post('trackingcode');
 			$billingcontact=$this->input->post('billingcontact');
 			$shippingcontact=$this->input->post('shippingcontact');
-			if(($this->order_model->createorder($user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$currency,$orderstatus,$trackingcode,$billingcontact,$shippingcontact))==0)
+			$trackingcompany=$this->input->post('trackingcompany');
+			if(($this->order_model->createorder($user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$currency,$orderstatus,$trackingcode,$billingcontact,$shippingcontact,$trackingcompany))==0)
 				$data['alerterror']="Order could not be Created.";
 			else
 				$data['alertsuccess']="Order  edited Successfully.";
@@ -2857,6 +2860,7 @@ class Site extends CI_Controller
 		$data[ 'country' ] =$this->user_model->getcountry();
 		$data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 		$data[ 'currency' ] =$this->currency_model->getcurrencydropdown();
+        $data[ 'trackingcompany' ] =$this->user_model->gettrackingcompanydropdown();
 		$data['before']=$this->order_model->beforeedit($this->input->get('id'));
 		$data['page']='editorder';
 		$data['page2']='block/orderblock';
@@ -2888,6 +2892,7 @@ class Site extends CI_Controller
 			$data[ 'country' ] =$this->user_model->getcountry();
 			$data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 			$data[ 'currency' ] =$this->currency_model->getcurrencydropdown();
+            $data[ 'trackingcompany' ] =$this->user_model->gettrackingcompanydropdown();           
 			$data['before']=$this->order_model->beforeedit($this->input->get('id'));
 			$data['page']='editorder';
 			$data['page2']='block/orderblock';
@@ -2916,7 +2921,8 @@ class Site extends CI_Controller
 			$trackingcode=$this->input->post('trackingcode');
 			$billingcontact=$this->input->post('billingcontact');
 			$shippingcontact=$this->input->post('shippingcontact');
-			if(($this->order_model->edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$currency,$orderstatus,$trackingcode,$billingcontact,$shippingcontact))==0)
+			$trackingcompany=$this->input->post('trackingcompany');
+			if(($this->order_model->edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$currency,$orderstatus,$trackingcode,$billingcontact,$shippingcontact,$trackingcompany))==0)
 				$data['alerterror']="Order could not be edited.";
 			else
             {

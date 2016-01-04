@@ -98,13 +98,19 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Shipping Pincode</label>
 						<div class="col-sm-4">
-						  <input type="text" id="" name="shippingpincode" class="form-control" value="<?php echo set_value('shippingpincode',$before['order']->shippingcountry); ?>">
+						  <input type="text" id="" name="shippingpincode" class="form-control" value="<?php echo set_value('shippingpincode',$before['order']->shippingpincode); ?>">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Trackingcode</label>
 						<div class="col-sm-4">
 						  <input type="text" id="" name="trackingcode" class="form-control" value="<?php echo set_value('trackingcode',$before['order']->trackingcode); ?>">
+						</div>
+					</div>
+                    <div class="form-group">
+						<label class="col-sm-2 control-label">Tracking Company</label>
+						<div class="col-sm-4">
+						  <?php echo form_dropdown('trackingcompany',$trackingcompany,set_value('trackingcompany',$before['order']->trackingcompany),'class="chzn-select trackingcompany form-control"'); ?>
 						</div>
 					</div>
 					<div class="form-group">

@@ -264,6 +264,18 @@ class User_model extends CI_Model
 			);
 		return $status;
 	}
+    public function gettrackingcompanydropdown()
+	{
+		$status= array(
+			 "" => "Choose Tracking Company",
+			 "1" => "DHL",
+			 "2" => "Blue dart",
+			 "3" => " FedEx",
+			 "4" => " DTDC",
+			 "5" => " Gati"
+			);
+		return $status;
+	}
 	public function getcountry()
 	{
 		$query=$this->db->query("SELECT * FROM `country`  ORDER BY `name` ASC")->result();
