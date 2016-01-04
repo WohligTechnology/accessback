@@ -61,6 +61,15 @@
 							?>
 						</div>
 					</div>
+                    	<div class="form-group">
+						<label class="col-sm-2 control-label">Status</label>
+						<div class="col-sm-4">
+						  <?php
+							
+							echo form_dropdown('status',$status,set_value('status'),'class="chzn-select form-control" 	data-placeholder=""');
+						?>
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">&nbsp;</label>
 						<div class="col-sm-4">	

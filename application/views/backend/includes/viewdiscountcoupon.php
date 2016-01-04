@@ -16,6 +16,7 @@
 					<!--<th>Id</th>-->
 					<th>Coupon Type</th>
 					<th>Coupon Code</th>
+					<th>Status</th>
 					<th> Actions </th>
 				</tr>
 			</thead>
@@ -25,6 +26,7 @@
 						<!--<td><?php echo $row->id; ?></td>-->
 						<td><?php echo $row->coupontype; ?></td>
 						<td><?php echo $row->couponcode; ?></td>
+						<td><?php echo $row->status; ?></td>
 						<td> <a class="btn btn-primary btn-xs" href="<?php echo site_url('site/editdiscountcoupon?id=').$row->id;?>"><i class="icon-pencil"></i></a>
                                       <a onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-xs" href="<?php echo site_url('site/deletediscountcoupon?id=').$row->id; ?>"><i class="icon-trash "></i></a>
 									 

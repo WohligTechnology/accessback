@@ -749,7 +749,7 @@ $val=$this->db->update('user', $data);
         return $userdata;
     }
       function getuserdetails($id){
-    $query=$this->db->query("SELECT `id`, `firstname`, `lastname`, `email`, `phone`,`billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingpincode` FROM `user` WHERE `id`='$id'")->row();
+    $query=$this->db->query("SELECT `id`, `firstname`, `lastname`, `email`, `phone`,`billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingpincode`,`credits` FROM `user` WHERE `id`='$id'")->row();
     return $query;
     }
     function getusercartdetails($userid)

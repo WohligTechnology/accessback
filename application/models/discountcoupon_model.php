@@ -4,7 +4,7 @@ if ( !defined( 'BASEPATH' ) )
 class discountcoupon_model extends CI_Model
 {
 	//discountcoupon
-	public function creatediscountcoupon($coupontype,$discountpercent,$discountamount,$minamount,$xproducts,$yproducts,$couponcode,$product)
+	public function creatediscountcoupon($coupontype,$discountpercent,$discountamount,$minamount,$xproducts,$yproducts,$couponcode,$product,$status)
 	{
 		$data  = array(
 			'coupontype' => $coupontype,
@@ -14,6 +14,7 @@ class discountcoupon_model extends CI_Model
 			'xproducts' => $xproducts,
 			'yproducts' => $yproducts,
 			'couponcode' => $couponcode,
+			'status' => $status
 			
 		);
 		$query=$this->db->insert( 'discountcoupon', $data );
@@ -33,9 +34,7 @@ class discountcoupon_model extends CI_Model
 	}
 	function viewdiscountcoupon()
 	{
-		$query=$this->db->query("SELECT `discountcoupon`.`id`,`coupontype`.`name` as `coupontype`,`discountcoupon`.`couponcode`,`discountcoupon`.`coupontype` as `coupontypeid` FROM `discountcoupon` 
-		INNER JOIN  `coupontype` ON  `coupontype`.`id`=`discountcoupon`.`coupontype`
-		ORDER BY `discountcoupon`.`id` ASC")->result();
+		$query=$this->db->query("SELECT `discountcoupon`.`id`,`coupontype`.`name` as `coupontype`,`discountcoupon`.`couponcode`,`discountcoupon`.`coupontype` as `coupontypeid`, IF(`discountcoupon`.`status`='1','Enable', 'Disable') as `Status` FROM `discountcoupon` INNER JOIN `coupontype` ON `coupontype`.`id`=`discountcoupon`.`coupontype` ORDER BY `discountcoupon`.`id` ASC")->result();
 		return $query;
 	}
 	public function beforeeditdiscountcoupon( $id )
@@ -51,7 +50,7 @@ class discountcoupon_model extends CI_Model
 		return $query;
 	}
 	
-	public function editdiscountcoupon( $id,$coupontype,$discountpercent,$discountamount,$minamount,$xproducts,$yproducts,$couponcode,$product)
+	public function editdiscountcoupon( $id,$coupontype,$discountpercent,$discountamount,$minamount,$xproducts,$yproducts,$couponcode,$product,$status)
 	{
 		$data = array(
 			'coupontype' => $coupontype,
@@ -61,6 +60,7 @@ class discountcoupon_model extends CI_Model
 			'xproducts' => $xproducts,
 			'yproducts' => $yproducts,
 			'couponcode' => $couponcode,
+			'status' => $status
 		);
 		$this->db->where( 'id', $id );
 		$this->db->update( 'discountcoupon', $data );
