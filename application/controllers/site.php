@@ -26,9 +26,80 @@ class Site extends CI_Controller
 		$access = array("1","2");
 		$this->checkaccess($access);
 		$data[ 'page' ] = 'dashboard';
+		$data["base_url"]=site_url("site/viewdashboardjson");
 		$data[ 'title' ] = 'Welcome';
 		$this->load->view( 'template', $data );	
 	}
+    public function getDate()
+	{
+		//$access = array("1","2");
+		$access = array("1","2");
+		$this->checkaccess($access);
+        $orderdate=$this->input->get_post('orderdate');
+        $data['orderdate']=$orderdate;
+		$data[ 'page' ] = 'dashboard';
+        $data["base_url"]=site_url("site/viewdashboardjson?date=".$orderdate);
+		$data[ 'title' ] = 'Welcome';
+		$this->load->view( 'template', $data );	
+	}
+    function viewdashboardjson()
+    {
+        $orderdate=$this->input->get('date');
+        if($orderdate !=""){
+            $where="WHERE DATE(`order`.`timestamp`)='$orderdate'";
+        }
+        else{
+            $where="WHERE 0";
+        }
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`order`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="Order No";
+        $elements[0]->alias="order";
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`product`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Product";
+        $elements[1]->alias="product";
+		
+        $elements[2]=new stdClass();
+        $elements[2]->field="`orderitems`.`quantity`";
+        $elements[2]->sort="1";
+        $elements[2]->header="Quantity";
+        $elements[2]->alias="quantity";
+        
+        $elements[3]=new stdClass();
+        $elements[3]->field="`product`.`id`";
+        $elements[3]->sort="1";
+        $elements[3]->header="Product Id";
+        $elements[3]->alias="productid"; 
+        
+        $elements[4]=new stdClass();
+        $elements[4]->field="`order`.`timestamp`";
+        $elements[4]->sort="1";
+        $elements[4]->header="timestamp";
+        $elements[4]->alias="timestamp";
+		
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+        $maxrow=20;
+        }
+        if($orderby=="")
+        {
+        $orderby="id";
+        $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `order` LEFT OUTER JOIN `orderitems` ON `orderitems`.`order`=`order`.`id` LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product`","$where");
+        $this->load->view("json",$data);
+    }
 	public function createuser()
 	{
 		$access = array("1");
@@ -3518,6 +3589,14 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
 		$this->product_model->exportproductcsv();
         $data['redirect']="site/viewproduct";
+        $this->load->view("redirect",$data);
+	}	
+    public function exportdateordercsv()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->order_model->exportdateordercsv();
+        $data['redirect']="site/index";
         $this->load->view("redirect",$data);
 	}
     

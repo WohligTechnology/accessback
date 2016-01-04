@@ -478,6 +478,37 @@ class Order_model extends CI_Model
              echo 'File written!';
         }
 	}
+    function exportdateordercsv()
+	{ 
+        $orderdate=$this->input->get('date');
+        if($orderdate !=""){
+            $where="WHERE DATE(`order`.`timestamp`)='$orderdate'";
+        }
+        else{
+            $where="WHERE 0";
+        }
+		$this->load->dbutil();
+		$query=$this->db->query("SELECT `order`.`id` as `Order Id`,`product`.`id` as `Product Id`,`product`.`name` as `Product Name`,`orderitems`.`quantity` as `Quantity` FROM `order` LEFT OUTER JOIN `orderitems` ON `orderitems`.`order`=`order`.`id` LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product` $where");
+
+       $content= $this->dbutil->csv_from_result($query);
+        $timestamp=new DateTime();
+        $timestamp=$timestamp->format('Y-m-d_H.i.s');
+        //$data = 'Some file data';
+
+//        file_put_contents("gs://magicmirroruploads/orders_$timestamp.csv", $content);
+//		redirect("http://magicmirror.in/servepublic?name=orders_$timestamp.csv", 'refresh');
+        //$data = 'Some file data';
+//magicmirroruploads
+        if ( ! write_file('./csvgenerated/orderdatefile.csv', $content))
+        {
+             echo 'Unable to write the file';
+        }
+        else
+        {
+            redirect(base_url('csvgenerated/orderdatefile.csv'), 'refresh');
+             echo 'File written!';
+        }
+	}
     function exportorderitemcsv()
 	{
 		$this->load->dbutil();
