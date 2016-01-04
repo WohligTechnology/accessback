@@ -38,6 +38,7 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
         $orderdate=$this->input->get_post('orderdate');
         $data['orderdate']=$orderdate;
+        $data[ 'usercount' ] = $this->user_model->getusercount();
 		$data[ 'page' ] = 'dashboard';
         $data["base_url"]=site_url("site/viewdashboardjson?date=".$orderdate);
 		$data[ 'title' ] = 'Welcome';
@@ -82,7 +83,13 @@ class Site extends CI_Controller
         $elements[4]->field="`order`.`timestamp`";
         $elements[4]->sort="1";
         $elements[4]->header="timestamp";
-        $elements[4]->alias="timestamp";
+        $elements[4]->alias="timestamp";  
+        
+        $elements[5]=new stdClass();
+        $elements[5]->field="`productimage`.`image`";
+        $elements[5]->sort="1";
+        $elements[5]->header="Image";
+        $elements[5]->alias="image";
 		
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
@@ -98,7 +105,10 @@ class Site extends CI_Controller
         $orderby="id";
         $orderorder="ASC";
         }
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `order` LEFT OUTER JOIN `orderitems` ON `orderitems`.`order`=`order`.`id` LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product`","$where");
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `order` 
+LEFT OUTER JOIN `orderitems` ON `orderitems`.`order`=`order`.`id` 
+LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product`
+LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$where","GROUP BY `product`.`id`");
         $this->load->view("json",$data);
     }
 	public function createuser()

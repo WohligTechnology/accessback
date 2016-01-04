@@ -43,8 +43,8 @@
                                 <thead>
                                     <tr>
                                         <th data-field="order">Order No</th>
-                                        <th data-field="productid">Product Id</th>
                                         <th data-field="product">Product</th>
+                                        <th data-field="image">Image</th>
                                         <th data-field="quantity">Quantity</th>
                                 </thead>
                                 <tbody>
@@ -62,8 +62,11 @@
     </div>
     <script>
         function drawtable(resultrow) {
-
-            return "<tr><td>" + resultrow.order + "</td><td>" + resultrow.productid + "</td><td>" + resultrow.product + "</td><td>" + resultrow.quantity + "</td></tr>";
+ var image = "<a class='img-center' href='<?php echo base_url('uploads').'/'; ?>" + resultrow.image + "' ><img src='<?php echo base_url('uploads').'/'; ?>" + resultrow.image + "'></a>";
+        if (resultrow.image == "") {
+            image = "No Receipt Available";
+        }
+            return "<tr><a href='http://accessworld.in/#/productdetail/'"+resultrow.id+"'><td>" + resultrow.order + "</td><td>" + image + "</td><td>" + resultrow.product + "</td><td>" + resultrow.productid + "</td></a></tr>";
         }
         generatejquery("<?php echo $base_url;?>");
     </script>

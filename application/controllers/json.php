@@ -421,7 +421,7 @@ class Json extends CI_Controller {
     }
     function getdiscountcoupon() {
         $couponcode = $this->input->get_post("couponcode");
-        $query = $this->db->query("SELECT * from `discountcoupon` WHERE `couponcode` LIKE '$couponcode' ");
+        $query = $this->db->query("SELECT * from `discountcoupon` WHERE `couponcode` LIKE '$couponcode' AND `status`=1 ");
         if ($query->num_rows() > 0) {
             $data['message'] = $query->row();
         } else {
