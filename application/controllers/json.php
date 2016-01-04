@@ -1489,7 +1489,7 @@ echo $filepath;
             $maxrow = 20;
         }
         if ($orderby == "") {
-            $orderby = "name";
+            $orderby = "orderbrand";
             $orderorder = "ASC";
         }
         $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `brand`");
@@ -1983,9 +1983,9 @@ echo $filepath;
         if ($maxrow == "") {
             $maxrow = 20;
         }
-              $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id` 
-LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1 
-LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=0", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND `product`.`id` IN $productids ", ' GROUP BY `product`.`id` ');
+              $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product` LEFT OUTER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id` LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=0 LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=1", "WHERE `product`.`visibility`=1 AND `product`.`status`=1 AND `product`.`id` IN $productids ", ' GROUP BY `product`.`id` ');
+
+
         $this->load->view("json", $data);
     }
 
@@ -2127,7 +2127,8 @@ LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` 
             $decryptValues=explode('&', $rcvdString);
             $json = json_encode($decryptValues);
             $transactionid = explode('=',$decryptValues[1])[1];
-            $couponcode = explode('=',$decryptValues[26])[1];
+$amount = explode('=',$decryptValues[10])[1];
+$couponcode = explode('=',$decryptValues[26])[1];
             $status = explode('=',$decryptValues[3])[1];
             if ($status=='Success') {
              $orderstatus = 2;
@@ -2135,8 +2136,8 @@ LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` 
               $orderstatus = 5;
             }
             $orderid = $this->input->post("orderNo");
-            $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus,$couponcode);
-  	         $this->load->view('json',$data);
+            $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus,$couponcode,$amount);
+  	    $this->load->view('json',$data);
    }
 
 }
