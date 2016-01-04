@@ -257,8 +257,26 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
 		public function updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus)
         {
           $query=$this->db->query("UPDATE `order` SET `orderstatus`='$orderstatus', `trackingcode`='$transactionid', `json`='$json' WHERE `id`='$orderid'");
-//            $query1=$this->db->query("SELECT SUM(`finalprice`) as `price` FROM `orderitems` WHERE `order`='$orderid'")->row();
-//            $finalprice=$query1->price;
+            $query1=$this->db->query("SELECT SUM(`finalprice`) as `price` FROM `orderitems` WHERE `order`='$orderid'")->row();
+            $orderdetails=$this->db->query("SELECT * FROM `order` WHERE `id`='$orderid'")->row();
+            $user=$orderdetails->user;
+            $userdetails=$this->db->query("SELECT * FROM `user` WHERE `id`='$user'")->row();
+            $credits=$userdetails->credits;
+            $finalprice=$query1->price;
+            if($credits < $finalprice)
+            {
+                $queryuser=$this->db->query("UPDATE `user` SET `credits`=0 WHERE `id`='$user'");
+                
+            }
+            else if($credits == $finalprice)
+            {
+                 $queryuser=$this->db->query("UPDATE `user` SET `credits`=0 WHERE `id`='$user'");
+            }
+            else if($credits > $finalprice)
+            {
+                 $newcredits=$credits-$finalprice;
+                 $queryuser=$this->db->query("UPDATE `user` SET `credits`='$newcredits' WHERE `id`='$user'");
+            }
             
             redirect("http://accessinfoworld.com");
         //return 1;

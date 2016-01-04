@@ -62,7 +62,7 @@ class Order_model extends CI_Model
             $query=$this->db->query("INSERT INTO `usercart`(`user`, `product`, `quantity`) VALUES ('$user','$product','$quantity')");
         }
     }
-    function placeorder($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote)
+    function placeorder($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode)
 	{
         if($firstname == "")
 				{
@@ -94,8 +94,13 @@ class Order_model extends CI_Model
 
 
         }
-
-
+        
+        // COUPON CODE
+        
+        if($couponcode!="")
+        {
+             $updatecouponcode=$this->db->query("UPDATE `discountcoupon` SET `status`=0 WHERE `couponcode`='$couponcode'");
+        }
 		$table =$this->order_model->getorderitem($order);
 		$before=$this->order_model->beforeedit($order);
 

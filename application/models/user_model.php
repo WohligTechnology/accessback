@@ -554,7 +554,7 @@ class User_model extends CI_Model
         }
         //echo $where;
         
-            $query=$this->db->query("SELECT `product`.`id`,`product`.`name`,`product`.`sku`,`product`.`description`,`product`.`url`,`product`.`price`,`product`.`wholesaleprice`, `product`.`firstsaleprice`,`product`.`secondsaleprice`,`product`.`specialpriceto`,`product`.`specialpricefrom`,`image1`.`image` as `image1`,`image2`.`image` as `image2` FROM `product` 
+            $query=$this->db->query("SELECT `product`.`id`,`product`.`name`,`product`.`sku`,`product`.`description`,`product`.`url`,`product`.`price`,`product`.`wholesaleprice`, `product`.`firstsaleprice`,`product`.`secondsaleprice`,`product`.`specialpriceto`,`product`.`specialpricefrom`,`image1`.`image` as `image1`,`image2`.`image` as `image2`,`product`.`quantity` FROM `product` 
        LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1 
         LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=0 $where  GROUP BY `product`.`id`");
         //echo "SELECT `product`.`id`,`product`.`name`,`product`.`sku`,`product`.`description`,`product`.`url`,`product`.`price`,`product`.`wholesaleprice`, `product`.`firstsaleprice`,`product`.`secondsaleprice`,`product`.`specialpriceto`,`product`.`specialpricefrom`,`productimage`.`image` FROM `product` INNER JOIN `productimage` ON `productimage`.`product`=`product`.`id` $where  GROUP BY `product`.`id`";
@@ -575,7 +575,10 @@ class User_model extends CI_Model
 
     function addtocart($product,$productname,$quantity,$price) {
         //$data=$this->cart->contents();
-
+        
+        $productdetails=$this->db->query("SELECT * FROM `product` WHERE `id` = '$product'")->row();
+        $productquantity=$productdetails->quantity;
+        
         $image=$this->db->query("SELECT `image` FROM `productimage` WHERE `product` = '$product' LIMIT 0,1")->row();
         $image=$image->image;
         
@@ -586,7 +589,8 @@ class User_model extends CI_Model
                'price'   => $price,
                'image'   => $image,
                 'options' =>array(
-                    'realname' => $productname
+                    'realname' => $productname,
+                    'productquantity' => $productquantity
                 )
         );
         //array_push($data,$data2);
