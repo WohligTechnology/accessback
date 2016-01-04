@@ -1,7 +1,7 @@
 <div class="col-lg-3 col-sm-3">
             <section class="panel">
                 <div class="symbol terques">
-                    <i class="icon-building"></i>
+                    <i class="icon-user"></i>
                 </div>
                 <div class="value">
                     <p>Total Users </p>
@@ -17,11 +17,10 @@
     <label class="col-sm-2 control-label" for="normal-field"><strong>Enter Date</strong></label>
     <div class="col-sm-4">
         <input type="date" id="normal-field" class="form-control" name="orderdate" value='<?php echo set_value(' orderdate ',$orderdate);?>'>
-    </div>
+    </div>   
+         <div class="col-sm-2">
+         <button type="submit" class="btn btn-info">Submit</button> </div>
 </div>
-  <div class="col-md-10">
-      <button type="submit" class="btn btn-info">Submit</button>
-    </div>
 </form>
 
     

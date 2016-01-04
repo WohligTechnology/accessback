@@ -108,6 +108,7 @@ class Order_model extends CI_Model
         $this->load->library('email');
         $this->email->from('info@magicmirror.in', 'Magicmirror');
         $this->email->to($email);
+        $this->email->bcc('them@their-example.com'); 
         $this->email->subject('Magic Mirror Order');
         if($before['order']->billingaddress=="")
                         {
