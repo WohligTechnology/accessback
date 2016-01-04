@@ -254,9 +254,13 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
         return 0;
         }
     }
-		public function updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus){
+		public function updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus)
+        {
           $query=$this->db->query("UPDATE `order` SET `orderstatus`='$orderstatus', `trackingcode`='$transactionid', `json`='$json' WHERE `id`='$orderid'");
-redirect("http://accessinfoworld.com");
+//            $query1=$this->db->query("SELECT SUM(`finalprice`) as `price` FROM `orderitems` WHERE `order`='$orderid'")->row();
+//            $finalprice=$query1->price;
+            
+            redirect("http://accessinfoworld.com");
         //return 1;
 
     }
