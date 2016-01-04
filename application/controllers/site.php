@@ -26,6 +26,7 @@ class Site extends CI_Controller
 		$access = array("1","2");
 		$this->checkaccess($access);
 		$data[ 'page' ] = 'dashboard';
+		$data[ 'usercount' ] = $this->user_model->getusercount();
 		$data["base_url"]=site_url("site/viewdashboardjson");
 		$data[ 'title' ] = 'Welcome';
 		$this->load->view( 'template', $data );	

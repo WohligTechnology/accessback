@@ -3959,3 +3959,29 @@ a.btn-poss {
     position: relative;
     right: 193px;
 }
+.terques {
+    background: #6ccac9;
+}
+.symbol i {
+    color: #fff;
+    font-size: 50px;
+}
+.value {
+    width: 58%;
+    padding-top: 8px;
+    display: inline-block;
+    text-align: center;
+}
+.value h1, .state-overview .value p {
+    margin: 0;
+    padding: 0;
+    color: #c6cad6;
+}
+.symbol {
+    width: 40%;
+    padding: 25px 15px;
+    -webkit-border-radius: 4px 0px 0px 4px;
+    border-radius: 4px 0px 0px 4px;
+    display: inline-block;
+    text-align: center;
+}

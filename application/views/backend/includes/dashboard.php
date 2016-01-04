@@ -1,3 +1,16 @@
+<div class="col-lg-3 col-sm-3">
+            <section class="panel">
+                <div class="symbol terques">
+                    <i class="icon-building"></i>
+                </div>
+                <div class="value">
+                    <p>Total Users </p>
+                    <h1><?php echo $usercount?></h1>
+
+                </div>
+
+            </section>
+        </div>
 
 <form method="post" action="<?php echo site_url('site/getDate');?>">
      <div class="form-group">
@@ -11,7 +24,7 @@
     </div>
 </form>
 
-
+    
 <div class="showtable">
 <div class=" row" style="padding:1% 0;">
     <div class="col-md-10">
