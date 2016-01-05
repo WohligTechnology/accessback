@@ -787,8 +787,13 @@ $timestamp=new DateTime();
 
 $this->db->where('id', $id);
 $val=$this->db->update('user', $data); 
-        $userdata=$this->user_model->getuserdetails($id);
-        return $userdata;
+       if($val){
+           return true;
+       }
+        else{
+            return false;
+        }
+        
     }
       function getuserdetails($id){
     $query=$this->db->query("SELECT `id`, `firstname`, `lastname`, `email`, `phone`,`billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingpincode`,`credits` FROM `user` WHERE `id`='$id'")->row();
