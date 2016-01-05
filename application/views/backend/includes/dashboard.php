@@ -12,7 +12,6 @@
     </section>
 </div>
 
-<!--
 <div class="col-lg-3 col-sm-3">
     <section class="panel">
         <div class="symbol terques">
@@ -26,7 +25,6 @@
 
     </section>
 </div>
--->
 
 <form method="post" action="<?php echo site_url('site/getDate');?>">
     <div class="row">

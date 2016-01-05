@@ -297,15 +297,15 @@ class User_model extends CI_Model
 	}
     public function getmonthlysales()
 	{
-        $now = new \DateTime('now');
-        $month = $now->format('m');
-        $year = $now->format('Y');
-        $last_day_this_month  = date('m-t-Y');
-        $first_day_this_month  = date('Y-m-01');
         
-		$query=$this->db->query("SELECT IFNULL(SUM(`finalamount`),0) as `sumamount` FROM `order` WHERE DATE(`timestamp`) BETWEEN '$first_day_this_month' AND  $last_day_this_month")->row();
+    $todaysdate=date("Y-m-d");
+    $firstdate=date('Y-m-01', strtotime($todaysdate));
+    $lastdate=date('Y-m-t', strtotime($todaysdate));
+        
+		$query=$this->db->query("SELECT IFNULL(SUM(`finalamount`),0) as `sumamount` FROM `order` WHERE DATE(`timestamp`) BETWEEN '$firstdate' AND  '$lastdate'")->row();
 		$sumamount=$query->sumamount;
 		return $sumamount;
+        
 	}
     
 	function editaddress($id,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode)
@@ -609,6 +609,13 @@ class User_model extends CI_Model
         
         $productdetails=$this->db->query("SELECT * FROM `product` WHERE `id` = '$product'")->row();
         $productquantity=$productdetails->quantity;
+        $firstsaleprice=$productdetails->firstsaleprice;
+        if($firstsaleprice !=""){
+            $price=$firstsaleprice;
+        }
+        else{
+            $price=$price;
+        }
         
         $image=$this->db->query("SELECT `image` FROM `productimage` WHERE `product` = '$product' LIMIT 0,1")->row();
         $image=$image->image;

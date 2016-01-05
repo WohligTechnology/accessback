@@ -2136,19 +2136,18 @@ $couponcode = explode('=',$decryptValues[26])[1];
             $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus,$couponcode,$amount);
   	    $this->load->view('json',$data);
    }
-    public function test(){
-         $now = new \DateTime('now');
-        echo " now  ".$now;
-        $month = $now->format('m');
-        echo " month  ".$now;
-        $year = $now->format('Y');
-        echo " year  ".$now;
-        $last_day_this_month  = date('m-t-Y');
-        echo " last day  ".$now;
-        $first_day_this_month  = date('Y-m-01');
-        echo " first day  ".$now;
+      public function getmonthlysales()
+	{  
+    $todaysdate=date("Y-m-d");
+    $firstdate=date('Y-m-01', strtotime($todaysdate));
+    $lastdate=date('Y-m-t', strtotime($todaysdate));
         
-    }
+		$query=$this->db->query("SELECT IFNULL(SUM(`finalamount`),0) as `sumamount` FROM `order` WHERE DATE(`timestamp`) BETWEEN '$firstdate' AND  '$lastdate'")->row();
+      
+		$sumamount=$query->sumamount;
+		return $sumamount;
+        
+	}
 
 }
 ?>
