@@ -36,7 +36,9 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-info">Submit</button>
+    <button type="submit" class="btn btn-info" style="
+    float: right;
+    margin-top: -63px;">Submit</button>
 </form>
 
 
