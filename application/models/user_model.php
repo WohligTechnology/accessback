@@ -782,9 +782,8 @@ $timestamp=new DateTime();
                'billingcity'=> $billingcity,
                'billingpincode'=> $billingpincode,
                'billingcountry'=> $billingcountry,
-               'billingstate'=> $billingstate,
+               'billingstate'=> $billingstate
             );
-
 $this->db->where('id', $id);
 $val=$this->db->update('user', $data); 
        if($val){
