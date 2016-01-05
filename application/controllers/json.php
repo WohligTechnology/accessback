@@ -1486,7 +1486,7 @@ echo $filepath;
             $maxrow = 20;
         }
         if ($orderby == "") {
-            $orderby = "orderbrand";
+            $orderby = "name";
             $orderorder = "ASC";
         }
         $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `brand`");
