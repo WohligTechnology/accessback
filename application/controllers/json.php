@@ -1320,29 +1320,11 @@ echo $filepath;
         $elements[0]->header = "ID";
         $elements[0]->alias = "id";
 
-        $elements[1] = new stdClass();
-        $elements[1]->field = "`product`.`name`";
-        $elements[1]->sort = "1";
-        $elements[1]->header = "Product Name";
-        $elements[1]->alias = "productname";
-
         $elements[2] = new stdClass();
         $elements[2]->field = "DATE(`order`.`timestamp`)";
         $elements[2]->sort = "1";
         $elements[2]->header = "Date";
         $elements[2]->alias = "date";
-
-        $elements[3] = new stdClass();
-        $elements[3]->field = "`product`.`sku`";
-        $elements[3]->sort = "1";
-        $elements[3]->header = "sku";
-        $elements[3]->alias = "sku";
-
-        $elements[4] = new stdClass();
-        $elements[4]->field = "`orderitems`.`quantity`";
-        $elements[4]->sort = "1";
-        $elements[4]->header = "quantity";
-        $elements[4]->alias = "quantity";
 
         $elements[5] = new stdClass();
         $elements[5]->field = "`orderitems`.`price`";
@@ -1355,6 +1337,12 @@ echo $filepath;
         $elements[6]->sort = "1";
         $elements[6]->header = "status";
         $elements[6]->alias = "status";
+        
+        $elements[6] = new stdClass();
+        $elements[6]->field = "`order`.`finalamount`";
+        $elements[6]->sort = "1";
+        $elements[6]->header = "finalamount";
+        $elements[6]->alias = "finalamount";
 
         $elements[7] = new stdClass();
         $elements[7]->field = "`orderstatus`.`name`";
@@ -1368,13 +1356,22 @@ echo $filepath;
         $orderorder = $this->input->get_post("orderorder");
         $maxrow = $this->input->get_post("maxrow");
         if ($maxrow == "") {
-            $maxrow = 5;
+            $maxrow = 10;
         }
         if ($orderby == "") {
             $orderby = "id";
             $orderorder = "ASC";
         }
-        $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `orderitems` INNER JOIN `order` ON `order`.`id`=`orderitems`.`order` LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","WHERE `order`.`user`='$userid'");
+        $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `orderitems` INNER JOIN `order` ON `order`.`id`=`orderitems`.`order` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","WHERE `order`.`user`='$userid'");
+        
+//        multiple products
+        
+         foreach($data["message"]->queryresult as $row)
+        {
+            $orderid=$row->id;
+            $row->products=$this->db->query("SELECT `orderitems`.`product`,`product`.`name`,`productimage`.`image`, `orderitems`.`quantity`, `orderitems`.`price`, `orderitems`.`discount`, `orderitems`.`finalprice` FROM `orderitems` LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product` LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id` WHERE `orderitems`.`order`='$orderid' GROUP BY `product`.`id`")->result();
+        }
+        
         $this->load->view("json", $data);
     }
 
@@ -2139,6 +2136,19 @@ $couponcode = explode('=',$decryptValues[26])[1];
             $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus,$couponcode,$amount);
   	    $this->load->view('json',$data);
    }
+    public function test(){
+         $now = new \DateTime('now');
+        echo " now  ".$now;
+        $month = $now->format('m');
+        echo " month  ".$now;
+        $year = $now->format('Y');
+        echo " year  ".$now;
+        $last_day_this_month  = date('m-t-Y');
+        echo " last day  ".$now;
+        $first_day_this_month  = date('Y-m-01');
+        echo " first day  ".$now;
+        
+    }
 
 }
 ?>

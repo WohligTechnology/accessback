@@ -295,11 +295,17 @@ class User_model extends CI_Model
 		$usercount=$query->usercount;
 		return $usercount;
 	}
-    public function getmonthlysales($month,$year)
+    public function getmonthlysales()
 	{
-		$query=$this->db->query("SELECT COUNT(*) as `usercount` FROM `user`")->row();
-		$usercount=$query->usercount;
-		return $usercount;
+        $now = new \DateTime('now');
+        $month = $now->format('m');
+        $year = $now->format('Y');
+        $last_day_this_month  = date('m-t-Y');
+        $first_day_this_month  = date('Y-m-01');
+        
+		$query=$this->db->query("SELECT IFNULL(SUM(`finalamount`),0) as `sumamount` FROM `order` WHERE DATE(`timestamp`) BETWEEN '$first_day_this_month' AND  $last_day_this_month")->row();
+		$sumamount=$query->sumamount;
+		return $sumamount;
 	}
     
 	function editaddress($id,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode)
