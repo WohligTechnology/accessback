@@ -173,10 +173,12 @@ class Json extends CI_Controller {
         $this->load->view('json', $data);
     }
     function usercontact() {
-        $name = $this->input->get_post('name');
-        $email = $this->input->get_post('email');
-        $phone = $this->input->get_post('phone');
-        $comment = $this->input->get_post('comment');
+         $data = json_decode(file_get_contents('php://input'), true);
+        //print_r($data);
+        $name = $data['name'];
+        $email = $data['email'];
+        $phone = $data['phone'];
+        $comment = $data['comment'];
         $data["message"] = $this->user_model->usercontact($id, $name, $email, $phone, $comment);
 
 //        $toemail="support@magicmirror.in";
