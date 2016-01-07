@@ -306,7 +306,7 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
              $updatecouponcode=$this->db->query("UPDATE `discountcoupon` SET `status`=0 WHERE `couponcode`='$couponcode'");
         }
 
-            redirect("http://accessworld.in/#/thankyou?order='$orderid'");  
+            redirect("http://accessworld.in/#/thankyou/".$orderid);  
         }
     else
     {
