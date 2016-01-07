@@ -2197,6 +2197,14 @@ $couponcode = explode('=',$decryptValues[26])[1];
   	    $this->load->view('json',$data);
         
 	}
+      public function getorderbyorderid()
+	{  
+       $orderid=$this->input->get_post('id');
+     $data['message']=$this->restapi_model->getorderbyorderid($orderid);
+  	    $this->load->view('json',$data);
+        
+	}
+    
 
 }
 ?>

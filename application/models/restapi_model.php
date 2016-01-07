@@ -306,7 +306,7 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
              $updatecouponcode=$this->db->query("UPDATE `discountcoupon` SET `status`=0 WHERE `couponcode`='$couponcode'");
         }
 
-            redirect("http://accessinfoworld.com");  
+            redirect("http://accessworld.in/#/thankyou?order='$orderid'");  
         }
     else
     {
@@ -319,6 +319,10 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
          $query=$this->db->query("SELECT `quantity` FROM `product` WHERE `id`='$prodid'")->row();
          $quantity=$query->quantity;
         return $quantity;
+    }
+    public function getorderbyorderid($orderid){
+         $query=$this->db->query("SELECT `id`, `user`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `defaultcurrency`, `timestamp`, `totalamount`, `discountamount`, `finalamount`, `discountcoupon`, `paymentmethod`, `orderstatus`, `currency`, `trackingcode`, `billingpincode`, `shippingmethod`, `shippingname`, `shippingtel`, `customernote`, `billingcontact`, `shippingcontact`, `json`, `trackingcompany` FROM `order` WHERE `id`='$orderid'")->row();
+        return $query;
     }
 }
 ?>
