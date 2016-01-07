@@ -90,7 +90,7 @@ class Order_model extends CI_Model
             $querycart=$this->db->query("INSERT INTO `orderitems`(`order`, `product`, `quantity`, `price`, `finalprice`) VALUES ('$order','".$cart['id']."','".$cart['qty']."','".$cart['price']."','".$cart['subtotal']."')");
             $quantity=intval($cart['qty']);
             $productid=$cart['id'];
-            $this->db->query("UPDATE `product` SET `product`.`quantity`=`product`.`quantity`-$quantity WHERE `product`.`id`='$productid'");
+         
 
 
         }
@@ -399,7 +399,7 @@ class Order_model extends CI_Model
 	}
 	public function getorderstatus()
 	{
-		$query=$this->db->query("SELECT * FROM `orderstatus` ORDER BY `name` ASC" )->result();
+		$query=$this->db->query("SELECT * FROM `orderstatus` WHERE `status`=1 ORDER BY `name` ASC" )->result();
 		$return=array(
 
 		);

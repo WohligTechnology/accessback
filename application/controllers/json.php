@@ -2140,14 +2140,14 @@ $couponcode = explode('=',$decryptValues[26])[1];
    }
       public function getmonthlysales()
 	{  
-    $todaysdate=date("Y-m-d");
-    $firstdate=date('Y-m-01', strtotime($todaysdate));
-    $lastdate=date('Y-m-t', strtotime($todaysdate));
-        
-		$query=$this->db->query("SELECT IFNULL(SUM(`finalamount`),0) as `sumamount` FROM `order` WHERE DATE(`timestamp`) BETWEEN '$firstdate' AND  '$lastdate'")->row();
-      
-		$sumamount=$query->sumamount;
-		return $sumamount;
+         $data = json_decode(file_get_contents('php://input'), true);
+        $orderid = $data['o'];
+        $transactionid = $data['t'];
+        $json = $data['j'];
+        $couponcode = $data['c'];
+        $amount = $data['a'];
+     $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json,2,$couponcode,$amount);
+  	    $this->load->view('json',$data);
         
 	}
 

@@ -257,9 +257,15 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
 		public function updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus,$couponcode,$amount)
         {
           $query=$this->db->query("UPDATE `order` SET `orderstatus`='$orderstatus', `finalamount`='$amount', `trackingcode`='$transactionid', `json`='$json' WHERE `id`='$orderid'");
+            
+    if($orderstatus==2)
+        {
+              //CHECK IF PAYMENT IS SUCCESSFUL
+            
             $query1=$this->db->query("SELECT SUM(`finalprice`) as `price` FROM `orderitems` WHERE `order`='$orderid'")->row();
             $orderdetails=$this->db->query("SELECT * FROM `order` WHERE `id`='$orderid'")->row();
             $user=$orderdetails->user;
+            
             $userdetails=$this->db->query("SELECT * FROM `user` WHERE `id`='$user'")->row();
             $credits=$userdetails->credits;
             $finalprice=$query1->price;
@@ -277,14 +283,30 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
                  $newcredits=$credits-$finalprice;
                  $queryuser=$this->db->query("UPDATE `user` SET `credits`='$newcredits' WHERE `id`='$user'");
             }
-// COUPON CODE
+            
+              // REDUCE PRODUCT QUANTITY
+            
+            $orderitems=$this->db->query("SELECT * FROM `orderitems` WHERE `order`='$orderid'")->result();
+            
+            foreach($orderitems as $orderitem){
+                $productid=$orderitem->product;
+                $quantity=$orderitem->quantity;
+                 $this->db->query("UPDATE `product` SET `product`.`quantity`=`product`.`quantity`-$quantity WHERE `product`.`id`='$productid'");
+            }
+            
+                // COUPON CODE
 
         if($couponcode!="")
         {
              $updatecouponcode=$this->db->query("UPDATE `discountcoupon` SET `status`=0 WHERE `couponcode`='$couponcode'");
         }
 
-            redirect("http://accessinfoworld.com");
+            redirect("http://accessinfoworld.com");  
+        }
+    else
+    {
+              redirect("http://accessinfoworld.com");  
+    }
         //return 1;
 
     }

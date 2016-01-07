@@ -52,7 +52,7 @@ class Site extends CI_Controller
     {
         $orderdate=$this->input->get('date');
         if($orderdate !=""){
-            $where="WHERE DATE(`order`.`timestamp`)='$orderdate'";
+            $where="WHERE DATE(`order`.`timestamp`)='$orderdate' AND `order`.`orderstatus` IN(2,3)";
         }
         else{
             $where="WHERE 0";
@@ -3032,7 +3032,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
             $orderby="id";
             $orderorder="ASC";
         }
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `order` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`");
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `order` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","WHERE `order`.`orderstatus`<>1");
         $this->load->view("json",$data);
     }
 
