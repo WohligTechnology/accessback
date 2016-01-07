@@ -262,6 +262,7 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
         {
               //CHECK IF PAYMENT IS SUCCESSFUL
             
+            
             $query1=$this->db->query("SELECT SUM(`finalprice`) as `price` FROM `orderitems` WHERE `order`='$orderid'")->row();
             $orderdetails=$this->db->query("SELECT * FROM `order` WHERE `id`='$orderid'")->row();
             $user=$orderdetails->user;
@@ -283,7 +284,11 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
                  $newcredits=$credits-$finalprice;
                  $queryuser=$this->db->query("UPDATE `user` SET `credits`='$newcredits' WHERE `id`='$user'");
             }
-            
+            // DESTROY CART
+        
+             $this->cart->destroy();
+             $deletecart=$this->db->query("DELETE FROM `usercart` WHERE `user`='$user'");
+        
               // REDUCE PRODUCT QUANTITY
             
             $orderitems=$this->db->query("SELECT * FROM `orderitems` WHERE `order`='$orderid'")->result();
@@ -309,6 +314,11 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
     }
         //return 1;
 
+    }
+    public function checkproductquantity($prodid){
+         $query=$this->db->query("SELECT `quantity` FROM `product` WHERE `id`='$prodid'")->row();
+         $quantity=$query->quantity;
+        return $quantity;
     }
 }
 ?>

@@ -627,8 +627,7 @@ class User_model extends CI_Model
                'price'   => $price,
                'image'   => $image,
                 'options' =>array(
-                    'realname' => $productname,
-                    'productquantity' => $productquantity
+                    'realname' => $productname
                 )
         );
         //array_push($data,$data2);

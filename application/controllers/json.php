@@ -286,27 +286,74 @@ class Json extends CI_Controller {
     }
     function showcart() {
         $userid=$this->session->userdata("id");
+        $newcart=array();
         if($userid!="")
         {
             $cart = $this->cart->contents();
-            $newcart = array();
             foreach ($cart as $item) {
                 array_push($newcart, $item);
             }
-            $data["message"] = $newcart;
-            $this->load->view("json", $data);
         }
         else
         {
             $cart = $this->cart->contents();
-            $newcart = array();
+            foreach ($cart as $item) {
+                $quantity=$item->options->productquantity;
+                $productid=$item->id;
+                array_push($newcart, $item);
+            }
+        }
+        $data["message"]=array();
+        foreach($newcart as $element)
+        {
+            $proid=$element["id"];
+            $element["maxQuantity"]=$this->restapi_model->checkproductquantity($proid);
+            array_push($data["message"], $element);
+        }
+        
+        $this->load->view("json", $data);
+    }
+    
+    function checkoutCheck() {
+        $userid=$this->session->userdata("id");
+        $newcart=array();
+        if($userid!="")
+        {
+            $cart = $this->cart->contents();
             foreach ($cart as $item) {
                 array_push($newcart, $item);
             }
-            $data["message"] = $newcart;
-            $this->load->view("json", $data);
         }
+        else
+        {
+            $cart = $this->cart->contents();
+            foreach ($cart as $item) {
+                $quantity=$item->options->productquantity;
+                $productid=$item->id;
+                array_push($newcart, $item);
+            }
+        }
+        $returnWhat=new stdClass();
+        $returnWhat->value=true;
+        $data["message"]=array();
+        foreach($newcart as $element)
+        {
+            $proid=$element["id"];
+            $element["maxQuantity"]=$this->restapi_model->checkproductquantity($proid);
+            $maxQuantity = intval($element["maxQuantity"]);
+            $cartQuantity = intval($element["qty"]);
+            if($cartQuantity <= $maxQuantity) {
+                //Enjoy
+            }
+            else
+            {
+                 $returnWhat->value=false;
+            }
+        }
+        $data["message"]=$returnWhat;
+        $this->load->view("json", $data);
     }
+    
     function totalcart() {
         $data["message"] = $this->cart->total();
         $this->load->view("json", $data);
