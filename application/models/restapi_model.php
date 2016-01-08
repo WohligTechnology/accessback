@@ -310,7 +310,7 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
         }
     else
     {
-              redirect("http://accessinfoworld.com");  
+              redirect("http://accessworld.in/#/sorry/".$orderid);   
     }
         //return 1;
 
