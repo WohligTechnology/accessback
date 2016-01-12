@@ -791,12 +791,13 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$length=$this->input->post('length');
 			$capacity=$this->input->post('capacity');
 			$voltage=$this->input->post('voltage');
+			$tax=$this->input->post('tax');
             
 			if($specialpricefrom != "")
 				$specialpricefrom = date("Y-m-d",strtotime($specialpricefrom));
 			if($specialpriceto != "")
 				$specialpriceto = date("Y-m-d",strtotime($specialpriceto));
-			if($this->product_model->createproduct($name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage)==0)
+			if($this->product_model->createproduct($name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage,$tax)==0)
 			$data['alerterror']="New product could not be created.";
 			else
 			$data['alertsuccess']="product  created Successfully.";
@@ -997,8 +998,9 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$length=$this->input->post('length');
 			$capacity=$this->input->post('capacity');
 			$voltage=$this->input->post('voltage');
+			$tax=$this->input->post('tax');
             
-			if($this->product_model->editproduct($id,$name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage)==0)
+			if($this->product_model->editproduct($id,$name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage,$tax)==0)
 			$data['alerterror']="product Editing was unsuccesful";
 			else
 			$data['alertsuccess']="product edited Successfully.";
@@ -3032,7 +3034,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
             $orderby="id";
             $orderorder="ASC";
         }
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `order` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","WHERE `order`.`orderstatus`<>1");
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `order` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","WHERE `order`.`orderstatus` NOT IN (1,5)");
         $this->load->view("json",$data);
     }
 

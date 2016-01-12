@@ -326,6 +326,12 @@
 						<div class="col-sm-4">
 						  <input type="text" id="normal-field" class="form-control" name="voltage" value="<?php echo set_value('voltage',$before['product']->voltage);?>">
 						</div>
+					</div> 
+                    <div class="form-group">
+						<label class="col-sm-2 control-label">Tax</label>
+						<div class="col-sm-4">
+						  <input type="text" id="normal-field" class="form-control" name="tax" value="<?php echo set_value('tax',$before['product']->tax);?>">
+						</div>
 					</div>
 					<div class=" form-group">
 					  <label class="col-sm-2 control-label">Status</label>

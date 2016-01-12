@@ -25,7 +25,7 @@ class Product_model extends CI_Model
 //        $query=$this->db->query("INSERT INTO `userwishlist`(`user`,`product`) VALUES ('$user','$product')");
 //        return $query;
     }
-	public function createproduct($name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage)
+	public function createproduct($name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage,$tax)
 	{
 		$data  = array(
 			'name' => $name,
@@ -70,7 +70,8 @@ class Product_model extends CI_Model
 			'microphone' => $microphone,
 			'length' => $length,
 			'capacity' => $capacity,
-			'voltage' => $voltage
+			'voltage' => $voltage,
+			'tax' => $tax
 		);
 		$query=$this->db->insert( 'product', $data );
 		$id=$this->db->insert_id();
@@ -171,7 +172,7 @@ class Product_model extends CI_Model
 		return $query;
 	}
 	
-	public function editproduct( $id,$name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage)
+	public function editproduct( $id,$name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage,$tax)
 	{
 		$data = array(
 			'name' => $name,
@@ -216,7 +217,8 @@ class Product_model extends CI_Model
             'microphone' => $microphone,
 			'length' => $length,
 			'capacity' => $capacity,
-			'voltage' => $voltage
+			'voltage' => $voltage,
+			'tax' => $tax
 		);
 		$this->db->where( 'id', $id );
 		$q=$this->db->update( 'product', $data );
@@ -641,7 +643,7 @@ class Product_model extends CI_Model
     function exportproductcsv()
 	{
 		$this->load->dbutil();
-		$query=$this->db->query("SELECT  `product`.`id`  AS `id` ,  `product`.`name`  AS `Name`, GROUP_CONCAT(`brand`.`name`) AS `Brand`, `product`.`modelnumber`, `product`.`brandcolor`, `product`.`eanorupc`, `product`.`eanorupcmeasuringunits`, GROUP_CONCAT(`type`.`name`) AS `Type`, `product`.`compatibledevice`,`product`.`compatiblewith` ,  `product`.`price`  AS `price` ,  `product`.`wholesaleprice`  AS `wholesaleprice` ,  `product`.`firstsaleprice`  AS `firstsaleprice` ,  `product`.`secondsaleprice`  AS `secondsaleprice` ,  `product`.`specialpriceto`  AS `specialpriceto` ,  `product`.`specialpricefrom`  AS `specialpricefrom` , GROUP_CONCAT(`productimage`.`image`) AS `image`, GROUP_CONCAT(`category`.`name`) AS `category`, `product`.`quantity`  AS `quantity` , `product`.`colormatch`  AS `colormatch` , `product`.`dimension`  AS `dimension` ,`product`.`microphone`  AS `microphone` ,`product`.`length`  AS `length` ,`product`.`capacity`  AS `capacity` ,`product`.`voltage`  AS `voltage` 
+		$query=$this->db->query("SELECT  `product`.`id`  AS `id` ,  `product`.`name`  AS `Name`, GROUP_CONCAT(`brand`.`name`) AS `Brand`, `product`.`modelnumber`, `product`.`brandcolor`, `product`.`eanorupc`, `product`.`eanorupcmeasuringunits`, GROUP_CONCAT(`type`.`name`) AS `Type`, `product`.`compatibledevice`,`product`.`compatiblewith` ,  `product`.`price`  AS `price` ,  `product`.`wholesaleprice`  AS `wholesaleprice` ,  `product`.`firstsaleprice`  AS `firstsaleprice` ,  `product`.`secondsaleprice`  AS `secondsaleprice` ,  `product`.`specialpriceto`  AS `specialpriceto` ,  `product`.`specialpricefrom`  AS `specialpricefrom` , GROUP_CONCAT(`productimage`.`image`) AS `image`, GROUP_CONCAT(`category`.`name`) AS `category`, `product`.`quantity`  AS `quantity` , `product`.`colormatch`  AS `colormatch` , `product`.`dimension`  AS `dimension` ,`product`.`microphone`  AS `microphone` ,`product`.`length`  AS `length` ,`product`.`capacity`  AS `capacity` ,`product`.`voltage`  AS `voltage`,`product`.`tax`  AS `tax` 
 FROM `product` 
 INNER JOIN `productcategory` ON `product`.`id`=`productcategory`.`product` 
 INNER JOIN `category` ON `category`.`id`=`productcategory`.`category` 
@@ -750,6 +752,7 @@ $timestamp=new DateTime();
             $length=$row['Length'];
             $capacity=$row['Capacity'];
             $voltage=$row['Voltage'];
+            $tax=$row['Tax'];
             $allsubcategory=explode(",",$subcategory);
             
             $q="INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`,`dimension`,`colormatch`,`microphone`,`length`,`capacity`,`voltage`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$dimension','$colormatch','$microphone','$length','$capacity','$voltage')";
@@ -783,7 +786,7 @@ $timestamp=new DateTime();
 //                print_r($subcategory);
                 
 //                $query=$this->db->insert('product', $data );
-                $query=$this->db->query("INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`,`size`,`dimension`,`colormatch`,`microphone`,`length`,`capacity`,`voltage`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$modelnumber','$brandcolor','$eanorupc','$eanorupcmeasuringunits','$type','$compatibledevice','$compatiblewith','$material','$color','$design','$width','$height','$depth','$portsize','$packof','$salespackage','$keyfeatures','$videourl','$modelname','$finish','$weight','$domesticwarranty','$domesticwarrantymeasuringunits','$internationalwarranty','$internationalwarrantymeasuringunits','$warrantysummary','$warrantyservicetype','$coveredinwarranty','$notcoveredinwarranty','$size','$dimension','$colormatch','$microphone','$length','$capacity','$voltage')");
+                $query=$this->db->query("INSERT INTO `product`( `name`, `sku`, `description`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`,`size`,`dimension`,`colormatch`,`microphone`,`length`,`capacity`,`voltage`,`tax`) VALUES ('$name','$sku','$description','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$modelnumber','$brandcolor','$eanorupc','$eanorupcmeasuringunits','$type','$compatibledevice','$compatiblewith','$material','$color','$design','$width','$height','$depth','$portsize','$packof','$salespackage','$keyfeatures','$videourl','$modelname','$finish','$weight','$domesticwarranty','$domesticwarrantymeasuringunits','$internationalwarranty','$internationalwarrantymeasuringunits','$warrantysummary','$warrantyservicetype','$coveredinwarranty','$notcoveredinwarranty','$size','$dimension','$colormatch','$microphone','$length','$capacity','$voltage','$tax')");
                 $productid=$this->db->insert_id();
 //                echo "pid".$productid;
                 if($image1!=""){
