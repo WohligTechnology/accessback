@@ -302,7 +302,7 @@ class User_model extends CI_Model
     $firstdate=date('Y-m-01', strtotime($todaysdate));
     $lastdate=date('Y-m-t', strtotime($todaysdate));
         
-		$query=$this->db->query("SELECT IFNULL(SUM(`finalamount`),0) as `sumamount` FROM `order` WHERE DATE(`timestamp`) BETWEEN '$firstdate' AND  '$lastdate'")->row();
+		$query=$this->db->query("SELECT IFNULL(SUM(`finalamount`),0) as `sumamount` FROM `order` WHERE DATE(`timestamp`) BETWEEN '$firstdate' AND  '$lastdate' AND `order`.`orderstatus` NOT IN (1,5)")->row();
 		$sumamount=$query->sumamount;
 		return $sumamount;
         
