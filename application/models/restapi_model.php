@@ -231,7 +231,7 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
         $query3['clength'] = $this->db->query(" SELECT DISTINCT `product`.`length` as `clength` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`length` <> ''")->result();
         $query3['voltage'] = $this->db->query(" SELECT DISTINCT `product`.`voltage` as `voltage` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`voltage` <> ''")->result();
         $query3['capacity'] = $this->db->query(" SELECT DISTINCT `product`.`capacity` as `capacity` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`capacity` <> ''")->result();
-        $query3['compatibledevice'] = $this->db->query(" SELECT DISTINCT `product`.`compatibledevice` as `compatibledevice` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`compatibledevice` <> ''")->result();
+        $query3['compatibledevice'] = $this->db->query(" SELECT DISTINCT LOWER(TRIM(`product`.`compatibledevice`)) as `compatibledevice` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`compatibledevice` <> ''")->result();
         $query3['compatiblewith'] = $this->db->query(" SELECT DISTINCT `product`.`compatiblewith` as `compatiblewith` FROM ($query) as `tab3` INNER JOIN `product` ON `product`.`id` =`tab3`.`id` WHERE `product`.`compatiblewith` <> ''")->result();
 
         return $query3;
