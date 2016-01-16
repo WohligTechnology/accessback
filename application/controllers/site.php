@@ -3224,11 +3224,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$access = array("1");
 		$this->checkaccess($access);
 		$data[ 'category' ] =$this->category_model->getcategorydropdown();
-		$data[ 'table' ] =$this->order_model->getorderitem($this->input->get('id'));
-		$data['before']=$this->order_model->beforeedit($this->input->get('id'));
+		$data[ 'orderitem' ] =$this->order_model->getorderitem($this->input->get('id'));
+		$data[ 'totallastamt' ] =$this->order_model->gettotallastamt($this->input->get('id'));
+		$data[ 'totalqty' ] =$this->order_model->totalqty($this->input->get('id'));
+		$data[ 'amtinwords' ] =$this->order_model->amtinwords($this->input->get('id'));
+		$data['order']=$this->order_model->getorder($this->input->get('id'));
+        $data['invoicedate'] = date( "m/d/Y", strtotime($data['order']->orderdate);
         $data['id']=$this->input->get('id');
-		$data['page']='orderinvoice';
-		$this->load->view('templateinvoice',$data);
+		$this->load->view('templateinvoice1',$data);
 	}
     
 	function printorderlabel()
@@ -3612,6 +3615,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->order_model->exportorderitemcsv();
          
 	}
+  
     	public function exportproductcsv()
 	{
 		$access = array("1");

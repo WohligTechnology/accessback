@@ -28,6 +28,7 @@ class aboutus_model extends CI_Model
 		return $query;
 	}
 	
+    
 	public function editaboutus($id,$order,$image,$status,$title)
 	{
 		$data = array(
