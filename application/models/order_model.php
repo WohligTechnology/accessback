@@ -441,9 +441,9 @@ class Order_model extends CI_Model
     function gettotallastamt($id)
 	{
         $query=$this->db->query("SELECT * FROM `orderitems` WHERE `order`='$id'" )->result();
+        $tot=0;
         foreach($query as $row){
             $finalprice=$row->finalprice;
-            $tot=0;
             $tot=$tot+$finalprice;
         }
 
@@ -452,9 +452,9 @@ class Order_model extends CI_Model
     function amtinwords($id)
 	{
         $query=$this->db->query("SELECT * FROM `orderitems` WHERE `order`='$id'" )->result();
+        $tot=0;
         foreach($query as $row){
             $finalprice=$row->finalprice;
-            $tot=0;
             $tot=$tot+$finalprice;
         }
         $amtinwords=$this->order_model->convert_number_to_words($tot);

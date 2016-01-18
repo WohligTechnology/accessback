@@ -5272,6 +5272,13 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['alertsuccess']="homeslider Deleted Successfully";
         $data['redirect']="site/viewhomeslider";
         $this->load->view("redirect",$data);
+	}	
+    function gettotallastamt()
+	{
+        $id=$this->input->get('id');
+		$amt=$this->order_model->gettotallastamt($id);
+          $data['message']=$amt;
+        $this->load->view("json",$data);
 	}
     
     
