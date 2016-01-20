@@ -820,11 +820,72 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
     {
         $access=array("1");
         $this->checkaccess($access);
+//        $data['yesview']=1;
         $data["page"]="viewproductnew";
         $data["base_url"]=site_url("site/viewproductjson");
         $data["title"]="View product";
         $this->load->view("template",$data);
+    } 
+    public function viewproductdisabled()
+    {
+        $access=array("1");
+        $this->checkaccess($access);
+//        $data['yesview']=2;
+        $data["page"]="viewproductnewdisable";
+        $data["base_url"]=site_url("site/viewproductdisabledjson");
+        $data["title"]="View product";
+        $this->load->view("template",$data);
     }
+    function viewproductdisabledjson()
+    {
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`product`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`product`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="name";
+        $elements[1]->alias="name";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`product`.`sku`";
+        $elements[2]->sort="1";
+        $elements[2]->header="sku";
+        $elements[2]->alias="sku";
+        
+        $elements[3]=new stdClass();
+        $elements[3]->field="`product`.`price`";
+        $elements[3]->sort="1";
+        $elements[3]->header="price";
+        $elements[3]->alias="price";
+        
+        $elements[4]=new stdClass();
+        $elements[4]->field="`product`.`quantity`";
+        $elements[4]->sort="1";
+        $elements[4]->header="quantity";
+        $elements[4]->alias="quantity";
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `product`","WHERE `product`.`status`=0");
+        $this->load->view("json",$data);
+    } 
     function viewproductjson()
     {
         $elements=array();
@@ -872,7 +933,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
             $orderby="id";
             $orderorder="ASC";
         }
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `product`");
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `product`","WHERE `product`.`status`=1");
         $this->load->view("json",$data);
     }
 
