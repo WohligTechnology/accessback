@@ -1,0 +1,7 @@
+[28-Dec-2015 12:53:15 Etc/GMT] PHP Fatal error:  Call to undefined function decrypt() in /home/acceskq2/public_html/admin/application/controllers/json.php on line 2176
+[28-Dec-2015 12:54:19 Etc/GMT] PHP Fatal error:  Call to undefined function decrypt() in /home/acceskq2/public_html/admin/application/controllers/json.php on line 2176
+[28-Dec-2015 13:45:08 Etc/GMT] PHP Fatal error:  Call to undefined function hextobin() in /home/acceskq2/public_html/admin/application/libraries/Ccavenue.php on line 23
+[29-Dec-2015 04:48:13 Etc/GMT] PHP Fatal error:  Call to undefined function splite() in /home/acceskq2/public_html/admin/application/controllers/json.php on line 2131
+[29-Dec-2015 04:51:49 Etc/GMT] PHP Parse error:  syntax error, unexpected ',' in /home/acceskq2/public_html/admin/application/controllers/json.php on line 2131
+[29-Dec-2015 04:54:04 Etc/GMT] PHP Parse error:  syntax error, unexpected ',' in /home/acceskq2/public_html/admin/application/controllers/json.php on line 2131
+[29-Dec-2015 04:54:06 Etc/GMT] PHP Parse error:  syntax error, unexpected ',' in /home/acceskq2/public_html/admin/application/controllers/json.php on line 2131
