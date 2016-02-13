@@ -3286,6 +3286,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$data[ 'category' ] =$this->category_model->getcategorydropdown();
 		$data[ 'orderitem' ] =$this->order_model->getorderitem($this->input->get('id'));
+//        print_r($data[ 'orderitem' ]);
 		$data[ 'totallastamt' ] =$this->order_model->gettotallastamt($this->input->get('id'));
 		$data[ 'totalqty' ] =$this->order_model->totalqty($this->input->get('id'));
 		$data[ 'amtinwords' ] =$this->order_model->amtinwords($this->input->get('id'));

@@ -96,14 +96,13 @@
         <div>
           <div class="row bor">
             <div class="col-xs-4" style="padding-right:0px;padding-left:3px;padding-top:2px">
-              <img src="<?php echo base_url('uploads/logoaccess.png'); ?>" alt="logo" width="98.5" height="30">
+              <img src="<?php echo base_url('uploads/logoaccess.png'); ?>" alt="logo" width="150" height="">
             </div>
             <div class="col-xs-8" style="padding:0px 10px 0px 10px;">
               <div class="arr1">
                 <p style="font-size:16"><b>Access</b></p>
                 <p>19/20,Ganga Building,1st Floor</p>
-                <p>Old Topiwala Lane,</p>
-                <p>Off.Lamington Road</p>
+                <p>Old Topiwala Lane, Off.Lamington Road</p>
                 <p>Grant Road(E),Mumbai-400007.</p>
                 <p>Tel.No.-022-23840789/ 809/ 810</p>
                 <p>E-Mail: accessinfoworld@vsnl.com</p>
@@ -121,7 +120,7 @@
               <p><?php echo $order->firstname; ?> <?php echo $order->lastname; ?></p>
 <!--              <p style="font-size:16"><b>ACCESS - MKC</b></p>-->
               <p><?php echo $order->billingaddress; ?></p>
-              <p><?php echo $order->billingcity;?></p> - <p> <?php echo $order->billingpincode;?></p>
+              <p><?php echo $order->billingcity;?></p><p> <?php echo $order->billingpincode;?></p>
                <p><?php echo $order->billingcountry;?></p>
               <p><?php echo $order->billingcontact;?></p>
             </div>
@@ -311,8 +310,8 @@
           </div>
           <div class=" text-right">
             <div class="bor" style="height:87px;border-bottom:none;border-right:none">
-              <p><b>For Access</b></p>
-              <p style="margin:51px 0px 0px 0px">Authorised Signatory</p>
+              <p style="margin-right:40px;"><b>For Access</b></p>
+              <p style="margin:51px 5px 0px 0px">Authorised Signatory</p>
             </div>
           </div>
         </div>
