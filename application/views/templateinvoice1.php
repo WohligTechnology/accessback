@@ -89,7 +89,7 @@
 <body>
   <div class="container">
     <div>
-      <h4 class="text-center" style="margin:0px"><b>INVOICE FOR ACCESS</b></h4>
+      <h4 class="text-center" style="margin:0px"><b>TAX INVOICE</b></h4>
     </div>
     <div class="row">
       <div class="col-xs-6">
@@ -214,7 +214,7 @@
          <?php  foreach($orderitem as $orderitems){ ?>
           <tr>
             <td align="center"><?php  echo $i;?></td>
-            <td align="left"><b><?php  echo $orderitems->name;?></b></td>
+              <td align="left"><b><?php  echo $orderitems->name;?> <span style="float:right;">Output VAT <?php  echo $orderitems->tax;?> %</span></b></td>
             <td align="right"><b><?php  echo $orderitems->quantity;?> Pcs.</b></td>
             <td align="right"><?php  echo $orderitems->price;?></td>
             <td align="center">Pcs.</td>
@@ -234,7 +234,7 @@
           </tr>
           <tr>
             <td align="center"></td>
-            <td style="text-align:right; text-align: top;"><b><i>ACCESS BRANCH TRANSFER</i></b></td>
+<!--            <td style="text-align:right; text-align: top;"><b><i>ACCESS BRANCH TRANSFER</i></b></td>-->
             <td></td>
             <td></td>
             <td></td>
@@ -257,7 +257,7 @@
       <div class="bor size1 padd1" style="border-bottom:none;border-top:none">
         <div class="arr" style="margin-top:30px">
           <p>Company's VAT TIN</p>
-          <p>Buyer's VAT TIN</p>
+<!--          <p>Buyer's VAT TIN</p>-->
           <p>Company's PAN</p>
         </div>
         <div class="arr">
@@ -265,7 +265,7 @@
             : <b>27900022830V w.e.f. 1-4-2006</b>
           </p>
           <p>
-            : <b>27900022830v</b>
+<!--            : <b>27900022830v</b>-->
           </p>
           <p>
             : <b>AAGFA1707Q</b>
@@ -280,7 +280,7 @@
           <br> TERMS & CONDITIONS:
           <p>
             <br>1.Please bring Invoice Copy for warranty/replacement Purpose/D. O.A Replacement Validity 72 hrs only/No.Warranty on Burn /Damage Pieces. 2.Material Delivered with MRP Labels on all Products Mention on this Invoice.3.Warranty on all products
-            is carry-in-warranty from the respective Mfr./Dist.As per there warranty terms.4.If Cheque is dishonoured Rs.250/- Per cheque will be charged.5.Replacement timings:2.00PM to 5.00 PM( Monday to Friday) STRICTY.</p>
+            is carry-in-warranty from the respective Mfr./Dist.As per there warranty terms.</p>
           <p style="margin-bottom:0px">I/We Hereby Certify that my/our registration certificate under the maharashtra Value Added Tax Act,2002 is in force on the date on whice the sale of the goods sepecifield in this tax invoice is made by me/us and that the transaction of sale
             covered by this tax invoice has been effected by me/us & it shal be accounted for in the turnover of sales while filling of return & the due tax, if any, payable on the sale has been paid os shall be paid.</p>
         </div>
@@ -288,7 +288,7 @@
       <div class="col-xs-6 padd" style="font-size:12">
         <div style="margin-top:52px">
           <div class="arr">
-            <p>Date & Time</p>
+<!--            <p>Date & Time</p>-->
             <p>Company's Bank Details</p>
             <p>Bank Name </p>
             <p> A/c No. </p>
@@ -296,7 +296,7 @@
           </div>
           <div class="arr">
             <p>
-              : <b>4-Jan-2016 at 18:50</b>
+<!--              : <b>4-Jan-2016 at 18:50</b>-->
             </p>
             <p>.</p>
             <p>

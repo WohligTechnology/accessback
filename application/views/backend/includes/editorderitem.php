@@ -7,11 +7,11 @@
 			    <form class="form-horizontal tasi-form" method="post" action="<?php echo site_url('site/editorderitemsubmit?order='.$before['orderitems'][0]->order);?>" >
 					<div class="amount-message alert alert-danger" style="display:none;"></div>
 					
-					<?php print_r($before['orderitems']);?>
+<!--					<?php print_r($before['orderitems']);?>-->
 					
 					<input type="hidden" id="normal-field" class="form-control" name="id" value="<?php echo $before['orderitems'][0]->id;?>" style="display:none;">
 					<input type="hidden" id="normal-field" class="form-control" name="order" value="<?php echo $before['orderitems'][0]->order; ?>"  style="display:none;">
-					<?php print_r($before[orderitems][0]->quantity);?>
+<!--					<?php print_r($before[orderitems][0]->quantity);?>-->
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Product</label>
 						<div class="col-sm-4">
