@@ -96,7 +96,7 @@
         <div>
           <div class="row bor">
             <div class="col-xs-4" style="padding-right:0px;padding-left:3px;padding-top:2px">
-              <img src="A_logo.png" alt="logo" width="98.5" height="30">
+              <img src="<?php echo base_url('uploads/logoaccess.png'); ?>" alt="logo" width="98.5" height="30">
             </div>
             <div class="col-xs-8" style="padding:0px 10px 0px 10px;">
               <div class="arr1">
@@ -118,8 +118,8 @@
         <div class="row">
           <div class="bor" style="border-top:none;padding-top:3px;">
             <div class="arr" style="padding-left:5px">
-              <p>Buyer</p>
-              <p style="font-size:16"><b>ACCESS - MKC</b></p>
+              <p><?php echo $order->firstname; ?> <?php echo $order->lastname; ?></p>
+<!--              <p style="font-size:16"><b>ACCESS - MKC</b></p>-->
               <p><?php echo $order->billingaddress; ?></p>
               <p><?php echo $order->billingcity;?></p> - <p> <?php echo $order->billingpincode;?></p>
                <p><?php echo $order->billingcountry;?></p>
@@ -133,7 +133,7 @@
           <div class="col-xs-6 padd">
             <div class="bor1" style="border-left:none;border-right:none">
               <div class="arr" style="padding-left:5px">
-                <p>Invoice No.</p>
+                <p>Order ID.</p>
                 <p style="margin-top:5px"><b> <?php echo $order->id;?></b></p>
               </div>
             </div>

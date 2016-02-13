@@ -3290,7 +3290,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'totalqty' ] =$this->order_model->totalqty($this->input->get('id'));
 		$data[ 'amtinwords' ] =$this->order_model->amtinwords($this->input->get('id'));
 		$data['order']=$this->order_model->getorder($this->input->get('id'));
-        $data['invoicedate'] = date( "m/d/Y", strtotime($data['order']->orderdate));
+        $data['invoicedate'] = date( "d/m/Y", strtotime($data['order']->orderdate));
         $data['id']=$this->input->get('id');
 		$this->load->view('templateinvoice1',$data);
 	}
