@@ -73,7 +73,15 @@ class Category_model extends CI_Model
 		);
 		foreach($query as $row)
 		{
-			$return[$row->id]=$row->name;
+            if($row->parent==0){
+                $return[$row->id]=$row->name;
+            }
+            else{
+                $query1=$this->db->query("SELECT `name` FROM `category`  WHERE `id`='$row->parent'")->row();
+                $categoryname=$query1->name;
+                $return[$row->id]=$categoryname." - ".$row->name;
+            }
+			
 		}
 		
 		return $return;
