@@ -31,7 +31,12 @@ $config =
 
 			"Google" => array (
 				"enabled" => true,
-				"keys"    => array ( "id" => "1020486677583-qu1b7lap3l7ardv0nt2gkgstlpsi67ne.apps.googleusercontent.com", "secret" => "2oAmQbZgeI2RyViZxcTe5_T9" )
+				"keys"    => array ( "id" => "1020486677583-qu1b7lap3l7ardv0nt2gkgstlpsi67ne.apps.googleusercontent.com", "secret" => "2oAmQbZgeI2RyViZxcTe5_T9" ),
+                "scope"           => "https://www.googleapis.com/auth/userinfo.profile ". // optional
+                               "https://www.googleapis.com/auth/userinfo.email"   , // optional
+                  "access_type"     => "offline",   // optional
+                  "approval_prompt" => "force",     // optional
+                  "hd"              => "accessworld.in" // optional
 
 			),
 
@@ -42,7 +47,7 @@ $config =
 			),
 			"Twitter" => array (
 				"enabled" => true,
-				"keys"    => array ( "key" => "OyqptjsjeFqLlzfSZKk1AB386", "secret" => "sFuCATn4UeOmtAKAomWbVIUdi248HLNqaj106YtDvQCNcVAqkB" )
+				"keys"    => array ( "key" => "2CAQviXh71I2iFZqp1sgL1DhR", "secret" => "sFuCATn4UeOmtAKAomWbVIUdi248HLNqaj106YtDvQCNcVAqkB" )
 			),
 
 			// windows live
