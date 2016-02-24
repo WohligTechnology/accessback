@@ -35,6 +35,7 @@
                                     <th data-field="sku">SKU</th>
                                     <th data-field="price">price</th>
                                     <th data-field="quantity">quantity</th>
+                                    <th data-field="firstsaleprice">First Sale Price</th>
                                     <th data-field="Action">Action</th>
                                 </tr>
                             </thead>
@@ -71,7 +72,7 @@
             {
                 resultrow.status="Disable";
             }
-            return "<tr><td><input type='checkbox' class='deleteall all checkbox1' name='name[]' value='"+ resultrow.id +"'></td><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.sku + "</td><td>" + resultrow.price + "</td><td>" + resultrow.quantity + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editproduct?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=\"return confirm('Are you sure you want to delete?');\" href='<?php echo site_url('site/deleteproduct?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
+            return "<tr><td><input type='checkbox' class='deleteall all checkbox1' name='name[]' value='"+ resultrow.id +"'></td><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.sku + "</td><td>" + resultrow.price + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.firstsaleprice + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editproduct?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=\"return confirm('Are you sure you want to delete?');\" href='<?php echo site_url('site/deleteproduct?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
         }
 //        <td>
 //						<input type="hidden" name="iniquantity" class="iniquantity form-control" value="<?php echo $row->quantity; ?>">

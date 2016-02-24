@@ -917,7 +917,13 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[4]->field="`product`.`quantity`";
         $elements[4]->sort="1";
         $elements[4]->header="quantity";
-        $elements[4]->alias="quantity";
+        $elements[4]->alias="quantity"; 
+        
+        $elements[5]=new stdClass();
+        $elements[5]->field="`product`.`firstsaleprice`";
+        $elements[5]->sort="1";
+        $elements[5]->header="First Sale Price";
+        $elements[5]->alias="firstsaleprice";
         
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
