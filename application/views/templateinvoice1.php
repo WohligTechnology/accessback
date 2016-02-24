@@ -313,7 +313,7 @@
           <td></td>
           <td align="center"></td>
           <td></td>
-          <td align="right" style="border-top: 1px solid #000"><?php echo $totallastamt;?></td>
+<!--          <td align="right" style="border-top: 1px solid #000"><?php echo $totallastamt;?></td>-->
         </tr>
         <tr>
           <td align="center"></td>
