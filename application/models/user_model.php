@@ -613,7 +613,7 @@ class User_model extends CI_Model
                'image'   => $image,
                 'options' =>array(
                     'realname' => $productname,
-                    'orginalprice' => $originalprice
+                    'originalprice' => $originalprice
                 )
         );
         //array_push($data,$data2);
