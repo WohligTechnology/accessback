@@ -593,6 +593,7 @@ class User_model extends CI_Model
         
         $productdetails=$this->db->query("SELECT * FROM `product` WHERE `id` = '$product'")->row();
         $productquantity=$productdetails->quantity;
+        $originalprice=$productdetails->price;
         $firstsaleprice=$productdetails->firstsaleprice;
         if($firstsaleprice !=""){
             $price=$firstsaleprice;
@@ -611,7 +612,8 @@ class User_model extends CI_Model
                'price'   => $price,
                'image'   => $image,
                 'options' =>array(
-                    'realname' => $productname
+                    'realname' => $productname,
+                    'orginalprice' => $originalprice
                 )
         );
         //array_push($data,$data2);
