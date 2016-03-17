@@ -1053,7 +1053,8 @@ $timestamp=new DateTime();
             'microphone' => $microphone,
 			'length' => $length,
 			'capacity' => $capacity,
-			'voltage' => $voltage
+			'voltage' => $voltage,
+			'tax' => $tax
             );
 
                 $this->db->where('name', $name);
