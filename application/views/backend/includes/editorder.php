@@ -143,9 +143,15 @@ ini_set('display_errors', 1);?>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label">Transaction id</label>
+						<label class="col-sm-2 control-label">Tracking Code</label>
 						<div class="col-sm-4">
 						  <input type="text" id="" name="trackingcode" class="form-control" value="<?php echo set_value('trackingcode',$before['order']->trackingcode); ?>">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Transaction id</label>
+						<div class="col-sm-4">
+						  <input type="text" id="" name="transactionid" class="form-control" value="<?php echo set_value('transactionid',$before['order']->transactionid); ?>">
 						</div>
 					</div>
                      <div class="form-group">

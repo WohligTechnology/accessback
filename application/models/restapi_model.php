@@ -256,7 +256,7 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
     }
 		public function updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus,$couponcode,$amount)
         {
-          $query=$this->db->query("UPDATE `order` SET `orderstatus`='$orderstatus', `finalamount`='$amount', `trackingcode`='$transactionid', `json`='$json' WHERE `id`='$orderid'");
+          $query=$this->db->query("UPDATE `order` SET `orderstatus`='$orderstatus', `finalamount`='$amount', `transactionid`='$transactionid', `json`='$json' WHERE `id`='$orderid'");
             
     if($orderstatus==2)
         {

@@ -3006,7 +3006,8 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$billingcontact=$this->input->post('billingcontact');
 			$shippingcontact=$this->input->post('shippingcontact');
 			$trackingcompany=$this->input->post('trackingcompany');
-			if(($this->order_model->edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$currency,$orderstatus,$trackingcode,$billingcontact,$shippingcontact,$trackingcompany))==0)
+			$transactionid=$this->input->post('transactionid');
+			if(($this->order_model->edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$currency,$orderstatus,$trackingcode,$billingcontact,$shippingcontact,$trackingcompany,$transactionid))==0)
 				$data['alerterror']="Order could not be edited.";
 			else
             {

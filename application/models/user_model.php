@@ -270,9 +270,11 @@ class User_model extends CI_Model
 			 "" => "Choose Tracking Company",
 			 "1" => "DHL",
 			 "2" => "Blue dart",
-			 "3" => " FedEx",
-			 "4" => " DTDC",
-			 "5" => " Gati"
+			 "3" => "FedEx",
+			 "4" => "DTDC",
+			 "5" => "Gati",
+			 "6" => "Trackon",
+			 "7" => "Prime Track"
 			);
 		return $status;
 	}

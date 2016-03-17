@@ -243,7 +243,7 @@ class Order_model extends CI_Model
 		return $query;
 	}
 
-	public function edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$currency,$orderstatus,$trackingcode,$billingcontact,$shippingcontact,$trackingcompany)
+	public function edit($id,$user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode,$currency,$orderstatus,$trackingcode,$billingcontact,$shippingcontact,$trackingcompany,$transactionid)
 	{
 
 		$data  = array(
@@ -265,7 +265,8 @@ class Order_model extends CI_Model
 			'trackingcode' => $trackingcode,
 			'billingcontact' => $billingcontact,
 			'shippingcontact' => $shippingcontact,
-			'trackingcompany' => $trackingcompany
+			'trackingcompany' => $trackingcompany,
+			'transactionid' => $transactionid
 		);
 		$this->db->where( 'id', $id );
 		$query=$this->db->update( 'order', $data );
