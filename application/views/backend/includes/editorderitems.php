@@ -7,7 +7,7 @@
           <?php
 $order=$this->input->get('id');
 ?>
-           <div class=" pull-right col-md-1 createbtn" ><a class="btn btn-primary" href="<?php echo site_url('site/createorderitems?id='.$this->input->get('id')); ?>"><i class="icon-plus"></i>Create </a></div>
+<!--           <div class=" pull-right col-md-1 createbtn" ><a class="btn btn-primary" href="<?php echo site_url('site/createorderitems?id='.$this->input->get('id')); ?>"><i class="icon-plus"></i>Create </a></div>-->
             <div>
                 <table class="table table-striped table-hover border-top " cellpadding="0" cellspacing="0" >
 			<thead>
@@ -35,7 +35,7 @@ $order=$this->input->get('id');
 						<td><?php echo $row->price; ?></td>
 						<td><?php echo $row->discount; ?></td>
 						<td><?php echo $row->finalprice; ?></td>
-						<td> <a class="btn btn-primary btn-xs" href="<?php echo site_url('site/editorderitem?id=').$row->id.'&order='.$order;?>"><i class="icon-pencil"></i></a><a class="btn btn-primary btn-xs deleteorder" ><i class="icon-trash "></i></a>
+						<td> <a class="btn btn-primary btn-xs" href="<?php echo site_url('site/editorderitem?id=').$row->id.'&order='.$order;?>"><i class="icon-pencil"></i></a>
 					  </td>
 					</tr>
 					<?php } ?>
