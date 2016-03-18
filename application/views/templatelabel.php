@@ -1,93 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="">
-    <title>Invoice for Lyla Loves</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <title>ACCESS LABLE</title>
+  <style>
+  body{
+    font-size: 20px;
+  }
+  .mar{
+    margin-top: 100px;
+  }
+    .arr1 {
+      display: inline-block;
+    }
 
-    <!-- Bootstrap core CSS -->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" rel="stylesheet">
+    .arr {
+      display: inline-block;
+    }
+    p{
+      margin:0px;
+    }
 
-    <!-- Custom styles for this template -->
-    <style>
-        body {
-            padding-top: 50px;
-        }
-        .starter-template {
-            padding: 40px 15px;
-            text-align: center;
-        }
-    </style>
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+  </style>
 </head>
 
 <body>
-   <?php
-//        print_r($before);
-    ?>
-    <div class="container">
-        <div class="row" style="width:400px;">
-            
-            <div class="col-xs-8">
-                <div style="border:1px solid #ccc; padding:10px; font-size: 10px;"><b><?php echo $before['order']->firstname." ".$before['order']->lastname;?></b><br>
-<!--                <b>Address:</b>-->
-                    <div style="font-size: 8px;">
-                        <?php
-                            if($before['order']->shippingaddress=="")
-                            {
-                                echo $before['order']->billingaddress;
-                                echo "<br>";
-                                 echo $before['order']->billingcity;
-                                echo "<br>";
-                                 echo $before['order']->billingstate;
-                                echo "<br>";
-                                 echo $before['order']->billingpincode;
-                            }
-                            else
-                            {
-                                echo $before['order']->shippingaddress;
-                                echo "<br>";
-                                 echo $before['order']->shippingcity;
-                                echo "<br>";
-                                 echo $before['order']->shippingstate;
-                                echo "<br>";
-                                 echo $before['order']->shippingpincode;
-                            }
-                        ?>
-                    </div>
-                </div>
-
-            </div>
-            
-            <div class="col-xs-3">
-                <div class="logo">
-                    <img src="<?php echo base_url('../img/logo.jpg'); ?>" alt="" style="width:62px;height:100px;">
-                </div>
-            </div>
+  <div class="container">
+    <!-- style="width:595px;height:842px;background: yellow;" -->
+    <div class="row">
+      <div>
+        <div class="arr" style="padding-left:5px">
+          <p><strong>Buyer,</strong></p>
+          <p><strong><?php echo $before['order']->firstname." ".$before['order']->lastname;?></strong></p>
+          <p><strong><?php echo $before['order']->billingaddress;?></strong></p>
+          <p><strong><?php echo $before['order']->city." ".$before['order']->billingstate." ".$before['order']->billingcountry;?></strong></p>
+          <p><strong><?php echo $before['order']->billingpincode;?></strong></p>
         </div>
-        
+      </div>
     </div>
+    <div class="row mar">
+        <div class="arr pull-right">
+          <p><strong>From,</strong></p>
+          <p><strong class="text-uppercase">Access</strong></p>
+          <p><strong>601 Aditya Arcade 6th Floor,</strong></p>
+          <p><strong>Old Topiwala Lane,Nr. Dreamland Cinema,</strong></p>
+          <p><strong>Grant Road(E),Mumbai-400007.</strong></p>
+          <p><strong>Tel.No.- 022-23840789 /23840809</strong></p>
+        </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <!-- compiled and minified Bootstrap JavaScript -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script>
-        $(window).load(function () {
-            window.print();
-        });
-    </script>
+    </div>
+  </div>
 </body>
-
 </html>
