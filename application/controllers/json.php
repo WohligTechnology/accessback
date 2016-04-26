@@ -439,7 +439,8 @@ class Json extends CI_Controller {
         $cart = $this->cart->contents();
         $newcart = array();
         foreach ($cart as $item) {
-            if ($item['id'] != $id) array_push($newcart, $item);
+            if ($item['id'] != $id) 
+                array_push($newcart, $item);
         }
         $this->cart->destroy();
         $this->cart->insert($newcart);
