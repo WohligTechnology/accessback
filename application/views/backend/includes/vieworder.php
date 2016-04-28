@@ -11,7 +11,7 @@
 <!--
 	<div class="col-md-10">
 		<div class=" pull-right col-md-1 createbtn" ><a class="btn btn-primary" href="<?php echo site_url('site/exportordercsv'); ?>"target="_blank"><i class="icon-plus"></i>Export to CSV </a></div>
-	</div>	
+	</div>
 -->
 <!--<div class=" pull-right col-md-1 createbtn" ><a class="btn btn-primary" href="<?php echo site_url('site/createorder'); ?>"><i class="icon-plus"></i>Create </a></div>-->
 </div>
@@ -29,6 +29,7 @@
                                     <th data-field="firstname">Customer</th>
                                     <th data-field="finalamount">finalamount</th>
                                     <th data-field="orderstatus">orderstatus</th>
+                                    <th data-field="paymentmethod">Payment Mode</th>
                                     <th data-field="timestamp">timestamp</th>
                                     <th data-field="Action">Action</th>
                                 </tr>
@@ -48,8 +49,27 @@
     </div>
     <script>
         function drawtable(resultrow) {
-            
-            return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.firstname + " " + resultrow.lastname + "</td><td>" + resultrow.finalamount + "</td><td>" + resultrow.orderstatus + "</td><td>" + resultrow.timestamp + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorder?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a></td></tr>";
+					if(resultrow.paymentmethod == 1)
+					{
+				var paymentmode = "Credit Card";
+					}
+					if(resultrow.paymentmethod == 2)
+					{
+				var paymentmode = "Debit Card";
+					}
+					if(resultrow.paymentmethod == 3)
+					{
+				var paymentmode = "Net Banking";
+					}
+					if(resultrow.paymentmethod == 4)
+					{
+				var paymentmode = "Cash On Delivery";
+					}
+					else {
+						var paymentmode = "";
+					}
+
+            return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.firstname + " " + resultrow.lastname + "</td><td>" + resultrow.finalamount + "</td><td>" + resultrow.orderstatus + "</td><td>" + paymentmode + "</td><td>" + resultrow.timestamp + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorder?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a></td></tr>";
         }
         generatejquery("<?php echo $base_url;?>");
     </script>

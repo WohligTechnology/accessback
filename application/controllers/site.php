@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Site extends CI_Controller 
+class Site extends CI_Controller
 {
 	public function __construct( )
 	{
 		parent::__construct();
-		
+
 		$this->is_logged_in();
 	}
 	function is_logged_in( )
@@ -30,7 +30,7 @@ class Site extends CI_Controller
          $data[ 'monthlysales' ] = $this->user_model->getmonthlysales();
 		$data["base_url"]=site_url("site/viewdashboardjson");
 		$data[ 'title' ] = 'Welcome';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
     public function getDate()
 	{
@@ -46,7 +46,7 @@ class Site extends CI_Controller
 		$data[ 'page' ] = 'dashboard';
         $data["base_url"]=site_url("site/viewdashboardjson?date=".$orderdate);
 		$data[ 'title' ] = 'Welcome';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
     function viewdashboardjson()
     {
@@ -57,44 +57,44 @@ class Site extends CI_Controller
         else{
             $where="WHERE 0";
         }
-        
+
         $elements=array();
         $elements[0]=new stdClass();
         $elements[0]->field="`order`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="Order No";
         $elements[0]->alias="order";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`product`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="Product";
         $elements[1]->alias="product";
-		
+
         $elements[2]=new stdClass();
         $elements[2]->field="`orderitems`.`quantity`";
         $elements[2]->sort="1";
         $elements[2]->header="Quantity";
         $elements[2]->alias="quantity";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`product`.`id`";
         $elements[3]->sort="1";
         $elements[3]->header="Product Id";
-        $elements[3]->alias="productid"; 
-        
+        $elements[3]->alias="productid";
+
         $elements[4]=new stdClass();
         $elements[4]->field="`order`.`timestamp`";
         $elements[4]->sort="1";
         $elements[4]->header="timestamp";
-        $elements[4]->alias="timestamp";  
-        
+        $elements[4]->alias="timestamp";
+
         $elements[5]=new stdClass();
         $elements[5]->field="`productimage`.`image`";
         $elements[5]->sort="1";
         $elements[5]->header="Image";
         $elements[5]->alias="image";
-		
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -109,8 +109,8 @@ class Site extends CI_Controller
         $orderby="id";
         $orderorder="ASC";
         }
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `order` 
-LEFT OUTER JOIN `orderitems` ON `orderitems`.`order`=`order`.`id` 
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `order`
+LEFT OUTER JOIN `orderitems` ON `orderitems`.`order`=`order`.`id`
 LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product`
 LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$where","GROUP BY `product`.`id`");
         $this->load->view("json",$data);
@@ -125,7 +125,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'currency' ] =$this->currency_model->getcurrencydropdown();
 		$data[ 'page' ] = 'createuser';
 		$data[ 'title' ] = 'Create User';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createusersubmit()
 	{
@@ -153,7 +153,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('shippingcountry','shippingcountry','trim');
 		$this->form_validation->set_rules('shippingpincode','shippingpincode','trim');
 		$this->form_validation->set_rules('currency','currency','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->user_model->getstatusdropdown();
@@ -191,7 +191,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$data['alerterror']="New user could not be created.";
 			else
 			$data['alertsuccess']="User created Successfully.";
-			
+
 			$data['table']=$this->user_model->viewusers();
 			$data['redirect']="site/viewusers";
 			//$data['other']="template=$template";
@@ -222,56 +222,56 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		LEFT JOIN `accesslevel` ON `user`.`accesslevel` = `accesslevel`.`id`
 		LEFT JOIN `country` ON `user`.`country` = `country`.`id`
 		ORDER BY `user`.`id` ASC";
-        
+
         $elements=array();
         $elements[0]=new stdClass();
         $elements[0]->field="`user`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`user`.`firstname`";
         $elements[1]->sort="1";
         $elements[1]->header="firstname";
         $elements[1]->alias="firstname";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`user`.`lastname`";
         $elements[2]->sort="1";
         $elements[2]->header="lastname";
         $elements[2]->alias="lastname";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`user`.`name`";
         $elements[3]->sort="1";
         $elements[3]->header="name";
         $elements[3]->alias="name";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`user`.`status`";
         $elements[4]->sort="1";
         $elements[4]->header="status";
         $elements[4]->alias="status";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`accesslevel`.`name`";
         $elements[5]->sort="1";
         $elements[5]->header="accesslevel";
         $elements[5]->alias="accesslevel";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`user`.`companyname`";
         $elements[6]->sort="1";
         $elements[6]->header="companyname";
         $elements[6]->alias="companyname";
-        
+
         $elements[7]=new stdClass();
         $elements[7]->field="`country`.`name`";
         $elements[7]->sort="1";
         $elements[7]->header="country";
         $elements[7]->alias="country";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -312,16 +312,16 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('confirmpassword','Confirm Password','trim|matches[password]');
 		$this->form_validation->set_rules('accesslevel','Accesslevel','trim');
 		$this->form_validation->set_rules('name','name','trim');
-        
+
         $this->form_validation->set_rules('companyname','Companyname','trim|required');
 		$this->form_validation->set_rules('companyregistrationno','Company Registration Number','trim|required');
 		$this->form_validation->set_rules('vatnumber','VAT Number','trim|required');
 		$this->form_validation->set_rules('country','Country','trim|required');
-        
+
 		$this->form_validation->set_rules('dob','Date of birth','trim');
 		$this->form_validation->set_rules('email','Email','trim|valid_email');
 		$this->form_validation->set_rules('phone','Phone','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->user_model->getstatusdropdown();
@@ -362,14 +362,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$data['alerterror']="User Editing was unsuccesful";
 			else
 			$data['alertsuccess']="User edited Successfully.";
-			
+
 			$data['redirect']="site/viewusers";
 			//$data['other']="template=$template";
 			$this->load->view("redirect",$data);
-			
+
 		}
 	}
-	
+
 	function addcredits()
 	{
 		$access = array("1");
@@ -402,7 +402,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['page']='viewnewsletter';
 		$data['title']='View Newsletter';
 		$this->load->view('template',$data);
-        
+
 	}
 	function deletelimitedstock()
 	{
@@ -415,7 +415,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['page']='limitedstock';
 		$data['title']='View Limited Stock Offer';
 		$this->load->view('template',$data);
-        
+
 	}
 	function deletecontact()
 	{
@@ -428,15 +428,15 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['page']='viewcontact';
 		$data['title']='View Contact';
 		$this->load->view('template',$data);
-        
+
 	}
 	function addcreditssubmit()
 	{
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('credits','credits','trim');
-		
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->user_model->beforeedit($this->input->post('id'));
@@ -457,7 +457,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$data['redirect']="site/addcredits?id=".$id;
 			//$data['other']="template=$template";
 			$this->load->view("redirect2",$data);
-			
+
 		}
 	}
 	function editaddress()
@@ -485,7 +485,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('shippingstate','shippingstate','trim');
 		$this->form_validation->set_rules('shippingcity','shippingcity','trim');
 		$this->form_validation->set_rules('shippingcountry','shippingcountry','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->user_model->getstatusdropdown();
@@ -517,7 +517,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$data['redirect']="site/editaddress?id=".$id;
 			//$data['other']="template=$template";
 			$this->load->view("redirect2",$data);
-			
+
 		}
 	}
 	function deleteuser()
@@ -544,10 +544,10 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['title']='View Users';
 		$this->load->view('template',$data);
 	}
-    
-    
-    
-    
+
+
+
+
 	//category
 	public function createcategory()
 	{
@@ -557,7 +557,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['category']=$this->category_model->getcategorydropdown();
 		$data[ 'page' ] = 'createcategory';
 		$data[ 'title' ] = 'Create category';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createcategorysubmit()
 	{
@@ -567,7 +567,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('parent','parent','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->user_model->getstatusdropdown();
@@ -637,7 +637,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('parent','parent','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->user_model->getstatusdropdown();
@@ -708,7 +708,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['type']=$this->brand_model->gettypedropdown();
 		$data[ 'page' ] = 'createproduct';
 		$data[ 'title' ] = 'Create product';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createproductsubmit()
 	{
@@ -730,7 +730,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('metadesc','metadesc','trim|');
 		$this->form_validation->set_rules('metakeyword','metakeyword','trim|');
 		$this->form_validation->set_rules('quantity','quantity','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->product_model->getstatusdropdown();
@@ -763,7 +763,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$relatedproduct=$this->input->post('relatedproduct');
 			$brand=$this->input->post('brand');
 			$type=$this->input->post('type');
-            
+
 			$modelnumber=$this->input->post('modelnumber');
 			$brandcolor=$this->input->post('brandcolor');
 			$eanorupc=$this->input->post('eanorupc');
@@ -792,7 +792,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$capacity=$this->input->post('capacity');
 			$voltage=$this->input->post('voltage');
 			$tax=$this->input->post('tax');
-            
+
 			if($specialpricefrom != "")
 				$specialpricefrom = date("Y-m-d",strtotime($specialpricefrom));
 			if($specialpriceto != "")
@@ -825,7 +825,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data["base_url"]=site_url("site/viewproductjson");
         $data["title"]="View product";
         $this->load->view("template",$data);
-    } 
+    }
     public function viewproductdisabled()
     {
         $access=array("1");
@@ -844,31 +844,31 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`product`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`product`.`sku`";
         $elements[2]->sort="1";
         $elements[2]->header="sku";
         $elements[2]->alias="sku";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`product`.`price`";
         $elements[3]->sort="1";
         $elements[3]->header="price";
         $elements[3]->alias="price";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`product`.`quantity`";
         $elements[4]->sort="1";
         $elements[4]->header="quantity";
         $elements[4]->alias="quantity";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -885,7 +885,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         }
         $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `product`","WHERE `product`.`status`=0");
         $this->load->view("json",$data);
-    } 
+    }
     function viewproductjson()
     {
         $elements=array();
@@ -894,37 +894,37 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`product`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`product`.`sku`";
         $elements[2]->sort="1";
         $elements[2]->header="sku";
         $elements[2]->alias="sku";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`product`.`price`";
         $elements[3]->sort="1";
         $elements[3]->header="price";
         $elements[3]->alias="price";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`product`.`quantity`";
         $elements[4]->sort="1";
         $elements[4]->header="quantity";
-        $elements[4]->alias="quantity"; 
-        
+        $elements[4]->alias="quantity";
+
         $elements[5]=new stdClass();
         $elements[5]->field="`product`.`firstsaleprice`";
         $elements[5]->sort="1";
         $elements[5]->header="First Sale Price";
         $elements[5]->alias="firstsaleprice";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -967,7 +967,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['selectedbrand']=$this->brand_model->getbrandbyproduct($this->input->get_post('id'));
         $data['type']=$this->brand_model->gettypedropdown();
         $data['selectedtype']=$this->brand_model->gettypebyproduct($this->input->get_post('id'));
-     
+
 		$data['page']='editproduct';
 		$data['page2']='block/productblock';
 		$data['title']='Edit product';
@@ -993,7 +993,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('metadesc','metadesc','trim|');
 		$this->form_validation->set_rules('metakeyword','metakeyword','trim|');
 		$this->form_validation->set_rules('quantity','quantity','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->product_model->getstatusdropdown();
@@ -1036,8 +1036,8 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$relatedproduct=$this->input->post('relatedproduct');
 			$brand=$this->input->post('brand');
 			$type=$this->input->post('type');
-            
-            
+
+
 			$modelnumber=$this->input->post('modelnumber');
 			$brandcolor=$this->input->post('brandcolor');
 			$eanorupc=$this->input->post('eanorupc');
@@ -1066,13 +1066,13 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$capacity=$this->input->post('capacity');
 			$voltage=$this->input->post('voltage');
 			$tax=$this->input->post('tax');
-            
+
 			if($this->product_model->editproduct($id,$name,$sku,$description,$url,$visibility,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto,$metatitle,$metadesc,$metakeyword,$quantity,$status,$category,$relatedproduct,$brand,$type,$modelnumber,$brandcolor,$eanorupc,$eanorupcmeasuringunits,$compatibledevice,$compatiblewith,$material,$color,$width,$height,$depth,$salespackage,$keyfeatures,$videourl,$modelname,$finish,$weight,$domesticwarranty,$warrantysummary,$size,$typename,$dimension,$colormatch,$microphone,$length,$capacity,$voltage,$tax)==0)
 			$data['alerterror']="product Editing was unsuccesful";
 			else
 			$data['alertsuccess']="product edited Successfully.";
 			$data['table']=$this->product_model->viewproduct();
-            
+
 			$data['redirect']="site/viewproduct";
 			//$data['other']="template=$template";
 			$this->load->view("redirect",$data);
@@ -1154,7 +1154,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['page2']='block/productblock';
 		$data['title']='Image Upload';
 		$this->load->view('template',$data);
-	 
+
 	 }
 	 function defaultimage()
 	 {
@@ -1170,7 +1170,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['page2']='block/productblock';
 		$data['title']='Image Upload';
 		$this->load->view('template',$data);
-	 
+
 	 }
 	  function changeorder()
 	 {
@@ -1180,7 +1180,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$order=$this->input->get_post('order');
 		$product=$this->input->get_post('product');
 		$data['page2']='block/productblock';
-		$this->product_model->changeorder($id,$order,$product);	 
+		$this->product_model->changeorder($id,$order,$product);
 	 }
 	//Wishlist
 	function wishlistsubmit()
@@ -1192,7 +1192,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['message']="0";
 		else
 		$data['message']="1";
-		
+
 		$this->load->view('json',$data);
 	}
 	function viewwishlist()
@@ -1226,7 +1226,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['message']="0";
 		else
 		$data['message']="1";
-		
+
 		$this->load->view('json',$data);
 	}
 	function viewcart()
@@ -1242,7 +1242,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-		
+
 		$data['table']=$this->cart_model->viewusercart($this->input->get('id'));
 		$data['page']='viewusercart';
 		$data['page2']='block/userblock';
@@ -1257,7 +1257,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$data[ 'page' ] = 'createpage';
 		$data[ 'title' ] = 'Create page';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createpagesubmit()
 	{
@@ -1265,8 +1265,8 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('name','Name','trim|required');
 		$this->form_validation->set_rules('content','content','trim|');
-		
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'page' ] = 'createpage';
@@ -1311,7 +1311,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('name','Name','trim|required');
 		$this->form_validation->set_rules('content','content','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->page_model->beforeeditpage($this->input->post('id'));
@@ -1358,7 +1358,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['product']=$this->product_model->getproductdropdown();
 		$data[ 'page' ] = 'createslider';
 		$data[ 'title' ] = 'Create slider';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createslidersubmit()
 	{
@@ -1370,7 +1370,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('status','status','trim|');
 		$this->form_validation->set_rules('product','product','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->slider_model->getstatusdropdown();
@@ -1404,7 +1404,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-			
+
 			if($this->slider_model->createslider($name,$status,$order,$product,$image)==0)
 			$data['alerterror']="New slider could not be created.";
 			else
@@ -1443,7 +1443,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('product','product','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->slider_model->getstatusdropdown();
@@ -1508,7 +1508,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'status' ] =$this->banner_model->getstatusdropdown();
 		$data[ 'page' ] = 'createbanner1';
 		$data[ 'title' ] = 'Create banner1';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createbannersubmit1()
 	{
@@ -1518,7 +1518,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('link','link','trim|');
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->banner_model->getstatusdropdown();
@@ -1548,7 +1548,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-			
+
 			if($this->banner_model->createbanner1($name,$link,$target,$status,$fromdate,$todate,$image)==0)
 			$data['alerterror']="New banner1 could not be created.";
 			else
@@ -1586,7 +1586,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('link','link','trim|');
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->banner_model->getstatusdropdown();
@@ -1650,7 +1650,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'status' ] =$this->banner_model->getstatusdropdown();
 		$data[ 'page' ] = 'createbanner2';
 		$data[ 'title' ] = 'Create banner2';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createbannersubmit2()
 	{
@@ -1660,7 +1660,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('link','link','trim|');
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->banner_model->getstatusdropdown();
@@ -1690,7 +1690,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-			
+
 			if($this->banner_model->createbanner2($name,$link,$target,$status,$fromdate,$todate,$image)==0)
 			$data['alerterror']="New banner2 could not be created.";
 			else
@@ -1728,7 +1728,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('link','link','trim|');
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->banner_model->getstatusdropdown();
@@ -1792,7 +1792,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'status' ] =$this->banner_model->getstatusdropdown();
 		$data[ 'page' ] = 'createbanner3';
 		$data[ 'title' ] = 'Create banner3';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createbannersubmit3()
 	{
@@ -1802,7 +1802,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('link','link','trim|');
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->banner_model->getstatusdropdown();
@@ -1832,7 +1832,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-			
+
 			if($this->banner_model->createbanner3($name,$link,$target,$status,$fromdate,$todate,$image)==0)
 			$data['alerterror']="New banner3 could not be created.";
 			else
@@ -1870,7 +1870,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('link','link','trim|');
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->banner_model->getstatusdropdown();
@@ -1934,7 +1934,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'status' ] =$this->celebcorner_model->getstatusdropdown();
 		$data[ 'page' ] = 'createcelebcorner';
 		$data[ 'title' ] = 'Create celebcorner';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createcelebcornersubmit()
 	{
@@ -1945,7 +1945,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->celebcorner_model->getstatusdropdown();
@@ -1970,7 +1970,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-			
+
 			if($this->celebcorner_model->createcelebcorner($name,$link,$target,$status,$order,$image)==0)
 			$data['alerterror']="New celebcorner could not be created.";
 			else
@@ -2009,7 +2009,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->celebcorner_model->getstatusdropdown();
@@ -2068,7 +2068,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'status' ] =$this->bloggerscorner_model->getstatusdropdown();
 		$data[ 'page' ] = 'createbloggerscorner';
 		$data[ 'title' ] = 'Create bloggerscorner';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createbloggerscornersubmit()
 	{
@@ -2079,7 +2079,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->bloggerscorner_model->getstatusdropdown();
@@ -2104,7 +2104,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-			
+
 			if($this->bloggerscorner_model->createbloggerscorner($name,$link,$target,$status,$order,$image)==0)
 			$data['alerterror']="New bloggerscorner could not be created.";
 			else
@@ -2143,7 +2143,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->bloggerscorner_model->getstatusdropdown();
@@ -2203,7 +2203,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'parent' ] =$this->navigation_model->getnavigationdropdown();
 		$data[ 'page' ] = 'createnavigation';
 		$data[ 'title' ] = 'Create navigation';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createnavigationsubmit()
 	{
@@ -2214,7 +2214,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->navigation_model->getstatusdropdown();
@@ -2241,7 +2241,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-			
+
 			if($this->navigation_model->createnavigation($name,$link,$target,$status,$order,$image,$parent)==0)
 			$data['alerterror']="New navigation could not be created.";
 			else
@@ -2281,7 +2281,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('target','target','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->navigation_model->getstatusdropdown();
@@ -2343,7 +2343,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'country' ] =$this->currency_model->getcountry();
 		$data[ 'page' ] = 'createcurrency';
 		$data[ 'title' ] = 'Create currency';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createcurrencysubmit()
 	{
@@ -2352,7 +2352,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('name','Name','trim|required');
 		$this->form_validation->set_rules('conversionrate','conversionrate','trim|');
 		$this->form_validation->set_rules('isdefault','isdefault','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'isdefault' ] =$this->currency_model->getisdefault();
@@ -2404,7 +2404,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('name','Name','trim|required');
 		$this->form_validation->set_rules('conversionrate','conversionrate','trim|');
 		$this->form_validation->set_rules('isdefault','isdefault','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->currency_model->beforeeditcurrency($this->input->post('id'));
@@ -2454,7 +2454,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'status' ] =$this->paymentgateway_model->getstatusdropdown();
 		$data[ 'page' ] = 'createpaymentgateway';
 		$data[ 'title' ] = 'Create paymentgateway';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createpaymentgatewaysubmit()
 	{
@@ -2464,7 +2464,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('order','order','trim|');
 		$this->form_validation->set_rules('isdefault','isdefault','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'isdefault' ] =$this->paymentgateway_model->getisdefault();
@@ -2517,7 +2517,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('order','order','trim|');
 		$this->form_validation->set_rules('isdefault','isdefault','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->paymentgateway_model->beforeeditpaymentgateway($this->input->post('id'));
@@ -2568,7 +2568,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'product' ] =$this->discountcoupon_model->getproducts();
 		$data[ 'page' ] = 'creatediscountcoupon';
 		$data[ 'title' ] = 'Create discountcoupon';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function creatediscountcouponsubmit()
 	{
@@ -2580,7 +2580,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('minamount','minamount','trim|');
 		$this->form_validation->set_rules('xproducts','xproducts','trim|');
 		$this->form_validation->set_rules('yproducts','yproducts','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'coupontype' ] =$this->discountcoupon_model->getcoupontype();
@@ -2642,7 +2642,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('minamount','minamount','trim|');
 		$this->form_validation->set_rules('xproducts','xproducts','trim|');
 		$this->form_validation->set_rules('yproducts','yproducts','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->discountcoupon_model->beforeeditdiscountcoupon($this->input->post('id'));
@@ -2707,8 +2707,8 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('secondsaleprice','secondsaleprice','trim|');
 		$this->form_validation->set_rules('specialpricefrom','specialpricefrom','trim|');
 		$this->form_validation->set_rules('specialpriceto','specialpriceto','trim|');
-		
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->product_model->beforeeditproduct($this->input->post('id'));
@@ -2720,7 +2720,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		else
 		{
 			$id=$this->input->post('id');
-			
+
 			$price=$this->input->post('price');
 			$wholesaleprice=$this->input->post('wholesaleprice');
 			$firstsaleprice=$this->input->post('firstsaleprice');
@@ -2732,7 +2732,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			if($specialpriceto != "")
 				$specialpriceto = date("Y-m-d",strtotime($specialpriceto));
 			$specialpriceto=$this->input->post('specialpriceto');
-			
+
 			if($this->product_model->editprice($id,$price,$wholesaleprice,$firstsaleprice,$secondsaleprice,$specialpricefrom,$specialpriceto)==0)
 			$data['alerterror']="price Editing was unsuccesful";
 			else
@@ -2761,8 +2761,8 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('secondsaleprice','secondsaleprice','trim|');
 		$this->form_validation->set_rules('specialpricefrom','specialpricefrom','trim|');
 		$this->form_validation->set_rules('specialpriceto','specialpriceto','trim|');
-		
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->product_model->beforeeditproduct($this->input->post('id'));
@@ -2775,14 +2775,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		else
 		{
 			$id=$this->input->post('id');
-			
+
 			$relatedproduct=$this->input->post('relatedproduct');
-			
+
 			if($this->product_model->editrelatedproduct($id,$relatedproduct)==0)
 			$data['alerterror']="Related Product Editing was unsuccesful";
 			else
 			$data['alertsuccess']="Related Product edited Successfully.";
-			
+
 			$data['redirect']="site/editrelatedproducts?id=".$id;
 			//$data['other']="template=$template";
 			$this->load->view("redirect2",$data);
@@ -2799,7 +2799,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['title']='Product waiting';
 		$this->load->view('template',$data);
 	}
-    
+
 	//Newsletter
 	public function createnewsletteruser()
 	{
@@ -2809,15 +2809,15 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'user' ] =$this->newsletter_model->getuserdropdown();
 		$data[ 'page' ] = 'createnewsletteruser';
 		$data[ 'title' ] = 'Create newsletter';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	public function createnewsletterusersubmit()
 	{
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('status','status','trim|');
-		
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->newsletter_model->getstatusdropdown();
@@ -2850,7 +2850,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'user' ] =$this->newsletter_model->getuserdropdown();
 		$data[ 'page' ] = 'editnewsletteruser';
 		$data[ 'title' ] = 'Edit newsletter';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	//Order
     function createorder()
@@ -2887,7 +2887,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('shippingcountry','shippingcountry','trim');
 		$this->form_validation->set_rules('shippingpincode','shippingpincode','trim');
 		$this->form_validation->set_rules('currency','currency','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'user' ] =$this->order_model->getuser();
@@ -2903,7 +2903,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		}
 		else
 		{
-			
+
 			$user=$this->input->post('user');
 			$firstname=$this->input->post('firstname');
 			$lastname=$this->input->post('lastname');
@@ -2931,10 +2931,10 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			//$data['other']="template=$template";
 			$this->load->view("redirect",$data);
 		}
-			
+
 	}
-    
-    
+
+
 	function editorder()
 	{
 		$access = array("1");
@@ -2969,14 +2969,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('shippingcountry','shippingcountry','trim');
 		$this->form_validation->set_rules('shippingpincode','shippingpincode','trim');
 		$this->form_validation->set_rules('currency','currency','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'user' ] =$this->order_model->getuser();
 			$data[ 'country' ] =$this->user_model->getcountry();
 			$data[ 'orderstatus' ] =$this->order_model->getorderstatus();
 			$data[ 'currency' ] =$this->currency_model->getcurrencydropdown();
-            $data[ 'trackingcompany' ] =$this->user_model->gettrackingcompanydropdown();           
+            $data[ 'trackingcompany' ] =$this->user_model->gettrackingcompanydropdown();
 			$data['before']=$this->order_model->beforeedit($this->input->get('id'));
 			$data['page']='editorder';
 			$data['page2']='block/orderblock';
@@ -2985,7 +2985,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		}
 		else
 		{
-			
+
 			$id=$this->input->post('id');
 			$user=$this->input->post('user');
 			$firstname=$this->input->post('firstname');
@@ -3032,7 +3032,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			//$data['other']="template=$template";
 			$this->load->view("redirect",$data);
 		}
-			
+
 	}
     public function vieworder()
     {
@@ -3051,43 +3051,48 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`order`.`firstname`";
         $elements[1]->sort="1";
         $elements[1]->header="firstname";
         $elements[1]->alias="firstname";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`order`.`lastname`";
         $elements[2]->sort="1";
         $elements[2]->header="lastname";
         $elements[2]->alias="lastname";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`order`.`finalamount`";
         $elements[3]->sort="1";
         $elements[3]->header="finalamount";
         $elements[3]->alias="finalamount";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`order`.`finalamount`";
         $elements[4]->sort="1";
         $elements[4]->header="finalamount";
         $elements[4]->alias="finalamount";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`orderstatus`.`name`";
         $elements[5]->sort="1";
         $elements[5]->header="orderstatus";
         $elements[5]->alias="orderstatus";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`order`.`timestamp`";
         $elements[6]->sort="1";
         $elements[6]->header="timestamp";
         $elements[6]->alias="timestamp";
-        
+        $elements[7]=new stdClass();
+        $elements[7]->field="`order`.`paymentmethod`";
+        $elements[7]->sort="1";
+        $elements[7]->header="paymentmethod";
+        $elements[7]->alias="paymentmethod";
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -3115,7 +3120,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 //		$data['title']='View Pending order';
 //		$this->load->view('template',$data);
 //	}
-    
+
     public function viewpendingorder()
     {
         $access=array("1");
@@ -3133,43 +3138,43 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`order`.`firstname`";
         $elements[1]->sort="1";
         $elements[1]->header="firstname";
         $elements[1]->alias="firstname";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`order`.`lastname`";
         $elements[2]->sort="1";
         $elements[2]->header="lastname";
         $elements[2]->alias="lastname";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`order`.`finalamount`";
         $elements[3]->sort="1";
         $elements[3]->header="finalamount";
         $elements[3]->alias="finalamount";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`order`.`finalamount`";
         $elements[4]->sort="1";
         $elements[4]->header="finalamount";
         $elements[4]->alias="finalamount";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`orderstatus`.`name`";
         $elements[5]->sort="1";
         $elements[5]->header="orderstatus";
         $elements[5]->alias="orderstatus";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`order`.`timestamp`";
         $elements[6]->sort="1";
         $elements[6]->header="timestamp";
         $elements[6]->alias="timestamp";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -3199,7 +3204,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $this->load->view("redirect",$data);
     }
 	//Order
-   
+
 	function newsletter()
 	{
 		$access = array("1");
@@ -3228,7 +3233,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['title']='View Contact';
 		$this->load->view('template',$data);
 	}
-   
+
     public function createorderitems()
 	{
 		$access = array("1");
@@ -3241,7 +3246,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'page' ] = 'createorderitem';
 		$data['page2']='block/orderblock';
 		$data[ 'title' ] = 'Create Orderitem';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
     function createorderitemsubmit()
 	{
@@ -3252,7 +3257,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('quantity','Lastname','trim|required');
 		$this->form_validation->set_rules('discount','Discount','trim|required');
 		$this->form_validation->set_rules('finalprice','Finalprice','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
         $id=$this->input->get('id');
@@ -3267,14 +3272,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		}
 		else
 		{
-			
+
 			$order=$this->input->get_post('id');
 			$product=$this->input->post('product');
 			$price=$this->input->post('price');
 			$quantity=$this->input->post('quantity');
 			$discount=$this->input->post('discount');
 			$finalprice=$this->input->post('finalprice');
-			
+
 			if(($this->order_model->createorderitems($order,$product,$price,$quantity,$discount,$finalprice))==0)
 				$data['alerterror']="Orderitem could not be Created.";
 			else
@@ -3283,10 +3288,10 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			//$data['other']="template=$template";
 			$this->load->view("redirect",$data);
 		}
-			
+
 	}
-    
-    
+
+
 	function printorderinvoice()
 	{
 		$access = array("1");
@@ -3302,7 +3307,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['id']=$this->input->get('id');
 		$this->load->view('templateinvoice1',$data);
 	}
-    
+
 	function printorderlabel()
 	{
 		$access = array("1");
@@ -3315,7 +3320,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['title']='Edit order items';
 		$this->load->view('templatelabel',$data);
 	}
-    
+
 	function editorderitems()
 	{
 		$access = array("1");
@@ -3353,7 +3358,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('quantity','Lastname','trim|required');
 		$this->form_validation->set_rules('discount','Discount','trim|required');
 		$this->form_validation->set_rules('finalprice','Finalprice','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
         $id=$this->input->get('id');
@@ -3378,7 +3383,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$discount=$this->input->post('discount');
 			$finalprice=$this->input->post('finalprice');
             //echo $order;
-			
+
 			if(($this->order_model->updateorderitem($id,$order,$product,$price,$quantity,$discount,$finalprice))==0)
 				$data['alerterror']="Orderitem could not be Updated.";
 			else
@@ -3387,10 +3392,10 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$data['order']="id=$order";
 			$this->load->view("redirect",$data);
 		}
-			
+
 	}
-    
-    
+
+
 	function getproductbycategory()
 	{
 		$category = $this->input->get_post('category');
@@ -3416,9 +3421,9 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['title']='Edit orderitems';
 		$this->load->view('template',$data);
 	}
-    
+
     //Pick Of Weak
-    
+
 	function viewpickofweak()
 	{
 		$access = array("1");
@@ -3428,7 +3433,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['title']='View pickofweak';
 		$this->load->view('template',$data);
 	}
-    
+
 	public function createpickofweak()
 	{
 		$access = array("1");
@@ -3436,16 +3441,16 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['order']=$this->order_model->getorderdropdown();
 		$data[ 'page' ] = 'createpickofweak';
 		$data[ 'title' ] = 'Create pickofweak';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
-    
+
 	function createpickofweaksubmit()
 	{
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('order','Order','trim|required');
-		
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
             $data['order']=$this->order_model->getorderdropdown();
@@ -3456,7 +3461,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		else
 		{
 			$order=$this->input->post('order');
-			
+
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$this->load->library('upload', $config);
@@ -3467,7 +3472,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-			
+
 			if($this->pickofweak_model->createpickofweak($order,$image)==0)
 			$data['alerterror']="New pickofweak could not be created.";
 			else
@@ -3478,8 +3483,8 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$this->load->view("redirect",$data);
 		}
 	}
-    
-    
+
+
 	function editpickofweak()
 	{
 		$access = array("1");
@@ -3495,7 +3500,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('order','order','trim|required');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
             $data['before']=$this->pickofweak_model->beforeeditpickofweak($this->input->get('id'));
@@ -3518,7 +3523,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-			
+
 			if($this->pickofweak_model->editpickofweak($id,$order,$image)==0)
 			$data['alerterror']="pickofweak Editing was unsuccesful";
 			else
@@ -3532,7 +3537,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$this->load->view('template',$data);*/
 		}
 	}
-    
+
 	function deletepickofweak()
 	{
 		$access = array("1");
@@ -3544,7 +3549,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['title']='View pickofweak';
 		$this->load->view('template',$data);
 	}
-    
+
     function createproductwaiting()
 	{
 		$access = array("1");
@@ -3555,7 +3560,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['title']='create product Waiting';
 		$this->load->view('template',$data);
 	}
-    
+
 	function createproductwaitingsubmit()
 	{
 		$access = array("1");
@@ -3563,7 +3568,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('email','Email','trim|valid_email');
 		$this->form_validation->set_rules('product','product','trim');
 		$this->form_validation->set_rules('user','user','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
             print_r($data['alerterror']);
@@ -3601,7 +3606,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['title']='Edit product Waiting';
 		$this->load->view('template',$data);
 	}
-    
+
 	function editproductwaitingsubmit()
 	{
 		$access = array("1");
@@ -3609,7 +3614,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('email','Email','trim|valid_email');
 		$this->form_validation->set_rules('product','product','trim');
 		$this->form_validation->set_rules('user','user','trim');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->product_model->beforeeditproductwaiting($this->input->get('id'));
@@ -3637,7 +3642,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
             $this->load->view('template',$data);
 		}
 	}
-    
+
 	function deleteproductwaiting()
 	{
 		$access = array("1");
@@ -3651,13 +3656,13 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $this->load->view('template',$data);
 	}
     //csv
-    
+
     	public function exportusercsv()
 	{
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->user_model->exportusercsv();
-            
+
         $data['table']=$this->user_model->viewusers();
 		$data['page']='viewusers';
 		$data['title']='View Users';
@@ -3668,23 +3673,23 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->newsletter_model->exportnewslettercsv();
-         
+
 	}
     	public function exportordercsv()
 	{
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->order_model->exportordercsv();
-         
+
 	}
     	public function exportorderitemcsv()
 	{
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->order_model->exportorderitemcsv();
-         
+
 	}
-  
+
     	public function exportproductcsv()
 	{
 		$access = array("1");
@@ -3692,7 +3697,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->product_model->exportproductcsv();
         $data['redirect']="site/viewproduct";
         $this->load->view("redirect",$data);
-	}	
+	}
     public function exportdateordercsv()
 	{
 		$access = array("1");
@@ -3701,7 +3706,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['redirect']="site/index";
         $this->load->view("redirect",$data);
 	}
-    
+
     function uploadproductcsv()
 	{
 		$access = array("1");
@@ -3709,8 +3714,8 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'page' ] = 'uploadproductcsv';
 		$data[ 'title' ] = 'Upload product';
 		$this->load->view( 'template', $data );
-	} 
-//    
+	}
+//
 //    function uploadlistingcsvsubmit()
 //	{
 //        $access = array("1");
@@ -3739,16 +3744,16 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 //        $category=$this->input->get_post('category');
 //        $id1=$this->listing_model->createbycsv($file,$category);
 ////        echo $id1;
-//        
+//
 //        if($id1==0)
 //        $data['alerterror']="New listings could not be Uploaded.";
 //		else
 //		$data['alertsuccess']="listings Uploaded Successfully.";
-//        
+//
 //        $data['redirect']="site/viewlisting";
 //        $this->load->view("redirect",$data);
 //    }
-//    
+//
     function uploadproductcsvsubmit()
 	{
         $access = array("1");
@@ -3775,7 +3780,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $fullfilepath=$filepath."".$file;
         $file = $this->csvreader->parse_file($fullfilepath);
         $id1=$this->product_model->createbycsv($file);
-        
+
         if($id1==0)
         $data['alerterror']="New products could not be Uploaded.";
 		else
@@ -3785,10 +3790,10 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['redirect']="site/viewproduct";
         $this->load->view("redirect",$data);
     }
-   
-    
+
+
     //productimage
-    
+
     function viewproductimage()
 	{
 		$access = array("1");
@@ -3801,9 +3806,9 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['title']='View product Image';
 		$this->load->view('templatewith2',$data);
 	}
-    
-    
-    
+
+
+
     public function createproductimage()
 	{
 		$access = array("1");
@@ -3812,7 +3817,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'title' ] = 'Create productimage';
 		$data[ 'productid' ] = $this->input->get('id');
         $data['isdefault']=$this->productimage_model->getisdefaultdropdown();
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
     function createproductimagesubmit()
 	{
@@ -3822,23 +3827,23 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('order','order','trim');
 		$this->form_validation->set_rules('isdefault','isdefault','trim');
 
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
-            
+
 			$data['alerterror'] = validation_errors();
 			$data[ 'page' ] = 'createproductimage';
             $data[ 'title' ] = 'Create productimage';
             $data[ 'productid' ] = $this->input->get_post('id');
             $data['isdefault']=$this->productimage_model->getisdefaultdropdown();
 //            $data['product']=$this->productimage_model->getproductdropdown();
-            $this->load->view( 'template', $data );	
+            $this->load->view( 'template', $data );
 		}
 		else
 		{
 			$product=$this->input->post('product');
 			$order=$this->input->post('order');
 			$isdefault=$this->input->post('isdefault');
-           
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -3848,7 +3853,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -3857,30 +3862,30 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
-                }  
+                }
                 else
                 {
                     $image=$this->image_lib->dest_image;
                 }
-                
+
 			}
-            
-            
+
+
             if($this->productimage_model->create($product,$image,$order,$isdefault)==0)
                $data['alerterror']="New productimage could not be created.";
             else
                $data['alertsuccess']="productimage created Successfully.";
-			
+
 			$data['redirect']="site/viewproductimage?id=".$product;
 			$this->load->view("redirect2",$data);
 		}
 	}
-    
+
     function editproductimage()
 	{
 		$access = array("1");
@@ -3899,12 +3904,12 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-        
+
 		$this->form_validation->set_rules('product','product','trim|required');
 		$this->form_validation->set_rules('order','order','trim');
 		$this->form_validation->set_rules('isdefault','isdefault','trim');
-        
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
             $productid=$this->input->post('product');
@@ -3920,12 +3925,12 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		}
 		else
 		{
-            
+
 			$id=$this->input->post('productimageid');
             $product=$this->input->post('product');
             $order=$this->input->post('order');
             $isdefault=$this->input->post('isdefault');
-            
+
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -3935,7 +3940,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			{
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
-                
+
                 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
                 $config_r['maintain_ratio'] = TRUE;
                 $config_t['create_thumb'] = FALSE;///add this
@@ -3944,35 +3949,35 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
                 $config_r['quality']    = 100;
                 //end of configs
 
-                $this->load->library('image_lib', $config_r); 
+                $this->load->library('image_lib', $config_r);
                 $this->image_lib->initialize($config_r);
                 if(!$this->image_lib->resize())
                 {
                     echo "Failed." . $this->image_lib->display_errors();
-                }  
+                }
                 else
                 {
                     $image=$this->image_lib->dest_image;
                 }
-                
+
 			}
             if($image=="")
             {
                 $image=$this->productimage_model->getproductimagebyid($id);
                 $image=$image->image;
             }
-            
+
 			if($this->productimage_model->edit($id,$product,$image,$order,$isdefault)==0)
 			$data['alerterror']="productimage Editing was unsuccesful";
 			else
 			$data['alertsuccess']="productimage edited Successfully.";
-			
+
 			$data['redirect']="site/viewproductimage?id=".$product;
 			$this->load->view("redirect2",$data);
-			
+
 		}
 	}
-    
+
 	function deleteproductimage()
 	{
 		$access = array("1");
@@ -3984,8 +3989,8 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['redirect']="site/viewproductimage?id=".$productid;
 		$this->load->view("redirect2",$data);
 	}
-    
-    
+
+
     //avinash
     //offer
     public function viewoffer()
@@ -4005,49 +4010,49 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`offer`.`title`";
         $elements[1]->sort="1";
         $elements[1]->header="title";
         $elements[1]->alias="title";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`offer`.`price`";
         $elements[2]->sort="1";
         $elements[2]->header="price";
         $elements[2]->alias="price";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`offer`.`description`";
         $elements[3]->sort="1";
         $elements[3]->header="description";
         $elements[3]->alias="description";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`offer`.`startdate`";
         $elements[4]->sort="1";
         $elements[4]->header="startdate";
         $elements[4]->alias="startdate";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`offer`.`enddate`";
         $elements[5]->sort="1";
         $elements[5]->header="enddate";
         $elements[5]->alias="enddate";
-        
+
         $elements[6]=new stdClass();
         $elements[6]->field="`offer`.`status`";
         $elements[6]->sort="1";
         $elements[6]->header="status";
         $elements[6]->alias="status";
-        
+
         $elements[7]=new stdClass();
         $elements[7]->field="`offer`.`timestamp`";
         $elements[7]->sort="1";
         $elements[7]->header="timestamp";
         $elements[7]->alias="timestamp";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -4073,7 +4078,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data[ 'status' ] =$this->offer_model->getstatusdropdown();
 		$data[ 'page' ] = 'createoffer';
 		$data[ 'title' ] = 'Create offer';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createoffersubmit()
 	{
@@ -4085,7 +4090,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('price','price','trim|');
 		$this->form_validation->set_rules('startdate','startdate','trim|');
 		$this->form_validation->set_rules('enddate','enddate','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->offer_model->getstatusdropdown();
@@ -4101,7 +4106,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$startdate=$this->input->post('startdate');
 			$enddate=$this->input->post('enddate');
 			$status=$this->input->post('status');
-            
+
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -4112,7 +4117,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-            
+
 			if($this->offer_model->createoffer($title,$description,$price,$startdate,$enddate,$status,$image)==0)
 			$data['alerterror']="New offer could not be created.";
 			else
@@ -4152,7 +4157,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('price','price','trim|');
 		$this->form_validation->set_rules('startdate','startdate','trim|');
 		$this->form_validation->set_rules('enddate','enddate','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->offer_model->getstatusdropdown();
@@ -4164,14 +4169,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		else
 		{
 			$id=$this->input->post('id');
-			
+
 			$title=$this->input->post('title');
 			$description=$this->input->post('description');
 			$price=$this->input->post('price');
 			$startdate=$this->input->post('startdate');
 			$enddate=$this->input->post('enddate');
 			$status=$this->input->post('status');
-            
+
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -4182,14 +4187,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-            
+
             if($image=="")
             {
             $image=$this->offer_model->getofferimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
+
 			if($this->offer_model->editoffer($id,$title,$description,$price,$startdate,$enddate,$status,$image)==0)
 			$data['alerterror']="offer Editing was unsuccesful";
 			else
@@ -4207,9 +4212,9 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['redirect']="site/viewoffer";
         $this->load->view("redirect",$data);
 	}
-    
+
         //offerproduct
-    
+
     function viewofferproduct()
 	{
 		$access = array("1");
@@ -4234,37 +4239,37 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`offerproduct`.`offer`";
         $elements[1]->sort="1";
         $elements[1]->header="offer";
         $elements[1]->alias="offer";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`offerproduct`.`product`";
         $elements[2]->sort="1";
         $elements[2]->header="product";
         $elements[2]->alias="product";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`offerproduct`.`quantity`";
         $elements[3]->sort="1";
         $elements[3]->header="quantity";
         $elements[3]->alias="quantity";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`product`.`name`";
         $elements[4]->sort="1";
         $elements[4]->header="Product";
         $elements[4]->alias="productname";
-        
+
         $elements[5]=new stdClass();
         $elements[5]->field="`product`.`sku`";
         $elements[5]->sort="1";
         $elements[5]->header="sku";
         $elements[5]->alias="sku";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -4396,7 +4401,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->load->view("redirect2",$data);
 	}
 
-    
+
     //brand
     public function viewbrand()
     {
@@ -4415,31 +4420,31 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`brand`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="name";
         $elements[1]->alias="name";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`brand`.`order`";
         $elements[2]->sort="1";
         $elements[2]->header="order";
         $elements[2]->alias="order";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`brand`.`logo`";
         $elements[3]->sort="1";
         $elements[3]->header="logo";
         $elements[3]->alias="logo";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`brand`.`isdistributer`";
         $elements[4]->sort="1";
         $elements[4]->header="isdistributer";
         $elements[4]->alias="isdistributer";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -4465,7 +4470,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['isdistributer']=$this->brand_model->getdistributerdropdown();
 		$data[ 'page' ] = 'createbrand';
 		$data[ 'title' ] = 'Create brand';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createbrandsubmit()
 	{
@@ -4473,7 +4478,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('name','name','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'page' ] = 'createbrand';
@@ -4485,7 +4490,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$name=$this->input->post('name');
 			$order=$this->input->post('order');
 			$isdistributer=$this->input->post('isdistributer');
-            
+
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -4496,7 +4501,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-            
+
 			if($this->brand_model->createbrand($name,$order,$image,$isdistributer)==0)
 			$data['alerterror']="New brand could not be created.";
 			else
@@ -4532,7 +4537,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('name','name','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->brand_model->beforeeditbrand($this->input->post('id'));
@@ -4543,11 +4548,11 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		else
 		{
 			$id=$this->input->post('id');
-			
+
 			$name=$this->input->post('name');
 			$order=$this->input->post('order');
             $isdistributer=$this->input->post('isdistributer');
-            
+
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -4558,14 +4563,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-            
+
             if($image=="")
             {
             $image=$this->brand_model->getbrandlogobyid($id);
                // print_r($image);
                 $image=$image->logo;
             }
-            
+
 			if($this->brand_model->editbrand($id,$name,$order,$image,$isdistributer)==0)
 			$data['alerterror']="brand Editing was unsuccesful";
 			else
@@ -4583,7 +4588,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['redirect']="site/viewbrand";
         $this->load->view("redirect",$data);
 	}
-    
+
 	function productimagereorder()
 	{
 		$access = array("1");
@@ -4599,7 +4604,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['redirect']="site/index";
         $this->load->view("redirect",$data);
 	}
-    
+
     //type
 	public function createtype()
 	{
@@ -4607,15 +4612,15 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$data[ 'page' ] = 'createtype';
 		$data[ 'title' ] = 'Create type';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createtypesubmit()
 	{
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('name','Name','trim|required');
-		
-		if($this->form_validation->run() == FALSE)	
+
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'page' ] = 'createtype';
@@ -4652,13 +4657,13 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`type`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="name";
         $elements[1]->alias="name";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -4700,7 +4705,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('name','Name','trim|required');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->type_model->beforeedittype($this->input->post('id'));
@@ -4729,9 +4734,9 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['redirect']="site/viewtype";
         $this->load->view("redirect",$data);
 	}
-    
+
     // new arrivals
-    
+
     public function createnewarrival()
 	{
 		$access = array("1");
@@ -4740,7 +4745,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['product']=$this->product_model->getproductdropdown();
 		$data[ 'page' ] = 'createnewarrival';
 		$data[ 'title' ] = 'Create New Arrival';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createnewarrivalsubmit()
 	{
@@ -4752,12 +4757,12 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$data['alerterror']="New newarrival could not be created.";
 			else
 			$data['alertsuccess']="newarrival created Successfully.";
-			
+
 			$data['table']=$this->newarrival_model->viewnewarrival();
 			$data['redirect']="site/viewnewarrivals";
 			//$data['other']="template=$template";
 			$this->load->view("redirect",$data);
-		
+
 	}
     public function viewnewarrivals()
     {
@@ -4771,26 +4776,26 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
     }
     function viewnewarrivalsjson()
     {
-        
+
         $elements=array();
         $elements[0]=new stdClass();
         $elements[0]->field="`newarrival`.`id`";
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`product`.`name`";
         $elements[1]->sort="1";
         $elements[1]->header="product";
         $elements[1]->alias="product";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`newarrival`.`order`";
         $elements[2]->sort="1";
         $elements[2]->header="order";
         $elements[2]->alias="order";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -4827,16 +4832,16 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
             $id=$this->input->get_post('id');
             $product=$this->input->post('product');
 			$order=$this->input->post('order');
-       
+
 			if($this->newarrival_model->edit($id,$product,$order)==0)
 			$data['alerterror']="newarrival Editing was unsuccesful";
 			else
 			$data['alertsuccess']="newarrival edited Successfully.";
-			
+
 			$data['redirect']="site/viewnewarrivals";
 			$this->load->view("redirect",$data);
 	}
-    
+
     function deletenewarrival()
 	{
 		$access = array("1");
@@ -4848,9 +4853,9 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['title']='View newarrivals';
 		$this->load->view('template',$data);
 	}
-    
-    
-    
+
+
+
       public function viewsubscribe()
     {
         $access=array("1");
@@ -4868,13 +4873,13 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`subscribe`.`email`";
         $elements[1]->sort="1";
         $elements[1]->header="email";
         $elements[1]->alias="email";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`subscribe`.`timestamp`";
         $elements[2]->sort="1";
@@ -4904,14 +4909,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$data[ 'page' ] = 'createsubscribe';
 		$data[ 'title' ] = 'Create subscribe';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createsubscribesubmit()
 	{
 		$access = array("1");
 		$this->checkaccess($access);
         $this->form_validation->set_rules('email','email','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'page' ] = 'createsubscribe';
@@ -4946,7 +4951,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('name','name','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->subscribe_model->beforeeditsubscribe($this->input->post('id'));
@@ -4957,10 +4962,10 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		else
 		{
 			$id=$this->input->post('id');
-			
+
 			$email=$this->input->post('email');
 			$timestamp=$this->input->post('timestamp');
-          
+
 			if($this->subscribe_model->editsubscribe($id,$email,$timestamp)==0)
 			$data['alerterror']="subscribe Editing was unsuccesful";
 			else
@@ -4978,10 +4983,10 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['redirect']="site/viewsubscribe";
         $this->load->view("redirect",$data);
 	}
-    
-    
+
+
     // about us & clients
-    
+
       public function viewaboutus()
     {
         $access=array("1");
@@ -4999,31 +5004,31 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`about`.`image`";
         $elements[1]->sort="1";
         $elements[1]->header="image";
         $elements[1]->alias="image";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`about`.`order`";
         $elements[2]->sort="1";
         $elements[2]->header="order";
         $elements[2]->alias="order";
-        
+
         $elements[3]=new stdClass();
         $elements[3]->field="`about`.`status`";
         $elements[3]->sort="1";
         $elements[3]->header="status";
         $elements[3]->alias="status";
-        
+
         $elements[4]=new stdClass();
         $elements[4]->field="`about`.`title`";
         $elements[4]->sort="1";
         $elements[4]->header="title";
         $elements[4]->alias="title";
-        
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -5049,7 +5054,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data[ 'status' ] =$this->user_model->getstatusdropdown();
 		$data[ 'page' ] = 'createaboutus';
 		$data[ 'title' ] = 'Create aboutus';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createaboutussubmit()
 	{
@@ -5057,7 +5062,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('title','title','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'page' ] = 'createaboutus';
@@ -5069,7 +5074,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$title=$this->input->post('title');
 			$order=$this->input->post('order');
 			$status=$this->input->post('status');
-            
+
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -5080,7 +5085,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-            
+
 			if($this->aboutus_model->createaboutus($order,$image,$status,$title)==0)
 			$data['alerterror']="New aboutus could not be created.";
 			else
@@ -5116,7 +5121,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('name','name','trim|');
 		$this->form_validation->set_rules('order','order','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data['before']=$this->aboutus_model->beforeeditaboutus($this->input->post('id'));
@@ -5130,7 +5135,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 			$title=$this->input->post('title');
 			$order=$this->input->post('order');
 			$status=$this->input->post('status');
-            
+
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -5141,14 +5146,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-            
+
             if($image=="")
             {
             $image=$this->aboutus_model->getaboutuslogobyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
+
 			if($this->aboutus_model->editaboutus($id,$order,$image,$status,$title)==0)
 			$data['alerterror']="aboutus Editing was unsuccesful";
 			else
@@ -5166,9 +5171,9 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['redirect']="site/viewaboutus";
         $this->load->view("redirect",$data);
 	}
-    
+
     // home slider
-    
+
      public function viewhomeslider()
     {
         $access=array("1");
@@ -5186,20 +5191,20 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $elements[0]->sort="1";
         $elements[0]->header="ID";
         $elements[0]->alias="id";
-        
+
         $elements[1]=new stdClass();
         $elements[1]->field="`homeslider`.`image`";
         $elements[1]->sort="1";
         $elements[1]->header="image";
         $elements[1]->alias="image";
-        
+
         $elements[2]=new stdClass();
         $elements[2]->field="`homeslider`.`order`";
         $elements[2]->sort="1";
         $elements[2]->header="order";
         $elements[2]->alias="order";
-        
-        
+
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -5225,7 +5230,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
         $data['product']=$this->product_model->getproductdropdown();
 		$data[ 'page' ] = 'createhomeslider';
 		$data[ 'title' ] = 'Create homeslider';
-		$this->load->view( 'template', $data );	
+		$this->load->view( 'template', $data );
 	}
 	function createhomeslidersubmit()
 	{
@@ -5233,7 +5238,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('title','title','trim|');
 		$this->form_validation->set_rules('status','status','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->homeslider_model->getstatusdropdown();
@@ -5246,7 +5251,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		{
 			$order=$this->input->post('order');
 			$product=$this->input->post('product');
-            
+
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -5257,7 +5262,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-            
+
 			if($this->homeslider_model->createhomeslider($order,$image,$product)==0)
 			$data['alerterror']="New homeslider could not be created.";
 			else
@@ -5290,7 +5295,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$this->form_validation->set_rules('price','price','trim|');
 		$this->form_validation->set_rules('startdate','startdate','trim|');
 		$this->form_validation->set_rules('enddate','enddate','trim|');
-		if($this->form_validation->run() == FALSE)	
+		if($this->form_validation->run() == FALSE)
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->homeslider_model->getstatusdropdown();
@@ -5303,10 +5308,10 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		else
 		{
 			$id=$this->input->post('id');
-			
+
 			$order=$this->input->post('order');
 			$product=$this->input->post('product');
-            
+
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -5317,14 +5322,14 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 				$uploaddata = $this->upload->data();
 				$image=$uploaddata['file_name'];
 			}
-            
+
             if($image=="")
             {
             $image=$this->homeslider_model->gethomesliderimagebyid($id);
                // print_r($image);
                 $image=$image->image;
             }
-            
+
 			if($this->homeslider_model->edithomeslider($id,$order,$image,$product)==0)
 			$data['alerterror']="homeslider Editing was unsuccesful";
 			else
@@ -5341,7 +5346,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
 		$data['alertsuccess']="homeslider Deleted Successfully";
         $data['redirect']="site/viewhomeslider";
         $this->load->view("redirect",$data);
-	}	
+	}
     function gettotallastamt()
 	{
         $id=$this->input->get('id');
@@ -5349,7 +5354,7 @@ LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$whe
           $data['message']=$amt;
         $this->load->view("json",$data);
 	}
-    
-    
+
+
 }
 ?>

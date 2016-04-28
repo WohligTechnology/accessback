@@ -3,7 +3,7 @@ class Email extends CI_Controller
 {
     public function forgotpassword()
     {
-        
+
         //set POST variables
         $email=$this->input->get_post('email');
         $userid=$this->user_model->getidbyemail($email);
@@ -25,8 +25,8 @@ class Email extends CI_Controller
 //        echo $userid;
 //        echo $hashvalue;
 //        echo $link;
-        
-        
+
+
         $url = base_url("email/forgetpasswordemail.php");
         $fields = array(
                                 'userid' => urlencode($userid),
@@ -56,10 +56,10 @@ class Email extends CI_Controller
     }
     }
 
-    
+
     public function welcomemail()
     {
-        
+
         $url = base_url("email/welcomeemail.php");
         $fields = array(
                         );
@@ -82,10 +82,10 @@ class Email extends CI_Controller
         //close connection
         curl_close($ch);
     }
-    
+
     public function transactionsuccess()
     {
-        
+
         $url = base_url("email/transactionsuccessemail.php");
         $fields = array(
                         );
@@ -108,8 +108,8 @@ class Email extends CI_Controller
         //close connection
         curl_close($ch);
     }
-    
-} 
+
+}
 //<h1>Avinash</h1>
 //<p>My name is <span mc:edit="name">Avinash</span> and I am Web Developer.</p>
 //<span mc:edit="footer">Avinash</span>

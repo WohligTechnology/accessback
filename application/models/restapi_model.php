@@ -320,8 +320,10 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
 			if(!empty($orderid))
 			{
 			$tid = "COD".$orderid;
-			$query1 = $this->db->query("UPDATE `order` SET `orderstatus`='2',`paymentmode`='4',`transactionid`='$tid' WHERE `id`='$orderid'");
-$amount = $this->db->query("SELECT `id` AS 'OrderId',`transactionid`,`finalamount` AS 'totalamount' FROM `fynx_order` WHERE `id`='$orderid'")->row();
+			$tamount=  $this->db->query("SELECT SUM(`finalprice`) AS 'totalamount' FROM `orderitems` WHERE `order`='$orderid'")->row();
+			$query1 = $this->db->query("UPDATE `order` SET `orderstatus`='2',`paymentmethod`='4',`transactionid`='$tid',`finalamount`='$tamount->totalamount' WHERE `id`='$orderid'");
+$amount = $this->db->query("SELECT `id` AS 'OrderId',`transactionid`,`finalamount` AS 'totalamount' FROM `order` WHERE `id`='$orderid'")->row();
+
 // DESTROY CART
 			 $getuser = $this->db->query("SELECT `user` FROM `order` WHERE `id`='$orderid'")->row();
 $user = $getuser->user;
