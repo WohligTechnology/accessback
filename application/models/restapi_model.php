@@ -257,16 +257,16 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
 		public function updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus,$couponcode,$amount)
         {
           $query=$this->db->query("UPDATE `order` SET `orderstatus`='$orderstatus', `finalamount`='$amount', `transactionid`='$transactionid', `json`='$json' WHERE `id`='$orderid'");
-            
+
     if($orderstatus==2)
         {
               //CHECK IF PAYMENT IS SUCCESSFUL
-            
-            
+
+
             $query1=$this->db->query("SELECT SUM(`finalprice`) as `price` FROM `orderitems` WHERE `order`='$orderid'")->row();
             $orderdetails=$this->db->query("SELECT * FROM `order` WHERE `id`='$orderid'")->row();
             $user=$orderdetails->user;
-            
+
             $userdetails=$this->db->query("SELECT * FROM `user` WHERE `id`='$user'")->row();
             $credits=$userdetails->credits;
             $finalprice=$query1->price;
@@ -285,20 +285,20 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
                  $queryuser=$this->db->query("UPDATE `user` SET `credits`='$newcredits' WHERE `id`='$user'");
             }
             // DESTROY CART
-        
+
              $this->cart->destroy();
              $deletecart=$this->db->query("DELETE FROM `usercart` WHERE `user`='$user'");
-        
+
               // REDUCE PRODUCT QUANTITY
-            
+
             $orderitems=$this->db->query("SELECT * FROM `orderitems` WHERE `order`='$orderid'")->result();
-            
+
             foreach($orderitems as $orderitem){
                 $productid=$orderitem->product;
                 $quantity=$orderitem->quantity;
                  $this->db->query("UPDATE `product` SET `product`.`quantity`=`product`.`quantity`-$quantity WHERE `product`.`id`='$productid'");
             }
-            
+
                 // COUPON CODE
 
         if($couponcode!="")
@@ -306,15 +306,50 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
              $updatecouponcode=$this->db->query("UPDATE `discountcoupon` SET `status`=0 WHERE `couponcode`='$couponcode'");
         }
 
-            redirect("http://accessworld.in/#/thankyou/".$orderid);  
+            redirect("http://accessworld.in/#/thankyou/".$orderid);
         }
     else
     {
-              redirect("http://accessworld.in/#/sorry/".$orderid);   
+              redirect("http://accessworld.in/#/sorry/".$orderid);
     }
-        //return 1;
+    //return 1;
+    }
 
-    }
+		public function updateorderstatuscod($orderid)
+		{
+			if(!empty($orderid))
+			{
+			$tid = "COD".$orderid;
+			$query1 = $this->db->query("UPDATE `order` SET `orderstatus`='2',`paymentmode`='4',`transactionid`='$tid' WHERE `id`='$orderid'");
+$amount = $this->db->query("SELECT `id` AS 'OrderId',`transactionid`,`finalamount` AS 'totalamount' FROM `fynx_order` WHERE `id`='$orderid'")->row();
+// DESTROY CART
+			 $getuser = $this->db->query("SELECT `user` FROM `order` WHERE `id`='$orderid'")->row();
+$user = $getuser->user;
+$this->cart->destroy();
+$deletecart = $this->db->query("DELETE FROM `usercart` WHERE `user`='$user'");
+				if(!empty($query1))
+				{
+					return $amount;
+					// $obj = new stdClass();
+					// $obj->value = true;
+					// redirect('http://selfcareindia.com/#/thankyou/'.$OrderId."/".$amount->totalamount);
+				}
+				else
+				 {
+						$obj = new stdClass();
+						$obj->value = false;
+							return $obj;
+					}
+}
+else
+{
+	$obj = new stdClass();
+	$obj->value = "Order ID not found";
+		return $obj;
+}
+		}
+
+
     public function checkproductquantity($prodid){
          $query=$this->db->query("SELECT `quantity` FROM `product` WHERE `id`='$prodid'")->row();
          $quantity=$query->quantity;

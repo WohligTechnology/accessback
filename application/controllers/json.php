@@ -310,10 +310,10 @@ class Json extends CI_Controller {
             $element["maxQuantity"]=$this->restapi_model->checkproductquantity($proid);
             array_push($data["message"], $element);
         }
-        
+
         $this->load->view("json", $data);
     }
-    
+
     function checkoutCheck() {
         $userid=$this->session->userdata("id");
         $newcart=array();
@@ -353,7 +353,7 @@ class Json extends CI_Controller {
         $data["message"]=$returnWhat;
         $this->load->view("json", $data);
     }
-    
+
     function totalcart() {
         $data["message"] = $this->cart->total();
         $this->load->view("json", $data);
@@ -439,7 +439,7 @@ class Json extends CI_Controller {
         $cart = $this->cart->contents();
         $newcart = array();
         foreach ($cart as $item) {
-            if ($item['id'] != $id) 
+            if ($item['id'] != $id)
                 array_push($newcart, $item);
         }
         $this->cart->destroy();
@@ -1387,7 +1387,7 @@ echo $filepath;
         $elements[6]->sort = "1";
         $elements[6]->header = "status";
         $elements[6]->alias = "status";
-        
+
         $elements[6] = new stdClass();
         $elements[6]->field = "`order`.`finalamount`";
         $elements[6]->sort = "1";
@@ -1413,15 +1413,15 @@ echo $filepath;
             $orderorder = "ASC";
         }
         $data["message"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `orderitems` INNER JOIN `order` ON `order`.`id`=`orderitems`.`order` LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","WHERE `order`.`user`='$userid' AND `orderstatus` NOT IN(1,5)","GROUP BY `order`.`id`");
-        
+
 //        multiple products
-        
+
          foreach($data["message"]->queryresult as $row)
         {
             $orderid=$row->id;
             $row->products=$this->db->query("SELECT `orderitems`.`product`,`product`.`name`,`productimage`.`image`, `orderitems`.`quantity`, `orderitems`.`price`, `orderitems`.`discount`, `orderitems`.`finalprice` FROM `orderitems` LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product` LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id` WHERE `orderitems`.`order`='$orderid' GROUP BY `product`.`id`")->result();
         }
-        
+
         $this->load->view("json", $data);
     }
 
@@ -2186,8 +2186,16 @@ $couponcode = explode('=',$decryptValues[26])[1];
             $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json,$orderstatus,$couponcode,$amount);
   	    $this->load->view('json',$data);
    }
+
+   public function COD()
+   {
+     $data = json_decode(file_get_contents('php://input'), true);
+     $orderid = $data['id'];
+     $data['message'] = $this->restapi_model->updateorderstatuscod($orderid);
+     $this->load->view('json', $data);
+   }
       public function getmonthlysales()
-	{  
+	{
          $data = json_decode(file_get_contents('php://input'), true);
         $orderid = $data['o'];
         $transactionid = $data['t'];
@@ -2196,16 +2204,16 @@ $couponcode = explode('=',$decryptValues[26])[1];
         $amount = $data['a'];
      $data['message']=$this->restapi_model->updateorderstatusafterpayment($orderid,$transactionid,$json,2,$couponcode,$amount);
   	    $this->load->view('json',$data);
-        
+
 	}
       public function getorderbyorderid()
-	{  
+	{
        $orderid=$this->input->get_post('id');
      $data['message']=$this->restapi_model->getorderbyorderid($orderid);
   	    $this->load->view('json',$data);
-        
+
 	}
-    
+
 
 }
 ?>

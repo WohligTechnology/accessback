@@ -299,17 +299,17 @@ class User_model extends CI_Model
 	}
     public function getmonthlysales()
 	{
-        
+
     $todaysdate=date("Y-m-d");
     $firstdate=date('Y-m-01', strtotime($todaysdate));
     $lastdate=date('Y-m-t', strtotime($todaysdate));
-        
+
 		$query=$this->db->query("SELECT IFNULL(SUM(`finalamount`),0) as `sumamount` FROM `order` WHERE DATE(`timestamp`) BETWEEN '$firstdate' AND  '$lastdate' AND `order`.`orderstatus` NOT IN (1,5)")->row();
 		$sumamount=$query->sumamount;
 		return $sumamount;
-        
+
 	}
-    
+
 	function editaddress($id,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingstate,$shippingcountry,$shippingpincode)
 	{
 		$data  = array(
@@ -582,8 +582,8 @@ class User_model extends CI_Model
             }
             $where.=" ) ";
         }
-            $query=$this->db->query("SELECT `product`.`id`,`product`.`name`,`product`.`sku`,`product`.`description`,`product`.`url`,`product`.`price`,`product`.`wholesaleprice`, `product`.`firstsaleprice`,`product`.`secondsaleprice`,`product`.`specialpriceto`,`product`.`specialpricefrom`,`image1`.`image` as `image1`,`image2`.`image` as `image2`,`product`.`quantity` FROM `product` 
-       LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1 
+            $query=$this->db->query("SELECT `product`.`id`,`product`.`name`,`product`.`sku`,`product`.`description`,`product`.`url`,`product`.`price`,`product`.`wholesaleprice`, `product`.`firstsaleprice`,`product`.`secondsaleprice`,`product`.`specialpriceto`,`product`.`specialpricefrom`,`image1`.`image` as `image1`,`image2`.`image` as `image2`,`product`.`quantity` FROM `product`
+       LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1
         LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=0 $where  GROUP BY `product`.`id`");
         return $query->result();
     }
@@ -592,7 +592,7 @@ class User_model extends CI_Model
 
     function addtocart($product,$productname,$quantity,$price) {
         //$data=$this->cart->contents();
-        
+
         $productdetails=$this->db->query("SELECT * FROM `product` WHERE `id` = '$product'")->row();
         $productquantity=$productdetails->quantity;
         $originalprice=$productdetails->price;
@@ -603,10 +603,10 @@ class User_model extends CI_Model
         else{
             $price=$price;
         }
-        
+
         $image=$this->db->query("SELECT `image` FROM `productimage` WHERE `product` = '$product' LIMIT 0,1")->row();
         $image=$image->image;
-        
+
         $data = array(
                'id'      => $product,
                'name'      => '1',
@@ -640,7 +640,7 @@ class User_model extends CI_Model
             else
             return false;
         }
-         
+
     }
     function updatecart($rowid,$qty,$id){
     $data = array(
@@ -648,7 +648,7 @@ class User_model extends CI_Model
                'qty'   => $qty
             );
 
-        $this->cart->update($data); 
+        $this->cart->update($data);
         return $this->cart->contents();
     }
 
@@ -683,7 +683,7 @@ $timestamp=new DateTime();
              echo 'File written!';
         }
 	}
-    
+
 	function getidbyemail($useremail)
 	{
 		$query = $this->db->query("SELECT `id` FROM `user`
@@ -691,8 +691,8 @@ $timestamp=new DateTime();
         $userid=$query->id;
 		return $userid;
 	}
-    
-    
+
+
     function forgotpasswordsubmit($hashcode,$password)
     {
         $normalfromhash=base64_decode ($hashcode);
@@ -702,15 +702,15 @@ $timestamp=new DateTime();
         $userid=$returnvalue[0];
         $password=md5($password);
         $query=$this->db->query("UPDATE `user` SET `password`='$password' WHERE `id`='$userid'");
-//        
+//
 //        $getemailbyid=$this->db->query("SELECT `email` FROM `user` WHERE `id`='$userid'")->row();
 //        $email=$getemailbyid->email;
-//           
+//
 //        $this->load->library('email');
 //        $this->email->from('amitwohlig@gmail.com', 'Access');
 //        $this->email->to($email);
-//        $this->email->subject('Access Password Changed');   
-//            
+//        $this->email->subject('Access Password Changed');
+//
 //        $message = "<html>
 //
 //<body style=\"background:url('http://magicmirror.in/emaildata/emailer.jpg')no-repeat center; background-size:cover;\">
@@ -739,8 +739,8 @@ $timestamp=new DateTime();
 			return  1;
     }
 
-    
-    function changepasswordfront($email, $oldpassword, $newpassword, $confirmpassword) 
+
+    function changepasswordfront($email, $oldpassword, $newpassword, $confirmpassword)
     {
         $oldpassword=md5($oldpassword);
         $newpassword=md5($newpassword);
@@ -757,8 +757,8 @@ $timestamp=new DateTime();
             return 1;
         }
     }
-    
-    function updateuserfront($id,$firstname, $lastname, $billingaddress, $email, $phone, $billingcity,$billingpincode,$billingcountry,$billingstate) 
+
+    function updateuserfront($id,$firstname, $lastname, $billingaddress, $email, $phone, $billingcity,$billingpincode,$billingcountry,$billingstate)
     {
         $data = array(
                'firstname'=> $firstname,
@@ -772,14 +772,14 @@ $timestamp=new DateTime();
                'billingstate'=> $billingstate
             );
 $this->db->where('id', $id);
-$val=$this->db->update('user', $data); 
+$val=$this->db->update('user', $data);
        if($val){
            return true;
        }
         else{
             return false;
         }
-        
+
     }
       function getuserdetails($id){
     $query=$this->db->query("SELECT `id`, `firstname`, `lastname`, `email`, `phone`,`billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingpincode`,`credits` FROM `user` WHERE `id`='$id'")->row();
@@ -798,6 +798,6 @@ GROUP BY `product`.`id`")->result();
     function deletecartfromdb($id){
     $query=$this->db->query("DELETE FROM `usercart` WHERE `product`='$id'");
     }
-  
+
 }
 ?>
