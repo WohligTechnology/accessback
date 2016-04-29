@@ -321,8 +321,9 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
 			{
 			$tid = "COD".$orderid;
 			$tamount=  $this->db->query("SELECT SUM(`finalprice`) AS 'totalamount' FROM `orderitems` WHERE `order`='$orderid'")->row();
-			$query1 = $this->db->query("UPDATE `order` SET `orderstatus`='2',`paymentmethod`='4',`transactionid`='$tid',`finalamount`='$tamount->totalamount' WHERE `id`='$orderid'");
-$amount = $this->db->query("SELECT `id` AS 'OrderId',`transactionid`,`finalamount` AS 'totalamount' FROM `order` WHERE `id`='$orderid'")->row();
+			$query1 = $this->db->query("UPDATE `order` SET `orderstatus`='2',`paymentmethod`='4',`transactionid`='$tid',`trackingcode`='$tid',`finalamount`='$tamount->totalamount' WHERE `id`='$orderid'");
+$amount = $this->db->query("SELECT `id` AS 'OrderId' FROM `order` WHERE `id`='$orderid'")->row();
+// $amount = $this->db->query("SELECT `id` AS 'OrderId',`transactionid`,`finalamount` AS 'totalamount' FROM `order` WHERE `id`='$orderid'")->row();
 
 // DESTROY CART
 			 $getuser = $this->db->query("SELECT `user` FROM `order` WHERE `id`='$orderid'")->row();
