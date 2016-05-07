@@ -27,6 +27,7 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
 		$data[ 'page' ] = 'dashboard';
 		$data[ 'usercount' ] = $this->user_model->getusercount();
+		$data[ 'subscribecount' ] = $this->subscribe_model->subscribecount();
          $data[ 'monthlysales' ] = $this->user_model->getmonthlysales();
 		$data["base_url"]=site_url("site/viewdashboardjson");
 		$data[ 'title' ] = 'Welcome';
@@ -52,7 +53,7 @@ class Site extends CI_Controller
     {
         $orderdate=$this->input->get('date');
         if($orderdate !=""){
-            $where="WHERE DATE(`order`.`timestamp`)='$orderdate' AND `order`.`orderstatus` IN(2,3)";
+            $where="WHERE DATE(`order`.`timestamp`)='$orderdate'";
         }
         else{
             $where="WHERE 0";
@@ -95,6 +96,12 @@ class Site extends CI_Controller
         $elements[5]->header="Image";
         $elements[5]->alias="image";
 
+				$elements[6]=new stdClass();
+        $elements[6]->field="`orderstatus`.`name`";
+        $elements[6]->sort="1";
+        $elements[6]->header="Order Status";
+        $elements[6]->alias="orderstatus";
+
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
         $orderby=$this->input->get_post("orderby");
@@ -112,7 +119,8 @@ class Site extends CI_Controller
         $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `order`
 LEFT OUTER JOIN `orderitems` ON `orderitems`.`order`=`order`.`id`
 LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product`
-LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","$where","GROUP BY `product`.`id`");
+LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`
+LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","$where","GROUP BY `product`.`id`");
         $this->load->view("json",$data);
     }
 	public function createuser()

@@ -15,7 +15,7 @@ class subscribe_model extends CI_Model
 	}
 	function viewsubscribe()
 	{
-		$query=$this->db->query("SELECT `subscribe`.`id`,`subscribe`.`email`,`subscribe`.`timestamp` FROM `subscribe` 
+		$query=$this->db->query("SELECT `subscribe`.`id`,`subscribe`.`email`,`subscribe`.`timestamp` FROM `subscribe`
 		ORDER BY `subscribe`.`id` ASC")->result();
 		return $query;
 	}
@@ -25,7 +25,7 @@ class subscribe_model extends CI_Model
 		$query=$this->db->get( 'subscribe' )->row();
 		return $query;
 	}
-	
+
 	public function editsubscribe($id,$email,$timestamp)
 	{
 		$data = array(
@@ -41,7 +41,12 @@ class subscribe_model extends CI_Model
 	{
 		$query=$this->db->query("DELETE FROM `subscribe` WHERE `id`='$id'");
 	}
-	
-  
+	public function subscribecount()
+	{
+		$query=$this->db->query("SELECT count(*) as `count` FROM `subscribe`")->row();
+		return $query->count;
+	}
+
+
 }
 ?>

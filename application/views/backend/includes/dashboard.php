@@ -1,3 +1,4 @@
+<div class="row">
 <div class="col-lg-3 col-sm-3">
     <section class="panel">
         <div class="symbol terques">
@@ -11,7 +12,6 @@
 
     </section>
 </div>
-
 <div class="col-lg-3 col-sm-3">
     <section class="panel">
         <div class="symbol terques">
@@ -25,23 +25,33 @@
 
     </section>
 </div>
+<div class="col-lg-3 col-sm-3">
+    <section class="panel">
+        <div class="symbol terques">
+            <i class="icon-user"></i>
+        </div>
+        <div class="value">
+            <p>Total Subscribers </p>
+            <h1><?php echo $subscribecount; ?></h1>
 
-<form method="post" action="<?php echo site_url('site/getDate');?>">
+        </div>
+
+    </section>
+</div>
+</div>
+<div class="">
+  <form method="post" action="<?php echo site_url('site/getDate');?>">
     <div class="row">
         <div class="form-group">
             <label class="col-sm-2 control-label" for="normal-field"><strong>Enter Date</strong></label>
             <div class="col-sm-4">
                 <input type="date" id="normal-field" class="form-control" name="orderdate" value='<?php echo set_value(' orderdate ',$orderdate);?>'>
             </div>
+                <button type="submit" class="btn btn-info">Submit</button>
         </div>
     </div>
-
-    <button type="submit" class="btn btn-info" style="
-    float: right;
-    margin-top: -63px;">Submit</button>
 </form>
-
-
+</div>
 
 
 <div class="showtable">
@@ -66,6 +76,7 @@
                                             <th data-field="product">Product</th>
                                             <th data-field="image">Image</th>
                                             <th data-field="quantity">Quantity</th>
+                                            <th data-field="orderstatus">Order Status</th>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -87,7 +98,7 @@
                 {
                 image="No Receipt Available";
                 }
-                return "<tr><td>" + resultrow.order + "</td><td><a href='http://accessworld.in/#/productdetail/" + resultrow.productid + "' target='_blank'>" + resultrow.product + "</a></td><td>" + image + "</td><td>" + resultrow.quantity + "</td></tr>";
+                return "<tr><td>" + resultrow.order + "</td><td><a href='http://accessworld.in/#/productdetail/" + resultrow.productid + "' target='_blank'>" + resultrow.product + "</a></td><td>" + image + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.orderstatus + "</td></tr>";
                 //            <a href='http://accessworld.in/#/productdetail/158'></a>
             }
             generatejquery("<?php echo $base_url;?>");
