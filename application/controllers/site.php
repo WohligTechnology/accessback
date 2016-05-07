@@ -44,6 +44,7 @@ class Site extends CI_Controller
         $data['orderdate']=$orderdate;
         $data[ 'usercount' ] = $this->user_model->getusercount();
          $data[ 'monthlysales' ] = $this->user_model->getmonthlysales();
+				 $data[ 'subscribecount' ] = $this->subscribe_model->subscribecount();
 		$data[ 'page' ] = 'dashboard';
         $data["base_url"]=site_url("site/viewdashboardjson?date=".$orderdate);
 		$data[ 'title' ] = 'Welcome';
