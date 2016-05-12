@@ -5365,5 +5365,1131 @@ LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","$whe
 	}
 
 
+
+	    public function viewstore()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="viewstore";
+	$data["base_url"]=site_url("site/viewstorejson");
+	$data["title"]="View store";
+	$this->load->view("template",$data);
+	}
+	function viewstorejson()
+	{
+	$elements=array();
+	$elements[0]=new stdClass();
+	$elements[0]->field="`dea_store`.`id`";
+	$elements[0]->sort="1";
+	$elements[0]->header="ID";
+	$elements[0]->alias="id";
+	$elements[1]=new stdClass();
+	$elements[1]->field="`dea_store`.`storename`";
+	$elements[1]->sort="1";
+	$elements[1]->header="Store Name";
+	$elements[1]->alias="storename";
+	$elements[2]=new stdClass();
+	$elements[2]->field="`dea_store`.`image`";
+	$elements[2]->sort="1";
+	$elements[2]->header="Logo";
+	$elements[2]->alias="image";
+	$elements[3]=new stdClass();
+	$elements[3]->field="`dea_store`.`ownername`";
+	$elements[3]->sort="1";
+	$elements[3]->header="Owner Name";
+	$elements[3]->alias="ownername";
+	$elements[4]=new stdClass();
+	$elements[4]->field="`dea_store`.`city`";
+	$elements[4]->sort="1";
+	$elements[4]->header="City";
+	$elements[4]->alias="city";
+	$elements[5]=new stdClass();
+	$elements[5]->field="`dea_store`.`state`";
+	$elements[5]->sort="1";
+	$elements[5]->header="State";
+	$elements[5]->alias="state";
+	$elements[6]=new stdClass();
+	$elements[6]->field="`dea_store`.`pincode`";
+	$elements[6]->sort="1";
+	$elements[6]->header="Pincode";
+	$elements[6]->alias="pincode";
+	$elements[7]=new stdClass();
+	$elements[7]->field="`dea_store`.`phone`";
+	$elements[7]->sort="1";
+	$elements[7]->header="Phone";
+	$elements[7]->alias="phone";
+	$elements[8]=new stdClass();
+	$elements[8]->field="`dea_store`.`email`";
+	$elements[8]->sort="1";
+	$elements[8]->header="Email";
+	$elements[8]->alias="email";
+	$elements[9]=new stdClass();
+	$elements[9]->field="`dea_store`.`lat`";
+	$elements[9]->sort="1";
+	$elements[9]->header="Latitude";
+	$elements[9]->alias="lat";
+	$elements[10]=new stdClass();
+	$elements[10]->field="`dea_store`.`creationdate`";
+	$elements[10]->sort="1";
+	$elements[10]->header="Creation Date";
+	$elements[10]->alias="creationdate";
+	$elements[11]=new stdClass();
+	$elements[11]->field="`dea_store`.`modificationdate`";
+	$elements[11]->sort="1";
+	$elements[11]->header="Modification Date";
+	$elements[11]->alias="modificationdate";
+	$elements[12]=new stdClass();
+	$elements[12]->field="`dea_store`.`address`";
+	$elements[12]->sort="1";
+	$elements[12]->header="Address";
+	$elements[12]->alias="address";
+	$search=$this->input->get_post("search");
+	$pageno=$this->input->get_post("pageno");
+	$orderby=$this->input->get_post("orderby");
+	$orderorder=$this->input->get_post("orderorder");
+	$maxrow=$this->input->get_post("maxrow");
+	if($maxrow=="")
+	{
+	$maxrow=20;
+	}
+	if($orderby=="")
+	{
+	$orderby="id";
+	$orderorder="ASC";
+	}
+	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_store`");
+	$this->load->view("json",$data);
+	}
+
+	public function createstore()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="createstore";
+	$data["title"]="Create store";
+	$this->load->view("template",$data);
+	}
+	public function createstoresubmit()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->form_validation->set_rules("storename","Store Name","trim");
+	$this->form_validation->set_rules("ownername","Owner Name","trim");
+	$this->form_validation->set_rules("city","City","trim");
+	$this->form_validation->set_rules("state","State","trim");
+	$this->form_validation->set_rules("pincode","Pincode","trim");
+	$this->form_validation->set_rules("phone","Phone","trim");
+	$this->form_validation->set_rules("email","Email","trim");
+	$this->form_validation->set_rules("lat","Latitude","trim");
+	$this->form_validation->set_rules("creationdate","Creation Date","trim");
+	$this->form_validation->set_rules("modificationdate","Modification Date","trim");
+	$this->form_validation->set_rules("address","Address","trim");
+	if($this->form_validation->run()==FALSE)
+	{
+	$data["alerterror"]=validation_errors();
+	$data["page"]="createstore";
+	$data["title"]="Create store";
+	$this->load->view("template",$data);
+	}
+	else
+	{
+	$storename=$this->input->get_post("storename");
+	$ownername=$this->input->get_post("ownername");
+	$city=$this->input->get_post("city");
+	$state=$this->input->get_post("state");
+	$pincode=$this->input->get_post("pincode");
+	$phone=$this->input->get_post("phone");
+	$email=$this->input->get_post("email");
+	$lat=$this->input->get_post("lat");
+	$long=$this->input->get_post("long");
+	$creationdate=$this->input->get_post("creationdate");
+	$modificationdate=$this->input->get_post("modificationdate");
+	$address=$this->input->get_post("address");
+	$config['upload_path'] = './uploads/';
+$config['allowed_types'] = 'gif|jpg|png|jpeg';
+$this->load->library('upload', $config);
+$filename="image";
+$image="";
+if (  $this->upload->do_upload($filename))
+{
+$uploaddata = $this->upload->data();
+$image=$uploaddata['file_name'];
+
+			$config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+			$config_r['maintain_ratio'] = TRUE;
+			$config_t['create_thumb'] = FALSE;///add this
+			$config_r['width']   = 800;
+			$config_r['height'] = 800;
+			$config_r['quality']    = 100;
+			//end of configs
+
+			$this->load->library('image_lib', $config_r);
+			$this->image_lib->initialize($config_r);
+			if(!$this->image_lib->resize())
+			{
+					echo "Failed." . $this->image_lib->display_errors();
+					//return false;
+			}
+			else
+			{
+					//print_r($this->image_lib->dest_image);
+					//dest_image
+					$image=$this->image_lib->dest_image;
+					//return false;
+			}
+
+}
+	if($this->store_model->create($storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address)==0)
+	$data["alerterror"]="New store could not be created.";
+	else
+	$data["alertsuccess"]="store created Successfully.";
+	$data["redirect"]="site/viewstore";
+	$this->load->view("redirect",$data);
+	}
+	}
+	public function editstore()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="editstore";
+	$data["title"]="Edit store";
+	$data["before"]=$this->store_model->beforeedit($this->input->get("id"));
+	$this->load->view("template",$data);
+	}
+	public function editstoresubmit()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->form_validation->set_rules("id","ID","trim");
+	$this->form_validation->set_rules("storename","Store Name","trim");
+	$this->form_validation->set_rules("ownername","Owner Name","trim");
+	$this->form_validation->set_rules("city","City","trim");
+	$this->form_validation->set_rules("state","State","trim");
+	$this->form_validation->set_rules("pincode","Pincode","trim");
+	$this->form_validation->set_rules("phone","Phone","trim");
+	$this->form_validation->set_rules("email","Email","trim");
+	$this->form_validation->set_rules("lat","Latitude","trim");
+	$this->form_validation->set_rules("creationdate","Creation Date","trim");
+	$this->form_validation->set_rules("modificationdate","Modification Date","trim");
+	$this->form_validation->set_rules("address","Address","trim");
+	if($this->form_validation->run()==FALSE)
+	{
+	$data["alerterror"]=validation_errors();
+	$data["page"]="editstore";
+	$data["title"]="Edit store";
+	$data["before"]=$this->store_model->beforeedit($this->input->get("id"));
+	$this->load->view("template",$data);
+	}
+	else
+	{
+	$id=$this->input->get_post("id");
+	$storename=$this->input->get_post("storename");
+	$ownername=$this->input->get_post("ownername");
+	$city=$this->input->get_post("city");
+	$state=$this->input->get_post("state");
+	$pincode=$this->input->get_post("pincode");
+	$phone=$this->input->get_post("phone");
+	$email=$this->input->get_post("email");
+	$lat=$this->input->get_post("lat");
+	$long=$this->input->get_post("long");
+	$creationdate=$this->input->get_post("creationdate");
+	$modificationdate=$this->input->get_post("modificationdate");
+	$address=$this->input->get_post("address");
+	$config['upload_path'] = './uploads/';
+$config['allowed_types'] = 'gif|jpg|png|jpeg';
+$this->load->library('upload', $config);
+$filename="image";
+$image="";
+if (  $this->upload->do_upload($filename))
+{
+$uploaddata = $this->upload->data();
+$image=$uploaddata['file_name'];
+
+			$config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+			$config_r['maintain_ratio'] = TRUE;
+			$config_t['create_thumb'] = FALSE;///add this
+			$config_r['width']   = 800;
+			$config_r['height'] = 800;
+			$config_r['quality']    = 100;
+			//end of configs
+
+			$this->load->library('image_lib', $config_r);
+			$this->image_lib->initialize($config_r);
+			if(!$this->image_lib->resize())
+			{
+					echo "Failed." . $this->image_lib->display_errors();
+					//return false;
+			}
+			else
+			{
+					//print_r($this->image_lib->dest_image);
+					//dest_image
+					$image=$this->image_lib->dest_image;
+					//return false;
+			}
+
+}
+
+	if($image=="")
+	{
+	$image=$this->store_model->getimagebyid($id);
+		 // print_r($image);
+			$image=$image->image;
+	}
+	if($this->store_model->edit($id,$storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address)==0)
+	$data["alerterror"]="New store could not be Updated.";
+	else
+	$data["alertsuccess"]="store Updated Successfully.";
+	$data["redirect"]="site/viewstore";
+	$this->load->view("redirect",$data);
+	}
+	}
+	public function deletestore()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->store_model->delete($this->input->get("id"));
+	$data["redirect"]="site/viewstore";
+	$this->load->view("redirect",$data);
+	}
+	public function viewstoreprice()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="viewstoreprice";
+	$data["base_url"]=site_url("site/viewstorepricejson");
+	$data["title"]="View storeprice";
+	$this->load->view("template",$data);
+	}
+	function viewstorepricejson()
+	{
+	$elements=array();
+	$elements[0]=new stdClass();
+	$elements[0]->field="`dea_storeprice`.`id`";
+	$elements[0]->sort="1";
+	$elements[0]->header="ID";
+	$elements[0]->alias="id";
+	$elements[1]=new stdClass();
+	$elements[1]->field="`dea_storeprice`.`storeid`";
+	$elements[1]->sort="1";
+	$elements[1]->header="Store Id";
+	$elements[1]->alias="storeid";
+	$elements[2]=new stdClass();
+	$elements[2]->field="`dea_storeprice`.`productid`";
+	$elements[2]->sort="1";
+	$elements[2]->header="Product Id";
+	$elements[2]->alias="productid";
+	$elements[3]=new stdClass();
+	$elements[3]->field="`dea_storeprice`.`price`";
+	$elements[3]->sort="1";
+	$elements[3]->header="Price";
+	$elements[3]->alias="price";
+	$elements[4]=new stdClass();
+	$elements[4]->field="`dea_storeprice`.`orderid`";
+	$elements[4]->sort="1";
+	$elements[4]->header="Order Id";
+	$elements[4]->alias="orderid";
+	$elements[5]=new stdClass();
+	$elements[5]->field="`dea_storeprice`.`creationdate`";
+	$elements[5]->sort="1";
+	$elements[5]->header="Creation Date";
+	$elements[5]->alias="creationdate";
+	$elements[6]=new stdClass();
+	$elements[6]->field="`dea_storeprice`.`modificationdate`";
+	$elements[6]->sort="1";
+	$elements[6]->header="Modification Date";
+	$elements[6]->alias="modificationdate";
+	$search=$this->input->get_post("search");
+	$pageno=$this->input->get_post("pageno");
+	$orderby=$this->input->get_post("orderby");
+	$orderorder=$this->input->get_post("orderorder");
+	$maxrow=$this->input->get_post("maxrow");
+	if($maxrow=="")
+	{
+	$maxrow=20;
+	}
+	if($orderby=="")
+	{
+	$orderby="id";
+	$orderorder="ASC";
+	}
+	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_storeprice`");
+	$this->load->view("json",$data);
+	}
+
+	public function createstoreprice()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="createstoreprice";
+	$data["title"]="Create storeprice";
+	$this->load->view("template",$data);
+	}
+	public function createstorepricesubmit()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->form_validation->set_rules("storeid","Store Id","trim");
+	$this->form_validation->set_rules("productid","Product Id","trim");
+	$this->form_validation->set_rules("price","Price","trim");
+	$this->form_validation->set_rules("orderid","Order Id","trim");
+	$this->form_validation->set_rules("creationdate","Creation Date","trim");
+	$this->form_validation->set_rules("modificationdate","Modification Date","trim");
+	if($this->form_validation->run()==FALSE)
+	{
+	$data["alerterror"]=validation_errors();
+	$data["page"]="createstoreprice";
+	$data["title"]="Create storeprice";
+	$this->load->view("template",$data);
+	}
+	else
+	{
+	$storeid=$this->input->get_post("storeid");
+	$productid=$this->input->get_post("productid");
+	$price=$this->input->get_post("price");
+	$orderid=$this->input->get_post("orderid");
+	$creationdate=$this->input->get_post("creationdate");
+	$modificationdate=$this->input->get_post("modificationdate");
+	if($this->storeprice_model->create($storeid,$productid,$price,$orderid,$creationdate,$modificationdate)==0)
+	$data["alerterror"]="New storeprice could not be created.";
+	else
+	$data["alertsuccess"]="storeprice created Successfully.";
+	$data["redirect"]="site/viewstoreprice";
+	$this->load->view("redirect",$data);
+	}
+	}
+	public function editstoreprice()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="editstoreprice";
+	$data["title"]="Edit storeprice";
+	$data["before"]=$this->storeprice_model->beforeedit($this->input->get("id"));
+	$this->load->view("template",$data);
+	}
+	public function editstorepricesubmit()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->form_validation->set_rules("id","ID","trim");
+	$this->form_validation->set_rules("storeid","Store Id","trim");
+	$this->form_validation->set_rules("productid","Product Id","trim");
+	$this->form_validation->set_rules("price","Price","trim");
+	$this->form_validation->set_rules("orderid","Order Id","trim");
+	$this->form_validation->set_rules("creationdate","Creation Date","trim");
+	$this->form_validation->set_rules("modificationdate","Modification Date","trim");
+	if($this->form_validation->run()==FALSE)
+	{
+	$data["alerterror"]=validation_errors();
+	$data["page"]="editstoreprice";
+	$data["title"]="Edit storeprice";
+	$data["before"]=$this->storeprice_model->beforeedit($this->input->get("id"));
+	$this->load->view("template",$data);
+	}
+	else
+	{
+	$id=$this->input->get_post("id");
+	$storeid=$this->input->get_post("storeid");
+	$productid=$this->input->get_post("productid");
+	$price=$this->input->get_post("price");
+	$orderid=$this->input->get_post("orderid");
+	$creationdate=$this->input->get_post("creationdate");
+	$modificationdate=$this->input->get_post("modificationdate");
+	if($this->storeprice_model->edit($id,$storeid,$productid,$price,$orderid,$creationdate,$modificationdate)==0)
+	$data["alerterror"]="New storeprice could not be Updated.";
+	else
+	$data["alertsuccess"]="storeprice Updated Successfully.";
+	$data["redirect"]="site/viewstoreprice";
+	$this->load->view("redirect",$data);
+	}
+	}
+	public function deletestoreprice()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->storeprice_model->delete($this->input->get("id"));
+	$data["redirect"]="site/viewstoreprice";
+	$this->load->view("redirect",$data);
+	}
+	public function viewdeaorder()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="viewdeaorder";
+	$data["base_url"]=site_url("site/viewdeaorderjson");
+	$data["title"]="View deaorder";
+	$this->load->view("template",$data);
+	}
+	function viewdeaorderjson()
+	{
+	$elements=array();
+	$elements[0]=new stdClass();
+	$elements[0]->field="`dea_order`.`id`";
+	$elements[0]->sort="1";
+	$elements[0]->header="ID";
+	$elements[0]->alias="id";
+	$elements[1]=new stdClass();
+	$elements[1]->field="`dea_order`.`store`";
+	$elements[1]->sort="1";
+	$elements[1]->header="Store";
+	$elements[1]->alias="store";
+	$elements[2]=new stdClass();
+	$elements[2]->field="`dea_order`.`paymentstatus`";
+	$elements[2]->sort="1";
+	$elements[2]->header="Payment Status";
+	$elements[2]->alias="paymentstatus";
+	$elements[3]=new stdClass();
+	$elements[3]->field="`dea_order`.`sales`";
+	$elements[3]->sort="1";
+	$elements[3]->header="Sales";
+	$elements[3]->alias="sales";
+	$elements[4]=new stdClass();
+	$elements[4]->field="`dea_order`.`firstname`";
+	$elements[4]->sort="1";
+	$elements[4]->header="First Name";
+	$elements[4]->alias="firstname";
+	$elements[5]=new stdClass();
+	$elements[5]->field="`dea_order`.`lastname`";
+	$elements[5]->sort="1";
+	$elements[5]->header="Last Name";
+	$elements[5]->alias="lastname";
+	$elements[6]=new stdClass();
+	$elements[6]->field="`dea_order`.`email`";
+	$elements[6]->sort="1";
+	$elements[6]->header="Email";
+	$elements[6]->alias="email";
+	$elements[7]=new stdClass();
+	$elements[7]->field="`dea_order`.`billingcity`";
+	$elements[7]->sort="1";
+	$elements[7]->header="Billing City";
+	$elements[7]->alias="billingcity";
+	$elements[8]=new stdClass();
+	$elements[8]->field="`dea_order`.`billingstate`";
+	$elements[8]->sort="1";
+	$elements[8]->header="Billing State";
+	$elements[8]->alias="billingstate";
+	$elements[9]=new stdClass();
+	$elements[9]->field="`dea_order`.`billingcountry`";
+	$elements[9]->sort="1";
+	$elements[9]->header="Billing Country";
+	$elements[9]->alias="billingcountry";
+	$elements[10]=new stdClass();
+	$elements[10]->field="`dea_order`.`billingcontact`";
+	$elements[10]->sort="1";
+	$elements[10]->header="Billing Contact";
+	$elements[10]->alias="billingcontact";
+	$elements[11]=new stdClass();
+	$elements[11]->field="`dea_order`.`billingpincode`";
+	$elements[11]->sort="1";
+	$elements[11]->header="Billing Pincode";
+	$elements[11]->alias="billingpincode";
+	$elements[12]=new stdClass();
+	$elements[12]->field="`dea_order`.`shippingcity`";
+	$elements[12]->sort="1";
+	$elements[12]->header="Shipping City";
+	$elements[12]->alias="shippingcity";
+	$elements[13]=new stdClass();
+	$elements[13]->field="`dea_order`.`shippingstate`";
+	$elements[13]->sort="1";
+	$elements[13]->header="Shipping State";
+	$elements[13]->alias="shippingstate";
+	$elements[14]=new stdClass();
+	$elements[14]->field="`dea_order`.`shippingcountry`";
+	$elements[14]->sort="1";
+	$elements[14]->header="Shipping Country";
+	$elements[14]->alias="shippingcountry";
+	$elements[15]=new stdClass();
+	$elements[15]->field="`dea_order`.`shippingcontact`";
+	$elements[15]->sort="1";
+	$elements[15]->header="Shipping Contact";
+	$elements[15]->alias="shippingcontact";
+	$elements[16]=new stdClass();
+	$elements[16]->field="`dea_order`.`shippingpincode`";
+	$elements[16]->sort="1";
+	$elements[16]->header="Shipping Pincode";
+	$elements[16]->alias="shippingpincode";
+	$elements[17]=new stdClass();
+	$elements[17]->field="`dea_order`.`long`";
+	$elements[17]->sort="1";
+	$elements[17]->header="longitude";
+	$elements[17]->alias="long";
+	$elements[18]=new stdClass();
+	$elements[18]->field="`dea_order`.`password`";
+	$elements[18]->sort="1";
+	$elements[18]->header="Password";
+	$elements[18]->alias="password";
+	$elements[19]=new stdClass();
+	$elements[19]->field="`dea_order`.`creationdate`";
+	$elements[19]->sort="1";
+	$elements[19]->header="Creation Date";
+	$elements[19]->alias="creationdate";
+	$elements[20]=new stdClass();
+	$elements[20]->field="`dea_order`.`modificationdate`";
+	$elements[20]->sort="1";
+	$elements[20]->header="Modification Date";
+	$elements[20]->alias="modificationdate";
+	$elements[21]=new stdClass();
+	$elements[21]->field="`dea_order`.`billingaddress`";
+	$elements[21]->sort="1";
+	$elements[21]->header="Billing Address";
+	$elements[21]->alias="billingaddress";
+	$elements[22]=new stdClass();
+	$elements[22]->field="`dea_order`.`shippingaddress`";
+	$elements[22]->sort="1";
+	$elements[22]->header="Shipping Address";
+	$elements[22]->alias="shippingaddress";
+	$search=$this->input->get_post("search");
+	$pageno=$this->input->get_post("pageno");
+	$orderby=$this->input->get_post("orderby");
+	$orderorder=$this->input->get_post("orderorder");
+	$maxrow=$this->input->get_post("maxrow");
+	if($maxrow=="")
+	{
+	$maxrow=20;
+	}
+	if($orderby=="")
+	{
+	$orderby="id";
+	$orderorder="ASC";
+	}
+	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_order`");
+	$this->load->view("json",$data);
+	}
+
+	public function createdeaorder()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="createdeaorder";
+	$data["paymentstatus"]=$this->deaorder_model->getpaymentstatusdropdown();
+	$data["store"]=$this->deaorder_model->getstoredropdown();
+	$data["sales"]=$this->deaorder_model->getsalesdropdown();
+	$data["title"]="Create deaorder";
+	$this->load->view("template",$data);
+	}
+	public function createdeaordersubmit()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->form_validation->set_rules("store","Store","trim");
+	$this->form_validation->set_rules("paymentstatus","Payment Status","trim");
+	$this->form_validation->set_rules("sales","Sales","trim");
+	$this->form_validation->set_rules("firstname","First Name","trim");
+	$this->form_validation->set_rules("lastname","Last Name","trim");
+	$this->form_validation->set_rules("email","Email","trim");
+	$this->form_validation->set_rules("billingcity","Billing City","trim");
+	$this->form_validation->set_rules("billingstate","Billing State","trim");
+	$this->form_validation->set_rules("billingcountry","Billing Country","trim");
+	$this->form_validation->set_rules("billingcontact","Billing Contact","trim");
+	$this->form_validation->set_rules("billingpincode","Billing Pincode","trim");
+	$this->form_validation->set_rules("shippingcity","Shipping City","trim");
+	$this->form_validation->set_rules("shippingstate","Shipping State","trim");
+	$this->form_validation->set_rules("shippingcountry","Shipping Country","trim");
+	$this->form_validation->set_rules("shippingcontact","Shipping Contact","trim");
+	$this->form_validation->set_rules("shippingpincode","Shipping Pincode","trim");
+	$this->form_validation->set_rules("long","longitude","trim");
+	$this->form_validation->set_rules("password","Password","trim");
+	$this->form_validation->set_rules("creationdate","Creation Date","trim");
+	$this->form_validation->set_rules("modificationdate","Modification Date","trim");
+	$this->form_validation->set_rules("billingaddress","Billing Address","trim");
+	$this->form_validation->set_rules("shippingaddress","Shipping Address","trim");
+	if($this->form_validation->run()==FALSE)
+	{
+	$data["alerterror"]=validation_errors();
+	$data["page"]="createdeaorder";
+	$data["title"]="Create deaorder";
+	$this->load->view("template",$data);
+	}
+	else
+	{
+	$store=$this->input->get_post("store");
+	$paymentstatus=$this->input->get_post("paymentstatus");
+	$sales=$this->input->get_post("sales");
+	$firstname=$this->input->get_post("firstname");
+	$lastname=$this->input->get_post("lastname");
+	$email=$this->input->get_post("email");
+	$billingcity=$this->input->get_post("billingcity");
+	$billingstate=$this->input->get_post("billingstate");
+	$billingcountry=$this->input->get_post("billingcountry");
+	$billingcontact=$this->input->get_post("billingcontact");
+	$billingpincode=$this->input->get_post("billingpincode");
+	$shippingcity=$this->input->get_post("shippingcity");
+	$shippingstate=$this->input->get_post("shippingstate");
+	$shippingcountry=$this->input->get_post("shippingcountry");
+	$shippingcontact=$this->input->get_post("shippingcontact");
+	$shippingpincode=$this->input->get_post("shippingpincode");
+	$long=$this->input->get_post("long");
+	$password=$this->input->get_post("password");
+	$creationdate=$this->input->get_post("creationdate");
+	$modificationdate=$this->input->get_post("modificationdate");
+	$billingaddress=$this->input->get_post("billingaddress");
+	$shippingaddress=$this->input->get_post("shippingaddress");
+	if($this->deaorder_model->create($store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress)==0)
+	$data["alerterror"]="New order could not be created.";
+	else
+	$data["alertsuccess"]="order created Successfully.";
+	$data["redirect"]="site/viewdeaorder";
+	$this->load->view("redirect",$data);
+	}
+	}
+	public function editdeaorder()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="editdeaorder";
+	$data["title"]="Edit deaorder";
+	$data["before"]=$this->deaorder_model->beforeedit($this->input->get("id"));
+	$this->load->view("template",$data);
+	}
+	public function editdeaordersubmit()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->form_validation->set_rules("id","ID","trim");
+	$this->form_validation->set_rules("store","Store","trim");
+	$this->form_validation->set_rules("paymentstatus","Payment Status","trim");
+	$this->form_validation->set_rules("sales","Sales","trim");
+	$this->form_validation->set_rules("firstname","First Name","trim");
+	$this->form_validation->set_rules("lastname","Last Name","trim");
+	$this->form_validation->set_rules("email","Email","trim");
+	$this->form_validation->set_rules("billingcity","Billing City","trim");
+	$this->form_validation->set_rules("billingstate","Billing State","trim");
+	$this->form_validation->set_rules("billingcountry","Billing Country","trim");
+	$this->form_validation->set_rules("billingcontact","Billing Contact","trim");
+	$this->form_validation->set_rules("billingpincode","Billing Pincode","trim");
+	$this->form_validation->set_rules("shippingcity","Shipping City","trim");
+	$this->form_validation->set_rules("shippingstate","Shipping State","trim");
+	$this->form_validation->set_rules("shippingcountry","Shipping Country","trim");
+	$this->form_validation->set_rules("shippingcontact","Shipping Contact","trim");
+	$this->form_validation->set_rules("shippingpincode","Shipping Pincode","trim");
+	$this->form_validation->set_rules("long","longitude","trim");
+	$this->form_validation->set_rules("password","Password","trim");
+	$this->form_validation->set_rules("creationdate","Creation Date","trim");
+	$this->form_validation->set_rules("modificationdate","Modification Date","trim");
+	$this->form_validation->set_rules("billingaddress","Billing Address","trim");
+	$this->form_validation->set_rules("shippingaddress","Shipping Address","trim");
+	if($this->form_validation->run()==FALSE)
+	{
+	$data["alerterror"]=validation_errors();
+	$data["page"]="editdeaorder";
+	$data["title"]="Edit deaorder";
+	$data["before"]=$this->deaorder_model->beforeedit($this->input->get("id"));
+	$this->load->view("template",$data);
+	}
+	else
+	{
+	$id=$this->input->get_post("id");
+	$store=$this->input->get_post("store");
+	$paymentstatus=$this->input->get_post("paymentstatus");
+	$sales=$this->input->get_post("sales");
+	$firstname=$this->input->get_post("firstname");
+	$lastname=$this->input->get_post("lastname");
+	$email=$this->input->get_post("email");
+	$billingcity=$this->input->get_post("billingcity");
+	$billingstate=$this->input->get_post("billingstate");
+	$billingcountry=$this->input->get_post("billingcountry");
+	$billingcontact=$this->input->get_post("billingcontact");
+	$billingpincode=$this->input->get_post("billingpincode");
+	$shippingcity=$this->input->get_post("shippingcity");
+	$shippingstate=$this->input->get_post("shippingstate");
+	$shippingcountry=$this->input->get_post("shippingcountry");
+	$shippingcontact=$this->input->get_post("shippingcontact");
+	$shippingpincode=$this->input->get_post("shippingpincode");
+	$long=$this->input->get_post("long");
+	$password=$this->input->get_post("password");
+	$creationdate=$this->input->get_post("creationdate");
+	$modificationdate=$this->input->get_post("modificationdate");
+	$billingaddress=$this->input->get_post("billingaddress");
+	$shippingaddress=$this->input->get_post("shippingaddress");
+	if($this->deaorder_model->edit($id,$store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress)==0)
+	$data["alerterror"]="New deaorder could not be Updated.";
+	else
+	$data["alertsuccess"]="deaorder Updated Successfully.";
+	$data["redirect"]="site/viewdeaorder";
+	$this->load->view("redirect",$data);
+	}
+	}
+	public function deletedeaorder()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->deaorder_model->delete($this->input->get("id"));
+	$data["redirect"]="site/viewdeaorder";
+	$this->load->view("redirect",$data);
+	}
+	public function vieworderproduct()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="vieworderproduct";
+	$data["base_url"]=site_url("site/vieworderproductjson");
+	$data["title"]="View orderproduct";
+	$this->load->view("template",$data);
+	}
+	function vieworderproductjson()
+	{
+	$elements=array();
+	$elements[0]=new stdClass();
+	$elements[0]->field="`dea_orderproduct`.`id`";
+	$elements[0]->sort="1";
+	$elements[0]->header="ID";
+	$elements[0]->alias="id";
+	$elements[1]=new stdClass();
+	$elements[1]->field="`dea_orderproduct`.`product`";
+	$elements[1]->sort="1";
+	$elements[1]->header="Product";
+	$elements[1]->alias="product";
+	$elements[2]=new stdClass();
+	$elements[2]->field="`dea_orderproduct`.`order`";
+	$elements[2]->sort="1";
+	$elements[2]->header="Order";
+	$elements[2]->alias="order";
+	$elements[3]=new stdClass();
+	$elements[3]->field="`dea_orderproduct`.`quantity`";
+	$elements[3]->sort="1";
+	$elements[3]->header="Quantity";
+	$elements[3]->alias="quantity";
+	$elements[4]=new stdClass();
+	$elements[4]->field="`dea_orderproduct`.`price`";
+	$elements[4]->sort="1";
+	$elements[4]->header="Price";
+	$elements[4]->alias="price";
+	$search=$this->input->get_post("search");
+	$pageno=$this->input->get_post("pageno");
+	$orderby=$this->input->get_post("orderby");
+	$orderorder=$this->input->get_post("orderorder");
+	$maxrow=$this->input->get_post("maxrow");
+	if($maxrow=="")
+	{
+	$maxrow=20;
+	}
+	if($orderby=="")
+	{
+	$orderby="id";
+	$orderorder="ASC";
+	}
+	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_orderproduct`");
+	$this->load->view("json",$data);
+	}
+
+	public function createorderproduct()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="createorderproduct";
+	$data["title"]="Create orderproduct";
+	$this->load->view("template",$data);
+	}
+	public function createorderproductsubmit()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->form_validation->set_rules("product","Product","trim");
+	$this->form_validation->set_rules("order","Order","trim");
+	$this->form_validation->set_rules("quantity","Quantity","trim");
+	$this->form_validation->set_rules("price","Price","trim");
+	if($this->form_validation->run()==FALSE)
+	{
+	$data["alerterror"]=validation_errors();
+	$data["page"]="createorderproduct";
+	$data["title"]="Create orderproduct";
+	$this->load->view("template",$data);
+	}
+	else
+	{
+	$product=$this->input->get_post("product");
+	$order=$this->input->get_post("order");
+	$quantity=$this->input->get_post("quantity");
+	$price=$this->input->get_post("price");
+	if($this->orderproduct_model->create($product,$order,$quantity,$price)==0)
+	$data["alerterror"]="New orderproduct could not be created.";
+	else
+	$data["alertsuccess"]="orderproduct created Successfully.";
+	$data["redirect"]="site/vieworderproduct";
+	$this->load->view("redirect",$data);
+	}
+	}
+	public function editorderproduct()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="editorderproduct";
+	$data["title"]="Edit orderproduct";
+	$data["before"]=$this->orderproduct_model->beforeedit($this->input->get("id"));
+	$this->load->view("template",$data);
+	}
+	public function editorderproductsubmit()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->form_validation->set_rules("id","ID","trim");
+	$this->form_validation->set_rules("product","Product","trim");
+	$this->form_validation->set_rules("order","Order","trim");
+	$this->form_validation->set_rules("quantity","Quantity","trim");
+	$this->form_validation->set_rules("price","Price","trim");
+	if($this->form_validation->run()==FALSE)
+	{
+	$data["alerterror"]=validation_errors();
+	$data["page"]="editorderproduct";
+	$data["title"]="Edit orderproduct";
+	$data["before"]=$this->orderproduct_model->beforeedit($this->input->get("id"));
+	$this->load->view("template",$data);
+	}
+	else
+	{
+	$id=$this->input->get_post("id");
+	$product=$this->input->get_post("product");
+	$order=$this->input->get_post("order");
+	$quantity=$this->input->get_post("quantity");
+	$price=$this->input->get_post("price");
+	if($this->orderproduct_model->edit($id,$product,$order,$quantity,$price)==0)
+	$data["alerterror"]="New orderproduct could not be Updated.";
+	else
+	$data["alertsuccess"]="orderproduct Updated Successfully.";
+	$data["redirect"]="site/vieworderproduct";
+	$this->load->view("redirect",$data);
+	}
+	}
+	public function deleteorderproduct()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->orderproduct_model->delete($this->input->get("id"));
+	$data["redirect"]="site/vieworderproduct";
+	$this->load->view("redirect",$data);
+	}
+	public function viewsales()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="viewsales";
+	$data["base_url"]=site_url("site/viewsalesjson");
+	$data["title"]="View sales";
+	$this->load->view("template",$data);
+	}
+	function viewsalesjson()
+	{
+	$elements=array();
+	$elements[0]=new stdClass();
+	$elements[0]->field="`dea_sales`.`id`";
+	$elements[0]->sort="1";
+	$elements[0]->header="ID";
+	$elements[0]->alias="id";
+	$elements[1]=new stdClass();
+	$elements[1]->field="`dea_sales`.`name`";
+	$elements[1]->sort="1";
+	$elements[1]->header="Name";
+	$elements[1]->alias="name";
+	$elements[2]=new stdClass();
+	$elements[2]->field="`dea_sales`.`image`";
+	$elements[2]->sort="1";
+	$elements[2]->header="Image";
+	$elements[2]->alias="image";
+	$elements[3]=new stdClass();
+	$elements[3]->field="`dea_sales`.`email`";
+	$elements[3]->sort="1";
+	$elements[3]->header="Email";
+	$elements[3]->alias="email";
+	$elements[4]=new stdClass();
+	$elements[4]->field="`dea_sales`.`password`";
+	$elements[4]->sort="1";
+	$elements[4]->header="Password";
+	$elements[4]->alias="password";
+	$elements[5]=new stdClass();
+	$elements[5]->field="`dea_sales`.`creationdate`";
+	$elements[5]->sort="1";
+	$elements[5]->header="Creation Date";
+	$elements[5]->alias="creationdate";
+	$elements[6]=new stdClass();
+	$elements[6]->field="`dea_sales`.`modificationdate`";
+	$elements[6]->sort="1";
+	$elements[6]->header="Modification Date";
+	$elements[6]->alias="modificationdate";
+	$search=$this->input->get_post("search");
+	$pageno=$this->input->get_post("pageno");
+	$orderby=$this->input->get_post("orderby");
+	$orderorder=$this->input->get_post("orderorder");
+	$maxrow=$this->input->get_post("maxrow");
+	if($maxrow=="")
+	{
+	$maxrow=20;
+	}
+	if($orderby=="")
+	{
+	$orderby="id";
+	$orderorder="ASC";
+	}
+	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_sales`");
+	$this->load->view("json",$data);
+	}
+
+	public function createsales()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="createsales";
+	$data["title"]="Create sales";
+	$this->load->view("template",$data);
+	}
+	public function createsalessubmit()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->form_validation->set_rules("name","Name","trim");
+	$this->form_validation->set_rules("email","Email","trim");
+	$this->form_validation->set_rules("password","Password","trim");
+	$this->form_validation->set_rules("creationdate","Creation Date","trim");
+	$this->form_validation->set_rules("modificationdate","Modification Date","trim");
+	if($this->form_validation->run()==FALSE)
+	{
+	$data["alerterror"]=validation_errors();
+	$data["page"]="createsales";
+	$data["title"]="Create sales";
+	$this->load->view("template",$data);
+	}
+	else
+	{
+	$name=$this->input->get_post("name");
+	$email=$this->input->get_post("email");
+	$password=$this->input->get_post("password");
+	$creationdate=$this->input->get_post("creationdate");
+	$modificationdate=$this->input->get_post("modificationdate");
+	$config['upload_path'] = './uploads/';
+$config['allowed_types'] = 'gif|jpg|png|jpeg';
+$this->load->library('upload', $config);
+$filename="image";
+$image="";
+if (  $this->upload->do_upload($filename))
+{
+$uploaddata = $this->upload->data();
+$image=$uploaddata['file_name'];
+
+			$config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+			$config_r['maintain_ratio'] = TRUE;
+			$config_t['create_thumb'] = FALSE;///add this
+			$config_r['width']   = 800;
+			$config_r['height'] = 800;
+			$config_r['quality']    = 100;
+			//end of configs
+
+			$this->load->library('image_lib', $config_r);
+			$this->image_lib->initialize($config_r);
+			if(!$this->image_lib->resize())
+			{
+					echo "Failed." . $this->image_lib->display_errors();
+					//return false;
+			}
+			else
+			{
+					//print_r($this->image_lib->dest_image);
+					//dest_image
+					$image=$this->image_lib->dest_image;
+					//return false;
+			}
+
+}
+	if($this->sales_model->create($name,$image,$email,$password,$creationdate,$modificationdate)==0)
+	$data["alerterror"]="New sales could not be created.";
+	else
+	$data["alertsuccess"]="sales created Successfully.";
+	$data["redirect"]="site/viewsales";
+	$this->load->view("redirect",$data);
+	}
+	}
+	public function editsales()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$data["page"]="editsales";
+	$data["title"]="Edit sales";
+	$data["before"]=$this->sales_model->beforeedit($this->input->get("id"));
+	$this->load->view("template",$data);
+	}
+	public function editsalessubmit()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->form_validation->set_rules("id","ID","trim");
+	$this->form_validation->set_rules("name","Name","trim");
+	$this->form_validation->set_rules("email","Email","trim");
+	$this->form_validation->set_rules("password","Password","trim");
+	$this->form_validation->set_rules("creationdate","Creation Date","trim");
+	$this->form_validation->set_rules("modificationdate","Modification Date","trim");
+	if($this->form_validation->run()==FALSE)
+	{
+	$data["alerterror"]=validation_errors();
+	$data["page"]="editsales";
+	$data["title"]="Edit sales";
+	$data["before"]=$this->sales_model->beforeedit($this->input->get("id"));
+	$this->load->view("template",$data);
+	}
+	else
+	{
+	$id=$this->input->get_post("id");
+	$name=$this->input->get_post("name");
+	$email=$this->input->get_post("email");
+	$password=$this->input->get_post("password");
+	$creationdate=$this->input->get_post("creationdate");
+	$modificationdate=$this->input->get_post("modificationdate");
+	$config['upload_path'] = './uploads/';
+$config['allowed_types'] = 'gif|jpg|png|jpeg';
+$this->load->library('upload', $config);
+$filename="image";
+$image="";
+if (  $this->upload->do_upload($filename))
+{
+$uploaddata = $this->upload->data();
+$image=$uploaddata['file_name'];
+
+			$config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+			$config_r['maintain_ratio'] = TRUE;
+			$config_t['create_thumb'] = FALSE;///add this
+			$config_r['width']   = 800;
+			$config_r['height'] = 800;
+			$config_r['quality']    = 100;
+			//end of configs
+
+			$this->load->library('image_lib', $config_r);
+			$this->image_lib->initialize($config_r);
+			if(!$this->image_lib->resize())
+			{
+					echo "Failed." . $this->image_lib->display_errors();
+					//return false;
+			}
+			else
+			{
+					//print_r($this->image_lib->dest_image);
+					//dest_image
+					$image=$this->image_lib->dest_image;
+					//return false;
+			}
+
+}
+
+	if($image=="")
+	{
+	$image=$this->sales_model->getimagebyid($id);
+		 // print_r($image);
+			$image=$image->image;
+	}
+	if($this->sales_model->edit($id,$name,$image,$email,$password,$creationdate,$modificationdate)==0)
+	$data["alerterror"]="New sales could not be Updated.";
+	else
+	$data["alertsuccess"]="sales Updated Successfully.";
+	$data["redirect"]="site/viewsales";
+	$this->load->view("redirect",$data);
+	}
+	}
+	public function deletesales()
+	{
+	$access=array("1");
+	$this->checkaccess($access);
+	$this->sales_model->delete($this->input->get("id"));
+	$data["redirect"]="site/viewsales";
+	$this->load->view("redirect",$data);
+	}
+
+
+
 }
 ?>
