@@ -5552,7 +5552,10 @@ $image=$uploaddata['file_name'];
 	$access=array("1");
 	$this->checkaccess($access);
 	$data["page"]="editstore";
+	$data["page2"]="block/storeblock";
 	$data["title"]="Edit store";
+	$data["before1"]=$this->input->get('id');
+	$data["before2"]=$this->input->get('id');
 	$data["before"]=$this->store_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
 	}
@@ -5657,12 +5660,13 @@ $image=$uploaddata['file_name'];
 	$access=array("1");
 	$this->checkaccess($access);
 	$data["page"]="viewstoreprice";
-	$data["base_url"]=site_url("site/viewstorepricejson");
+	$data["base_url"]=site_url("site/viewstorepricejson?id=").$this->input->get("id");
 	$data["title"]="View storeprice";
 	$this->load->view("template",$data);
 	}
 	function viewstorepricejson()
 	{
+		$id=$this->input->get("id");
 	$elements=array();
 	$elements[0]=new stdClass();
 	$elements[0]->field="`dea_storeprice`.`id`";
@@ -5675,7 +5679,7 @@ $image=$uploaddata['file_name'];
 	$elements[1]->header="Store Id";
 	$elements[1]->alias="storeid";
 	$elements[2]=new stdClass();
-	$elements[2]->field="`dea_storeprice`.`productid`";
+	$elements[2]->field="`product`.`name`";
 	$elements[2]->sort="1";
 	$elements[2]->header="Product Id";
 	$elements[2]->alias="productid";
@@ -5713,7 +5717,7 @@ $image=$uploaddata['file_name'];
 	$orderby="id";
 	$orderorder="ASC";
 	}
-	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_storeprice`");
+	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_storeprice` LEFT OUTER JOIN `product` ON `product`.`id`=`dea_storeprice`.`productid`","WHERE `dea_storeprice`.`storeid`='$id'");
 	$this->load->view("json",$data);
 	}
 
@@ -5722,6 +5726,8 @@ $image=$uploaddata['file_name'];
 	$access=array("1");
 	$this->checkaccess($access);
 	$data["page"]="createstoreprice";
+	$data['productid']=$this->product_model->getproductdropdown();
+	$data["storeid"]=$this->deaorder_model->getstoredropdown();
 	$data["title"]="Create storeprice";
 	$this->load->view("template",$data);
 	}
@@ -5739,6 +5745,8 @@ $image=$uploaddata['file_name'];
 	{
 	$data["alerterror"]=validation_errors();
 	$data["page"]="createstoreprice";
+	$data['productid']=$this->product_model->getproductdropdown();
+	$data["storeid"]=$this->deaorder_model->getstoredropdown();
 	$data["title"]="Create storeprice";
 	$this->load->view("template",$data);
 	}
@@ -5754,8 +5762,8 @@ $image=$uploaddata['file_name'];
 	$data["alerterror"]="New storeprice could not be created.";
 	else
 	$data["alertsuccess"]="storeprice created Successfully.";
-	$data["redirect"]="site/viewstoreprice";
-	$this->load->view("redirect",$data);
+	$data["redirect"]="site/viewstoreprice?id=".$storeid;
+	$this->load->view("redirect2",$data);
 	}
 	}
 	public function editstoreprice()
@@ -5764,6 +5772,8 @@ $image=$uploaddata['file_name'];
 	$this->checkaccess($access);
 	$data["page"]="editstoreprice";
 	$data["title"]="Edit storeprice";
+	$data['productid']=$this->product_model->getproductdropdown();
+	$data["storeid"]=$this->deaorder_model->getstoredropdown();
 	$data["before"]=$this->storeprice_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
 	}
@@ -5783,6 +5793,8 @@ $image=$uploaddata['file_name'];
 	$data["alerterror"]=validation_errors();
 	$data["page"]="editstoreprice";
 	$data["title"]="Edit storeprice";
+	$data['productid']=$this->product_model->getproductdropdown();
+	$data["storeid"]=$this->deaorder_model->getstoredropdown();
 	$data["before"]=$this->storeprice_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
 	}
@@ -5799,8 +5811,8 @@ $image=$uploaddata['file_name'];
 	$data["alerterror"]="New storeprice could not be Updated.";
 	else
 	$data["alertsuccess"]="storeprice Updated Successfully.";
-	$data["redirect"]="site/viewstoreprice";
-	$this->load->view("redirect",$data);
+	$data["redirect"]="site/viewstoreprice?id=".$storeid;
+	$this->load->view("redirect2",$data);
 	}
 	}
 	public function deletestoreprice()
@@ -5808,7 +5820,7 @@ $image=$uploaddata['file_name'];
 	$access=array("1");
 	$this->checkaccess($access);
 	$this->storeprice_model->delete($this->input->get("id"));
-	$data["redirect"]="site/viewstoreprice";
+	$data["redirect"]="site/viewstoreprice?id=".$this->input->get("storeid");
 	$this->load->view("redirect",$data);
 	}
 	public function viewdeaorder()
@@ -5829,7 +5841,7 @@ $image=$uploaddata['file_name'];
 	$elements[0]->header="ID";
 	$elements[0]->alias="id";
 	$elements[1]=new stdClass();
-	$elements[1]->field="`dea_order`.`store`";
+	$elements[1]->field="`dea_store`.`storename`";
 	$elements[1]->sort="1";
 	$elements[1]->header="Store";
 	$elements[1]->alias="store";
@@ -5839,7 +5851,7 @@ $image=$uploaddata['file_name'];
 	$elements[2]->header="Payment Status";
 	$elements[2]->alias="paymentstatus";
 	$elements[3]=new stdClass();
-	$elements[3]->field="`dea_order`.`sales`";
+	$elements[3]->field="`dea_sales`.`name`";
 	$elements[3]->sort="1";
 	$elements[3]->header="Sales";
 	$elements[3]->alias="sales";
@@ -5952,7 +5964,7 @@ $image=$uploaddata['file_name'];
 	$orderby="id";
 	$orderorder="ASC";
 	}
-	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_order`");
+	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_order` LEFT OUTER JOIN `dea_sales` ON `dea_sales`.`id`=`dea_order`.`sales` LEFT OUTER JOIN `dea_store` ON `dea_store`.`id`=`dea_order`.`store`");
 	$this->load->view("json",$data);
 	}
 
@@ -5996,6 +6008,9 @@ $image=$uploaddata['file_name'];
 	if($this->form_validation->run()==FALSE)
 	{
 	$data["alerterror"]=validation_errors();
+	$data["paymentstatus"]=$this->deaorder_model->getpaymentstatusdropdown();
+	$data["store"]=$this->deaorder_model->getstoredropdown();
+	$data["sales"]=$this->deaorder_model->getsalesdropdown();
 	$data["page"]="createdeaorder";
 	$data["title"]="Create deaorder";
 	$this->load->view("template",$data);
@@ -6037,6 +6052,12 @@ $image=$uploaddata['file_name'];
 	$access=array("1");
 	$this->checkaccess($access);
 	$data["page"]="editdeaorder";
+	$data["page2"]="block/deaorder";
+	$data["before1"]=$this->input->get('id');
+	$data["before2"]=$this->input->get('id');
+	$data["paymentstatus"]=$this->deaorder_model->getpaymentstatusdropdown();
+	$data["store"]=$this->deaorder_model->getstoredropdown();
+	$data["sales"]=$this->deaorder_model->getsalesdropdown();
 	$data["title"]="Edit deaorder";
 	$data["before"]=$this->deaorder_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
@@ -6073,6 +6094,9 @@ $image=$uploaddata['file_name'];
 	$data["alerterror"]=validation_errors();
 	$data["page"]="editdeaorder";
 	$data["title"]="Edit deaorder";
+	$data["paymentstatus"]=$this->deaorder_model->getpaymentstatusdropdown();
+	$data["store"]=$this->deaorder_model->getstoredropdown();
+	$data["sales"]=$this->deaorder_model->getsalesdropdown();
 	$data["before"]=$this->deaorder_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
 	}
@@ -6122,12 +6146,13 @@ $image=$uploaddata['file_name'];
 	$access=array("1");
 	$this->checkaccess($access);
 	$data["page"]="vieworderproduct";
-	$data["base_url"]=site_url("site/vieworderproductjson");
+	$data["base_url"]=site_url("site/vieworderproductjson?id=").$this->input->get('id');
 	$data["title"]="View orderproduct";
 	$this->load->view("template",$data);
 	}
 	function vieworderproductjson()
 	{
+		$id=$this->input->get('id');
 	$elements=array();
 	$elements[0]=new stdClass();
 	$elements[0]->field="`dea_orderproduct`.`id`";
@@ -6135,7 +6160,7 @@ $image=$uploaddata['file_name'];
 	$elements[0]->header="ID";
 	$elements[0]->alias="id";
 	$elements[1]=new stdClass();
-	$elements[1]->field="`dea_orderproduct`.`product`";
+	$elements[1]->field="`product`.`name`";
 	$elements[1]->sort="1";
 	$elements[1]->header="Product";
 	$elements[1]->alias="product";
@@ -6168,7 +6193,7 @@ $image=$uploaddata['file_name'];
 	$orderby="id";
 	$orderorder="ASC";
 	}
-	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_orderproduct`");
+	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_orderproduct` LEFT OUTER JOIN `product` ON `product`.`id`=`dea_orderproduct`.`product`","WHERE `dea_orderproduct`.`order`='$id'");
 	$this->load->view("json",$data);
 	}
 
@@ -6177,6 +6202,8 @@ $image=$uploaddata['file_name'];
 	$access=array("1");
 	$this->checkaccess($access);
 	$data["page"]="createorderproduct";
+			$data['product']=$this->product_model->getproductdropdown();
+					$data['order']=$this->deaorder_model->getdeaorderdropdown();
 	$data["title"]="Create orderproduct";
 	$this->load->view("template",$data);
 	}
@@ -6192,6 +6219,8 @@ $image=$uploaddata['file_name'];
 	{
 	$data["alerterror"]=validation_errors();
 	$data["page"]="createorderproduct";
+			$data['product']=$this->product_model->getproductdropdown();
+				$data['order']=$this->deaorder_model->getdeaorderdropdown();
 	$data["title"]="Create orderproduct";
 	$this->load->view("template",$data);
 	}
@@ -6205,8 +6234,8 @@ $image=$uploaddata['file_name'];
 	$data["alerterror"]="New orderproduct could not be created.";
 	else
 	$data["alertsuccess"]="orderproduct created Successfully.";
-	$data["redirect"]="site/vieworderproduct";
-	$this->load->view("redirect",$data);
+	$data["redirect"]="site/vieworderproduct?id=".$order;
+	$this->load->view("redirect2",$data);
 	}
 	}
 	public function editorderproduct()
@@ -6215,6 +6244,8 @@ $image=$uploaddata['file_name'];
 	$this->checkaccess($access);
 	$data["page"]="editorderproduct";
 	$data["title"]="Edit orderproduct";
+			$data['product']=$this->product_model->getproductdropdown();
+				$data['order']=$this->deaorder_model->getdeaorderdropdown();
 	$data["before"]=$this->orderproduct_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
 	}
@@ -6232,6 +6263,8 @@ $image=$uploaddata['file_name'];
 	$data["alerterror"]=validation_errors();
 	$data["page"]="editorderproduct";
 	$data["title"]="Edit orderproduct";
+			$data['product']=$this->product_model->getproductdropdown();
+				$data['order']=$this->deaorder_model->getdeaorderdropdown();
 	$data["before"]=$this->orderproduct_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
 	}
@@ -6246,8 +6279,8 @@ $image=$uploaddata['file_name'];
 	$data["alerterror"]="New orderproduct could not be Updated.";
 	else
 	$data["alertsuccess"]="orderproduct Updated Successfully.";
-	$data["redirect"]="site/vieworderproduct";
-	$this->load->view("redirect",$data);
+	$data["redirect"]="site/vieworderproduct?id=".$order;
+	$this->load->view("redirect2",$data);
 	}
 	}
 	public function deleteorderproduct()
@@ -6255,8 +6288,8 @@ $image=$uploaddata['file_name'];
 	$access=array("1");
 	$this->checkaccess($access);
 	$this->orderproduct_model->delete($this->input->get("id"));
-	$data["redirect"]="site/vieworderproduct";
-	$this->load->view("redirect",$data);
+	$data["redirect"]="site/vieworderproduct?id=".$this->input->get("deaorder");
+	$this->load->view("redirect2",$data);
 	}
 	public function viewsales()
 	{

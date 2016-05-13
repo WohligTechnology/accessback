@@ -1,6 +1,6 @@
 <section class="panel">
 <header class="panel-heading">
-<h3 class="panel-title">storeprice Details </h3>
+<h3 class="panel-title">Store Price Details </h3>
 </header>
 <div class="panel-body">
 <form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/editstorepricesubmit");?>' enctype= 'multipart/form-data'>
@@ -23,7 +23,7 @@
 <input type="text" id="normal-field" class="form-control" name="price" value='<?php echo set_value('price',$before->price);?>'>
 </div>
 </div>
-<div class=" form-group">
+<div class=" form-group" style="display:none">
 <label class="col-sm-2 control-label" for="normal-field">Order Id</label>
 <div class="col-sm-4">
 <?php echo form_dropdown("orderid",$orderid,set_value('orderid',$before->orderid),"class='chzn-select form-control'");?>
@@ -45,7 +45,7 @@
 <label class="col-sm-2 control-label" for="normal-field">&nbsp;</label>
 <div class="col-sm-4">
 <button type="submit" class="btn btn-primary">Save</button>
-<a href='<?php echo site_url("site/viewstoreprice"); ?>' class='btn btn-secondary'>Cancel</a>
+<a href='<?php echo site_url("site/viewstoreprice?id=").$this->input->get("id"); ?>' class='btn btn-secondary'>Cancel</a>
 </div>
 </div>
 </form>

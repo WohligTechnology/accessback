@@ -1,6 +1,6 @@
 <div id="page-title">
-<a href="<?php echo site_url("site/viewstoreprice"); ?>" class="btn btn-primary btn-labeled fa fa-arrow-left margined pull-right">Back</a>
-<h1 class="page-header text-overflow">storeprice Details </h1>
+<!-- <a href="<?php echo site_url("site/viewstoreprice"); ?>" class="btn btn-primary btn-labeled fa fa-arrow-left margined pull-right">Back</a> -->
+<h1 class="page-header text-overflow">Store Price Details </h1>
 </div>
 <div id="page-content">
 <div class="row">
@@ -16,7 +16,7 @@ Create storeprice </h3>
 <div class=" form-group">
 <label class="col-sm-2 control-label" for="normal-field">Store Id</label>
 <div class="col-sm-4">
-<?php echo form_dropdown("storeid",$storeid,set_value('storeid'),"class='chzn-select form-control'");?>
+<?php echo form_dropdown("storeid",$storeid,set_value('storeid','$this->input->get("id")'),"class='chzn-select form-control'");?>
 </div>
 </div>
 <div class=" form-group">
@@ -31,7 +31,7 @@ Create storeprice </h3>
 <input type="text" id="normal-field" class="form-control" name="price" value='<?php echo set_value('price');?>'>
 </div>
 </div>
-<div class=" form-group">
+<div class=" form-group" style="display:none">
 <label class="col-sm-2 control-label" for="normal-field">Order Id</label>
 <div class="col-sm-4">
 <?php echo form_dropdown("orderid",$orderid,set_value('orderid'),"class='chzn-select form-control'");?>
@@ -41,7 +41,7 @@ Create storeprice </h3>
 <label class="col-sm-2 control-label" for="normal-field">&nbsp;</label>
 <div class="col-sm-4">
 <button type="submit" class="btn btn-primary">Save</button>
-<a href="<?php echo site_url("site/viewstoreprice"); ?>" class="btn btn-secondary">Cancel</a>
+<a href="<?php echo site_url("site/viewstoreprice?id=").$this->input->get("id"); ?>" class="btn btn-secondary">Cancel</a>
 </div>
 </div>
 </form>

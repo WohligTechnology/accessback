@@ -1,9 +1,9 @@
 <section class="panel">
 <header class="panel-heading">
-<h3 class="panel-title">order Details </h3>
+<h3 class="panel-title">Store Order Details </h3>
 </header>
 <div class="panel-body">
-<form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/editordersubmit");?>' enctype= 'multipart/form-data'>
+<form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/editdeaordersubmit");?>' enctype= 'multipart/form-data'>
 <input type="hidden" id="normal-field" class="form-control" name="id" value="<?php echo set_value('id',$before->id);?>" style="display:none;">
 <div class=" form-group">
 <label class="col-sm-2 control-label" for="normal-field">Store</label>
@@ -141,7 +141,7 @@
 <label class="col-sm-2 control-label" for="normal-field">&nbsp;</label>
 <div class="col-sm-4">
 <button type="submit" class="btn btn-primary">Save</button>
-<a href='<?php echo site_url("site/vieworder"); ?>' class='btn btn-secondary'>Cancel</a>
+<a href='<?php echo site_url("site/viewdeaorder"); ?>' class='btn btn-secondary'>Cancel</a>
 </div>
 </div>
 </form>

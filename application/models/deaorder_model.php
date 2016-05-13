@@ -75,5 +75,19 @@ public function getpaymentstatusdropdown()
     );
   return $status;
 }
+
+public function getdeaorderdropdown()
+{
+  $query=$this->db->query("SELECT * FROM `dea_order`  ORDER BY `id` ASC")->result();
+  $return=array(
+
+  );
+  foreach($query as $row)
+  {
+    $return[$row->id]=$row->id;
+  }
+
+  return $return;
+}
 }
 ?>

@@ -1,6 +1,6 @@
 <div id="page-title">
 <a href="<?php echo site_url("site/vieworder"); ?>" class="btn btn-primary btn-labeled fa fa-arrow-left margined pull-right">Back</a>
-<h1 class="page-header text-overflow">order Details </h1>
+<h1 class="page-header text-overflow">Store Order Details </h1>
 </div>
 <div id="page-content">
 <div class="row">
@@ -11,7 +11,7 @@
 Create order </h3>
 </div>
 <div class="panel-body">
-<form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/createordersubmit");?>' enctype= 'multipart/form-data'>
+<form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/createdeaordersubmit");?>' enctype= 'multipart/form-data'>
 <div class="panel-body">
 <div class=" form-group">
 <label class="col-sm-2 control-label" for="normal-field">Store</label>
@@ -137,7 +137,7 @@ Create order </h3>
 <label class="col-sm-2 control-label" for="normal-field">&nbsp;</label>
 <div class="col-sm-4">
 <button type="submit" class="btn btn-primary">Save</button>
-<a href="<?php echo site_url("site/vieworder"); ?>" class="btn btn-secondary">Cancel</a>
+<a href="<?php echo site_url("site/viewdeaorder"); ?>" class="btn btn-secondary">Cancel</a>
 </div>
 </div>
 </form>

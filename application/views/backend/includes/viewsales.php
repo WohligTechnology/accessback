@@ -6,7 +6,7 @@
 <div class="row">
 <div class="col-lg-12">
 <div class="panel drawchintantable">
-<?php $this->chintantable->createsearch("sales List");?>
+<?php $this->chintantable->createsearch("Sales List");?>
 <div class="fixed-table-container">
 <div class="fixed-table-body">
 <table class="table table-hover" id="" cellpadding="0" cellspacing="0">
