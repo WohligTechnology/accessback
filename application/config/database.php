@@ -68,8 +68,8 @@ if($myserver!="localhost")
   //  $db['default']['autoinit'] = TRUE;
   //  $db['default']['stricton'] = FALSE;
 
-    $db['default']['username'] = 'acceskq2_fynx';
-    $db['default']['password'] = 'chintan123';
+    $db['default']['username'] = 'root';
+    $db['default']['password'] = 'YT4C-Xci+SxZAR';
     $db['default']['database'] = 'acceskq2_fynx';
     $db['default']['dbdriver'] = 'mysql';
     $db['default']['dbprefix'] = '';
