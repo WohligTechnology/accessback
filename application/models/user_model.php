@@ -464,10 +464,8 @@ class User_model extends CI_Model
         {
             $user=$query->row();
             $userid=$user->id;
-            $firstname=$user->firstname;
-            $lastname=$user->lastname;
-            $username=$user->username;
-            $name=$user->name;
+            $storename=$user->storename;
+            $ownername=$user->ownername;
 
 
             $newdata = array(
@@ -475,7 +473,7 @@ class User_model extends CI_Model
                 'storename'     => $storename,
                 'ownername'     => $ownername,
                 'logged_in' => 'true',
-                'id'=> $dealerid
+                'id'=> $userid
             );
 
             $this->session->set_userdata($newdata);
@@ -582,6 +580,16 @@ class User_model extends CI_Model
          return $query;
         }
     }
+    function authenticateDealer() {
+         $is_logged_in = $this->session->userdata( 'logged_in' );
+        if ( $is_logged_in != true) {
+            return false;
+        }
+        else {
+
+         return $this->session->all_userdata();;
+        }
+    }
     function searchbyname($search)
     {
         $whattosearch=array("`product`.`name`","`product`.`description`","`product`.`sku`");
@@ -632,6 +640,52 @@ class User_model extends CI_Model
         else{
             $price=$price;
         }
+
+        $image=$this->db->query("SELECT `image` FROM `productimage` WHERE `product` = '$product' LIMIT 0,1")->row();
+        $image=$image->image;
+
+        $data = array(
+               'id'      => $product,
+               'name'      => '1',
+               'qty'     => $quantity,
+               'price'   => $price,
+               'image'   => $image,
+                'options' =>array(
+                    'realname' => $productname,
+                    'originalprice' => $originalprice
+                )
+        );
+        //array_push($data,$data2);
+        $userid=$this->session->userdata('id');
+        if($userid=="")
+        {
+            $this->cart->insert($data);
+            $returnval=$this->cart->insert($data);
+            if(!empty($returnval)){
+            return true;
+            }
+            else{
+            return false;
+            }
+        }
+        else
+        {
+            $query=$this->db->query("INSERT INTO `usercart`(`user`, `product`, `quantity`, `status`, `timestamp`) VALUES ('$userid','$product','$quantity',1,NULL)");
+            $this->cart->insert($data);
+            if($query)
+            return true;
+            else
+            return false;
+        }
+
+    }
+    function addtocartDealer($product,$productname,$quantity,$price) {
+        //$data=$this->cart->contents();
+
+        $productdetails=$this->db->query("SELECT * FROM `product` WHERE `id` = '$product'")->row();
+        $productquantity=$productdetails->quantity;
+        $price=$productdetails->wholesaleprice;
+
 
         $image=$this->db->query("SELECT `image` FROM `productimage` WHERE `product` = '$product' LIMIT 0,1")->row();
         $image=$image->image;
@@ -812,6 +866,10 @@ $val=$this->db->update('user', $data);
     }
       function getuserdetails($id){
     $query=$this->db->query("SELECT `id`, `firstname`, `lastname`, `email`, `phone`,`billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingpincode`,`credits` FROM `user` WHERE `id`='$id'")->row();
+    return $query;
+    }
+      function getDealerDetails($id){
+    $query=$this->db->query("SELECT * FROM `dea_store` WHERE `id`='$id'")->row();
     return $query;
     }
     function getusercartdetails($userid)

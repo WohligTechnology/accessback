@@ -256,6 +256,38 @@ class Json extends CI_Controller {
         //$data["message"]=$this->order_model->placeorder($user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingcountry,$shippingstate,$shippingpincode,$billingpincode,$phone,$status,$company,$fax);
         $this->load->view("json", $data);
     }
+
+    function placeOrderForDealer() {
+        $order = json_decode(file_get_contents('php://input'), true);
+        //print_r($order);
+        $user = $order['user'];
+        $firstname = $order['firstname'];
+        $lastname = $order['lastname'];
+        $email = $order['email'];
+        $billingcontact = $order['billingcontact'];
+        $status = $order['status'];
+        $company = $order['company'];
+        $billingaddress = $order['billingaddress'];
+        $billingcity = $order['billingcity'];
+        $billingstate = $order['billingstate'];
+        $billingcountry = $order['billingcountry'];
+        $shippingaddress = $order['shippingaddress'];
+        $shippingcity = $order['shippingcity'];
+        $shippingcountry = $order['shippingcountry'];
+        $shippingstate = $order['shippingstate'];
+        $shippingpincode = $order['shippingpincode'];
+        $billingpincode = $order['billingpincode'];
+        $shippingmethod = $order['shippingmethod'];
+        $carts = $order['cart'];
+        $finalamount = $order['finalamount'];
+        $shippingname = $order['shippingname'];
+        $shippingcontact = $order['shippingcontact'];
+        $customernote = $order['customernote'];
+        $couponcode = $order['couponcode'];
+        $data["message"] = $this->order_model->placeOrderForDealer($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode);
+        //$data["message"]=$this->order_model->placeorder($user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingcountry,$shippingstate,$shippingpincode,$billingpincode,$phone,$status,$company,$fax);
+        $this->load->view("json", $data);
+    }
     function getusercart() {
         $user = $this->input->get_post('user');
         $data["message"] = $this->order_model->getusercart($user);
@@ -277,6 +309,20 @@ class Json extends CI_Controller {
 //        $quantity=$data['quantity'];
 //        $price=$data['price'];
         $data["message"] = $this->user_model->addtocart($product, $productname, $quantity, $price);
+        //$data["message"]=$this->order_model->addtocart($user,$product,$quantity);
+        $this->load->view("json", $data);
+    }
+    function addtocartDealer() {
+         $product = $this->input->get_post('product');
+         $productname = $this->input->get_post('productname');
+         $quantity = $this->input->get_post('quantity');
+         $price = $this->input->get_post('price');
+//        $data = json_decode(file_get_contents('php://input'), true);
+//        $product=$data['product'];
+//        $productname=$data['productname'];
+//        $quantity=$data['quantity'];
+//        $price=$data['price'];
+        $data["message"] = $this->user_model->addtocartDealer($product, $productname, $quantity, $price);
         //$data["message"]=$this->order_model->addtocart($user,$product,$quantity);
         $this->load->view("json", $data);
     }
@@ -435,6 +481,10 @@ class Json extends CI_Controller {
     }
     public function authenticate() {
         $data['message'] = $this->user_model->authenticate();
+        $this->load->view('json', $data);
+    }
+    public function authenticateDealer() {
+        $data['message'] = $this->user_model->authenticateDealer();
         $this->load->view('json', $data);
     }
     public function logout() {
@@ -1460,6 +1510,11 @@ echo $filepath;
     function getuserdetails(){
         $id=$this->session->userdata('id');
         $data["message"] = $this->user_model->getuserdetails($id);
+        $this->load->view("json", $data);
+    }
+    function getDealerDetails(){
+        $id=$this->session->userdata('id');
+        $data["message"] = $this->user_model->getDealerDetails($id);
         $this->load->view("json", $data);
     }
     function updateuser() {
