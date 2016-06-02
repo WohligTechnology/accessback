@@ -456,6 +456,35 @@ class User_model extends CI_Model
         else
         return false;
     }
+    function dealerLogin($email,$password)
+    {
+        $password=md5($password);
+        $query=$this->db->query("SELECT * FROM `dea_store` WHERE `email`='$email' AND `password`= '$password'");
+        if($query->num_rows > 0)
+        {
+            $user=$query->row();
+            $userid=$user->id;
+            $firstname=$user->firstname;
+            $lastname=$user->lastname;
+            $username=$user->username;
+            $name=$user->name;
+
+
+            $newdata = array(
+                'email'     => $email,
+                'storename'     => $storename,
+                'ownername'     => $ownername,
+                'logged_in' => 'true',
+                'id'=> $dealerid
+            );
+
+            $this->session->set_userdata($newdata);
+
+            return $newdata;
+        }
+        else
+        return false;
+    }
 
     function createsessionbyid($id)
     {

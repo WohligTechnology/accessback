@@ -424,6 +424,15 @@ class Json extends CI_Controller {
         $data["message"] = $this->user_model->loginuser($email, $password);
         $this->load->view("json", $data);
     }
+    function dealerLogin() {
+      $data = json_decode(file_get_contents('php://input'), true);
+      $email=$data["email"];
+      $password=$data["password"];
+        // $email = $this->input->get_post('email');
+        // $password = $this->input->get_post('password');
+        $data["message"] = $this->user_model->dealerLogin($email, $password);
+        $this->load->view("json", $data);
+    }
     public function authenticate() {
         $data['message'] = $this->user_model->authenticate();
         $this->load->view('json', $data);
@@ -1072,6 +1081,7 @@ echo $filepath;
 
         $this->load->view("json", $data);
     }
+
     function login() {
         $id = $this->input->get_post('id');
         $data["message"] = $this->user_model->loginuser($id);
