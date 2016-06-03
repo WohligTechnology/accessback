@@ -284,7 +284,8 @@ class Json extends CI_Controller {
         $shippingcontact = $order['shippingcontact'];
         $customernote = $order['customernote'];
         $couponcode = $order['couponcode'];
-        $data["message"] = $this->order_model->placeOrderForDealer($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode);
+        $paymentstatus = $order['paymentstatus'];
+        $data["message"] = $this->order_model->placeOrderForDealer($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode,$paymentstatus);
         //$data["message"]=$this->order_model->placeorder($user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingcountry,$shippingstate,$shippingpincode,$billingpincode,$phone,$status,$company,$fax);
         $this->load->view("json", $data);
     }
@@ -666,6 +667,7 @@ echo $filepath;
         $this->order_model->emailcustomerdiscount();
     }
     function getproductbycategory() {
+  
         $userid=$this->session->userdata("id");
         $catidstr = $this->input->get_post("category");
         $brandstr = $this->input->get_post("brand");
@@ -1032,11 +1034,11 @@ echo $filepath;
         {
             $where .= " `product`.`price` BETWEEN '$pricemin' AND '$pricemax' AND ";
         }
-
-        //filter for color end
-
-
-
+//
+//         //filter for color end
+//
+//
+//
 
         $elements = array();
         $elements[0] = new stdClass();
@@ -1530,6 +1532,20 @@ echo $filepath;
         $billingcountry=$data['billingcountry'];
         $billingstate=$data['billingstate'];
         $data["message"] = $this->user_model->updateuserfront($id,$firstname, $lastname, $billingaddress, $email, $phone, $billingcity,$billingpincode,$billingcountry,$billingstate);
+        $this->load->view("json", $data);
+    }
+    function updateDealer() {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id=$data['id'];
+        $storename=$data['storename'];
+        $ownername=$data['ownername'];
+        $email=$data['email'];
+        $address=$data['address'];
+        $city=$data['city'];
+        $state=$data['state'];
+        $pincode=$data['pincode'];
+        $phone=$data['phone'];
+        $data["message"] = $this->user_model->updateDealer($id,$storename, $ownername, $email, $address, $city, $state,$pincode,$phone);
         $this->load->view("json", $data);
     }
     function getuserbyid()
@@ -2206,6 +2222,10 @@ echo $filepath;
     }
     public function orderhistory(){
      $data['message']=$this->restapi_model->orderhistory();
+        $this->load->view("json", $data);
+    }
+    public function orderDealerHistory(){
+     $data['message']=$this->restapi_model->orderDealerHistory();
         $this->load->view("json", $data);
     }
     public function getsinglecategory(){

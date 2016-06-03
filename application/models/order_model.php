@@ -216,16 +216,19 @@ class Order_model extends CI_Model
         }
 	}
 
-	function placeOrderForDealer($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode)
+	function placeOrderForDealer($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode,$paymentstatus)
 {
-
+	if($firstname == "")
+	{
+		return true;
+	}
 			$mysession=$this->session->all_userdata();
 
 				if($shippingaddress==""){
-			 $query=$this->db->query("INSERT INTO `dea_order`(`store`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`billingcontact`,`shippingcontact`) VALUES ('$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$billingaddress','$billingcity','$billingcountry','$billingstate','$billingpincode','$billingpincode','$billingcontact','$billingcontact')");
+			 $query=$this->db->query("INSERT INTO `dea_order`(`finalamount`,`store`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`billingcontact`,`shippingcontact`,`paymentstatus`) VALUES ('$finalamount','$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$billingaddress','$billingcity','$billingcountry','$billingstate','$billingpincode','$billingpincode','$billingcontact','$billingcontact','$paymentstatus')");
 			}
 			else{
-			$query=$this->db->query("INSERT INTO `dea_order`(`store`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`shippingcontact`,`billingcontact`) VALUES ('$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$shippingaddress','$shippingcity','$shippingcountry','$shippingstate','$shippingpincode','$billingpincode','$shippingcontact','$billingcontact')");
+			$query=$this->db->query("INSERT INTO `dea_order`(`finalamount`,`store`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`shippingcontact`,`billingcontact`,`paymentstatus`) VALUES ('$finalamount','$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$shippingaddress','$shippingcity','$shippingcountry','$shippingstate','$shippingpincode','$billingpincode','$shippingcontact','$billingcontact','$paymentstatus')");
 			}
 			$billingaddressforuser=$billingaddress;
 			$shippingaddressforuser=$shippingaddress;

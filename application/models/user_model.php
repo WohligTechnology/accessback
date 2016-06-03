@@ -864,6 +864,30 @@ $val=$this->db->update('user', $data);
         }
 
     }
+
+    function updateDealer($id,$storename, $ownername, $email, $address, $city, $state,$pincode,$phone)
+    {
+        $data = array(
+               'storename'=> $storename,
+               'ownername'=> $ownername,
+               'email'=> $email,
+               'phone'=> $phone,
+               'address'=> $address,
+               'city'=> $city,
+               'state'=> $state,
+               'pincode'=> $pincode,
+               'phone'=> $phone
+            );
+				$this->db->where('id', $id);
+				$val=$this->db->update('dea_store', $data);
+        if($val){
+           return true;
+        }
+        else{
+            return false;
+        }
+
+    }
       function getuserdetails($id){
     $query=$this->db->query("SELECT `id`, `firstname`, `lastname`, `email`, `phone`,`billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `billingpincode`,`credits` FROM `user` WHERE `id`='$id'")->row();
     return $query;
