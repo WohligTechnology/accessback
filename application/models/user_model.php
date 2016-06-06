@@ -566,6 +566,18 @@ class User_model extends CI_Model
             $contact=$this->db->insert_id();
             return $contact;
     }
+    function userContactDealer($id,$name,$email,$phone,$comment)
+    {
+			if($name){
+				$this->db->query("INSERT INTO `contact` (`id`, `name`, `email`, `telephone`, `comment`) VALUES ('', '$name', '$email', '$phone', '$comment');");
+						$contact=$this->db->insert_id();
+						return $contact;
+			}
+			else{
+					return false;
+			}
+
+    }
     function authenticate() {
          $is_logged_in = $this->session->userdata( 'logged_in' );
 //        return $is_logged_in;
