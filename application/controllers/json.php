@@ -182,6 +182,16 @@ class Json extends CI_Controller {
         $data["message"] = $this->user_model->usercontact($id, $name, $email, $phone, $comment);
         $this->load->view("json", $data);
     }
+    // public function usercontact() {
+    //      $data = json_decode(file_get_contents('php://input'), true);
+    //     //print_r($data);
+    //     $name = $data['name'];
+    //     $email = $data['email'];
+    //     $phone = $data['phone'];
+    //     $comment = $data['comment'];
+    //     $data["message"] = $this->user_model->usercontact($id, $name, $email, $phone, $comment);
+    //     $this->load->view("json", $data);
+    // }
     function userContactDealer() {
          $data = json_decode(file_get_contents('php://input'), true);
          if(!empty($data)){
@@ -273,6 +283,11 @@ class Json extends CI_Controller {
     function getusercart() {
         $user = $this->input->get_post('user');
         $data["message"] = $this->order_model->getusercart($user);
+        $this->load->view("json", $data);
+    }
+    function getDealerOrderDetails() {
+        $user=$this->input->get("user");
+        $data["message"] = $this->order_model->getDealerOrderDetails($user);
         $this->load->view("json", $data);
     }
     function addcartsession() {

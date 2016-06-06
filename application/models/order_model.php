@@ -21,6 +21,19 @@ class Order_model extends CI_Model
 		$query=$this->db->query($query)->row();
 		return $query;
 	}
+	function getDealerOrderDetails($user)
+	{
+
+		// $query="SELECT * FROM `dea_order` WHERE `store`='$user'";
+		// $query=$this->db->query($query)->row();
+		  $query=$this->db->query("SELECT * FROM `dea_order` WHERE `store`='$user'")->row();
+		if($query){
+			return $query;
+		}
+		else {
+			return false;
+		}
+	}
 	function vieworder()
 	{
 		$query="SELECT `order`.`id` as `id`,`order`.`firstname` as `firstname`,`order`.`lastname` as `lastname`,`order`.`user` as `user`,`order`.`orderstatus` as `orderstatusid`,`orderstatus`.`name` as `orderstatus`,`order`.`totalamount`,`order`.`discountamount`,`order`.`finalamount`,`order`.`trackingcode`,`order`.`timestamp` FROM `order`

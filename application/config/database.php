@@ -50,7 +50,8 @@ $active_record = TRUE;
 
 
 $myserver=$_SERVER['SERVER_NAME'];
-if($myserver!="localhost")
+$ip = substr($myserver,0,7);
+if($myserver!="localhost" && $ip != "192.168" )
 {
   //  $db['default']['hostname'] = 'localhost';
   //  $db['default']['username'] = 'wohligco_access';
@@ -68,9 +69,25 @@ if($myserver!="localhost")
   //  $db['default']['autoinit'] = TRUE;
   //  $db['default']['stricton'] = FALSE;
 
+    // $db['default']['username'] = 'root';
+    // $db['default']['password'] = 'YT4C-Xci+SxZAR';
+    // $db['default']['database'] = 'acceskq2_fynx';
+    // $db['default']['dbdriver'] = 'mysql';
+    // $db['default']['dbprefix'] = '';
+    // $db['default']['pconnect'] = TRUE;
+    // $db['default']['db_debug'] = TRUE;
+    // $db['default']['cache_on'] = FALSE;
+    // $db['default']['cachedir'] = '';
+    // $db['default']['char_set'] = 'utf8';
+    // $db['default']['dbcollat'] = 'utf8_general_ci';
+    // $db['default']['swap_pre'] = '';
+    // $db['default']['autoinit'] = TRUE;
+    // $db['default']['stricton'] = FALSE;
+
+    $db['default']['hostname'] = 'localhost';
     $db['default']['username'] = 'root';
-    $db['default']['password'] = 'YT4C-Xci+SxZAR';
-    $db['default']['database'] = 'acceskq2_fynx';
+    $db['default']['password'] = '';
+    $db['default']['database'] = 'access';
     $db['default']['dbdriver'] = 'mysql';
     $db['default']['dbprefix'] = '';
     $db['default']['pconnect'] = TRUE;
