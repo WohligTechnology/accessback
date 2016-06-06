@@ -244,6 +244,7 @@ class Order_model extends CI_Model
 
 			}
 			// $userquery=$this->db->query("UPDATE `user` SET `phone`='$billingcontact',`status`='$status',`billingaddress`='$billingaddressforuser',`billingcity`='$billingcity',`billingstate`='$billingstate',`billingcountry`='$billingcountry',`companyname`='$company' WHERE `id`='$user'");
+			$this->cart->destroy();
 			if($query){
 			return $order;
 			}
