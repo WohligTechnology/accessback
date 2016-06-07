@@ -231,7 +231,7 @@ class Order_model extends CI_Model
 
 	function placeOrderForDealer($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode,$paymentstatus)
 {
-	if($firstname == "")
+	if($paymentstatus == "")
 	{
 		return true;
 	}
