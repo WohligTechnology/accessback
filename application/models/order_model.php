@@ -255,6 +255,9 @@ class Order_model extends CI_Model
 					$quantity=intval($cart['qty']);
 					$productid=$cart['id'];
 
+							 $this->db->query("UPDATE `product` SET `product`.`quantity`=`product`.`quantity`-$quantity WHERE `product`.`id`='$productid'");
+
+
 			}
 			// $userquery=$this->db->query("UPDATE `user` SET `phone`='$billingcontact',`status`='$status',`billingaddress`='$billingaddressforuser',`billingcity`='$billingcity',`billingstate`='$billingstate',`billingcountry`='$billingcountry',`companyname`='$company' WHERE `id`='$user'");
 			$this->cart->destroy();
