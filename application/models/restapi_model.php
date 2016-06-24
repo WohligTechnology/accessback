@@ -333,6 +333,14 @@ INNER JOIN `brand` ON `brand`.`id` = `productbrand`.`brand`")->result();
 			$query1 = $this->db->query("UPDATE `order` SET `orderstatus`='2',`paymentmethod`='4',`transactionid`='$tid',`trackingcode`='$tid',`finalamount`='$tamount->totalamount' WHERE `id`='$orderid'");
 $amount = $this->db->query("SELECT `id` AS 'OrderId' FROM `order` WHERE `id`='$orderid'")->row();
 // $amount = $this->db->query("SELECT `id` AS 'OrderId',`transactionid`,`finalamount` AS 'totalamount' FROM `order` WHERE `id`='$orderid'")->row();
+//update product quantity
+$getproid = $this->db->query("SELECT `product` FROM `orderitems` WHERE `order`='$orderid'")->result();
+foreach ($getproid as $pid) {
+	$getqtyorder = $this->db->query("SELECT `quantity` FROM `orderitems` WHERE `product`='$pid->product' AND `order`='$orderid'")->row();
+	$getproqty = $this->db->query("SELECT `quantity` FROM `product` WHERE `id`='$pid->product'")->row();
+	$updateproduct = $this->db->query("UPDATE `product` SET `quantity`= $getproqty->quantity - $getqtyorder->quantity WHERE `id`='$pid->product'");
+}
+
 
 // DESTROY CART
 			 $getuser = $this->db->query("SELECT `user` FROM `order` WHERE `id`='$orderid'")->row();
