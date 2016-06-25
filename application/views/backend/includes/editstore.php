@@ -25,6 +25,13 @@
   </div>
 </div>
 <div class="form-group">
+  <label class="col-sm-2 control-label">Select Accesslevel</label>
+  <div class="col-sm-4">
+  <?php  	 echo form_dropdown('accesslevel',$accesslevel,set_value('accesslevel',$before->accesslevel),'class="chzn-select form-control" 	data-placeholder="Choose a Accesslevel..."');
+  ?>
+  </div>
+</div>
+<div class="form-group">
 <label class="col-sm-2 control-label" for="normal-field">Owner Name</label>
 <div class="col-sm-4">
 <input type="text" id="normal-field" class="form-control" name="ownername" value='<?php echo set_value('ownername',$before->ownername);?>'>
@@ -58,6 +65,12 @@
 <label class="col-sm-2 control-label" for="normal-field">Email</label>
 <div class="col-sm-4">
 <input type="email" id="normal-field" class="form-control" name="email" value='<?php echo set_value('email',$before->email);?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Password</label>
+<div class="col-sm-4">
+<input type="password" id="normal-field" class="form-control" name="password" value='<?php echo set_value('password',$before->password);?>'>
 </div>
 </div>
 <div class="form-group">

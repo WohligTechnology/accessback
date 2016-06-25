@@ -466,6 +466,7 @@ class User_model extends CI_Model
             $userid=$user->id;
             $storename=$user->storename;
             $ownername=$user->ownername;
+            $accesslevel=$user->accesslevel;
 
 
             $newdata = array(
@@ -473,6 +474,7 @@ class User_model extends CI_Model
                 'storename'     => $storename,
                 'ownername'     => $ownername,
                 'logged_in' => 'true',
+                'accesslevel' => $accesslevel,
                 'id'=> $userid
             );
 

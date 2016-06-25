@@ -5467,6 +5467,7 @@ LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","$whe
 	$this->checkaccess($access);
 	$data["page"]="createstore";
 	$data["title"]="Create store";
+	$data["accesslevel"]=$this->store_model->getaccesslevels();
 	$this->load->view("template",$data);
 	}
 	public function createstoresubmit()
@@ -5489,6 +5490,7 @@ LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","$whe
 	$data["alerterror"]=validation_errors();
 	$data["page"]="createstore";
 	$data["title"]="Create store";
+  	$data["accesslevel"]=$this->store_model->getaccesslevels();
 	$this->load->view("template",$data);
 	}
 	else
@@ -5505,6 +5507,8 @@ LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","$whe
 	$creationdate=$this->input->get_post("creationdate");
 	$modificationdate=$this->input->get_post("modificationdate");
 	$address=$this->input->get_post("address");
+	$accesslevel=$this->input->get_post("accesslevel");
+	$password=$this->input->post('password');
 	$config['upload_path'] = './uploads/';
 $config['allowed_types'] = 'gif|jpg|png|jpeg';
 $this->load->library('upload', $config);
@@ -5539,7 +5543,7 @@ $image=$uploaddata['file_name'];
 			}
 
 }
-	if($this->store_model->create($storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address)==0)
+	if($this->store_model->create($storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address,$accesslevel,$password)==0)
 	$data["alerterror"]="New store could not be created.";
 	else
 	$data["alertsuccess"]="store created Successfully.";
@@ -5556,6 +5560,7 @@ $image=$uploaddata['file_name'];
 	$data["title"]="Edit store";
 	$data["before1"]=$this->input->get('id');
 	$data["before2"]=$this->input->get('id');
+		$data["accesslevel"]=$this->store_model->getaccesslevels();
 	$data["before"]=$this->store_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
 	}
@@ -5580,6 +5585,7 @@ $image=$uploaddata['file_name'];
 	$data["alerterror"]=validation_errors();
 	$data["page"]="editstore";
 	$data["title"]="Edit store";
+		$data["accesslevel"]=$this->store_model->getaccesslevels();
 	$data["before"]=$this->store_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
 	}
@@ -5598,6 +5604,8 @@ $image=$uploaddata['file_name'];
 	$creationdate=$this->input->get_post("creationdate");
 	$modificationdate=$this->input->get_post("modificationdate");
 	$address=$this->input->get_post("address");
+	$accesslevel=$this->input->get_post("accesslevel");
+	$password=$this->input->get_post("password");
 	$config['upload_path'] = './uploads/';
 $config['allowed_types'] = 'gif|jpg|png|jpeg';
 $this->load->library('upload', $config);
@@ -5639,7 +5647,7 @@ $image=$uploaddata['file_name'];
 		 // print_r($image);
 			$image=$image->image;
 	}
-	if($this->store_model->edit($id,$storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address)==0)
+	if($this->store_model->edit($id,$storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address,$accesslevel,$password)==0)
 	$data["alerterror"]="New store could not be Updated.";
 	else
 	$data["alertsuccess"]="store Updated Successfully.";
