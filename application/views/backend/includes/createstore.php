@@ -1,6 +1,6 @@
 <div id="page-title">
 <a href="<?php echo site_url("site/viewstore"); ?>" class="btn btn-primary btn-labeled fa fa-arrow-left margined pull-right">Back</a>
-<h1 class="page-header text-overflow">Store Details </h1>
+<h1 class="page-header text-overflow">Store & Sales Details  </h1>
 </div>
 <div id="page-content">
 <div class="row">

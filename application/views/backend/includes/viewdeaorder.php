@@ -1,5 +1,5 @@
 <div id="page-title">
-<a class="btn btn-primary btn-labeled fa fa-plus margined pull-right" href="<?php echo site_url("site/createdeaorder"); ?>">Create</a>
+<!-- <a class="btn btn-primary btn-labeled fa fa-plus margined pull-right" href="<?php echo site_url("site/createdeaorder"); ?>">Create</a> -->
 <h1 class="page-header text-overflow">Store Order Details </h1>
 </div>
 <div id="page-content">
@@ -16,25 +16,10 @@
 <th data-field="store">Store</th>
 <th data-field="paymentstatus">Payment Status</th>
 <th data-field="sales">Sales</th>
-<th data-field="firstname">First Name</th>
+<th data-field="finalamount">Final Amount</th>
+<!-- <th data-field="firstname">First Name</th>
 <th data-field="lastname">Last Name</th>
-<th data-field="email">Email</th>
-<!-- <th data-field="billingcity">Billing City</th>
-<th data-field="billingstate">Billing State</th>
-<th data-field="billingcountry">Billing Country</th>
-<th data-field="billingcontact">Billing Contact</th>
-<th data-field="billingpincode">Billing Pincode</th>
-<th data-field="shippingcity">Shipping City</th>
-<th data-field="shippingstate">Shipping State</th>
-<th data-field="shippingcountry">Shipping Country</th>
-<th data-field="shippingcontact">Shipping Contact</th>
-<th data-field="shippingpincode">Shipping Pincode</th>
-<th data-field="long">longitude</th>
-<th data-field="password">Password</th>
-<th data-field="creationdate">Creation Date</th>
-<th data-field="modificationdate">Modification Date</th>
-<th data-field="billingaddress">Billing Address</th>
-<th data-field="shippingaddress">Shipping Address</th> -->
+<th data-field="email">Email</th> -->
 </tr>
 </thead>
 <tbody>
@@ -58,7 +43,24 @@ resultrow.paymentstatus="Full Payment";
   else if(resultrow.paymentstatus==2){
     resultrow.paymentstatus="Advance Payment";
   }
-return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.store + "</td><td>" + resultrow.paymentstatus + "</td><td>" + resultrow.sales + "</td><td>" + resultrow.firstname + "</td><td>" + resultrow.lastname + "</td><td>" + resultrow.email + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editdeaorder?id=');?>"+resultrow.id+"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deletedeaorder?id='); ?>"+resultrow.id+"'><i class='icon-trash '></i></a></td></tr>";
+
+  if(resultrow.sales!=0){
+resultrow.sales="By sales Person";
+resultrow.store=resultrow.ownername;
+  }
+  else {
+    resultrow.sales="By Dealer himself";
+    resultrow.store=resultrow.store;
+  }
+
+
+  // if(resultrow.store==""){
+  //
+  // }
+  // else {
+  //   resultrow.store=resultrow.store;
+  // }
+return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.store + "</td><td>" + resultrow.paymentstatus + "</td><td>" + resultrow.sales + "</td><td>" + resultrow.finalamount + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editdeaorder?id=');?>"+resultrow.id+"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deletedeaorder?id='); ?>"+resultrow.id+"'><i class='icon-trash '></i></a></td></tr>";
 }
 generatejquery("<?php echo $base_url;?>");
 </script>

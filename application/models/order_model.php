@@ -229,7 +229,7 @@ class Order_model extends CI_Model
         }
 	}
 
-	function placeOrderForDealer($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode,$paymentstatus)
+	function placeOrderForDealer($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode,$paymentstatus,$sales)
 {
 	if($paymentstatus == "")
 	{
@@ -238,10 +238,10 @@ class Order_model extends CI_Model
 			$mysession=$this->session->all_userdata();
 
 				if($shippingaddress==""){
-			 $query=$this->db->query("INSERT INTO `dea_order`(`finalamount`,`store`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`billingcontact`,`shippingcontact`,`paymentstatus`) VALUES ('$finalamount','$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$billingaddress','$billingcity','$billingcountry','$billingstate','$billingpincode','$billingpincode','$billingcontact','$billingcontact','$paymentstatus')");
+			 $query=$this->db->query("INSERT INTO `dea_order`(`finalamount`,`store`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`billingcontact`,`shippingcontact`,`paymentstatus`,`sales`) VALUES ('$finalamount','$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$billingaddress','$billingcity','$billingcountry','$billingstate','$billingpincode','$billingpincode','$billingcontact','$billingcontact','$paymentstatus','$sales')");
 			}
 			else{
-			$query=$this->db->query("INSERT INTO `dea_order`(`finalamount`,`store`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`shippingcontact`,`billingcontact`,`paymentstatus`) VALUES ('$finalamount','$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$shippingaddress','$shippingcity','$shippingcountry','$shippingstate','$shippingpincode','$billingpincode','$shippingcontact','$billingcontact','$paymentstatus')");
+			$query=$this->db->query("INSERT INTO `dea_order`(`finalamount`,`store`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `billingpincode`,`shippingcontact`,`billingcontact`,`paymentstatus`,`sales`) VALUES ('$finalamount','$user','$firstname','$lastname','$email','$billingaddress','$billingcity','$billingstate','$billingcountry','$shippingaddress','$shippingcity','$shippingcountry','$shippingstate','$shippingpincode','$billingpincode','$shippingcontact','$billingcontact','$paymentstatus','$sales')");
 			}
 			$billingaddressforuser=$billingaddress;
 			$shippingaddressforuser=$shippingaddress;
@@ -249,16 +249,19 @@ class Order_model extends CI_Model
 			$order=$this->db->insert_id();
 			$mysession["orderid"]=$order;
 			$this->session->set_userdata($mysession);
+			$sum=0;
 			foreach($carts as $cart)
 			{
-					$querycart=$this->db->query("INSERT INTO `dea_orderproduct`(`order`, `product`, `quantity`, `price`, `finalprice`) VALUES ('$order','".$cart['id']."','".$cart['qty']."','".$cart['price']."','".$cart['subtotal']."')");
+					$querycart=$this->db->query("INSERT INTO `dea_orderproduct`(`order`, `product`, `quantity`, `price`, `finalprice`) VALUES ('$order','".$cart['id']."','".$cart['qty']."','".$cart['price']."','".$cart['qty']."'*'".$cart['price']."')");
 					$quantity=intval($cart['qty']);
 					$productid=$cart['id'];
-
-							 $this->db->query("UPDATE `product` SET `product`.`quantity`=`product`.`quantity`-$quantity WHERE `product`.`id`='$productid'");
+					$totalamt=$cart['qty']*$cart['price'];
+					$sum=$sum+$totalamt;
+							 $this->db->query("UPDATE `dea_order` SET `finalamount`='$sum' WHERE `id`='$order'");
 
 
 			}
+				 $this->db->query("UPDATE `product` SET `product`.`quantity`=`product`.`quantity`-$quantity WHERE `product`.`id`='$productid'");
 			// $userquery=$this->db->query("UPDATE `user` SET `phone`='$billingcontact',`status`='$status',`billingaddress`='$billingaddressforuser',`billingcity`='$billingcity',`billingstate`='$billingstate',`billingcountry`='$billingcountry',`companyname`='$company' WHERE `id`='$user'");
 			$this->cart->destroy();
 			if($query){

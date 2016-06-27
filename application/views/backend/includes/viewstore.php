@@ -1,6 +1,6 @@
 <div id="page-title">
 <a class="btn btn-primary btn-labeled fa fa-plus margined pull-right" href="<?php echo site_url("site/createstore"); ?>">Create</a>
-<h1 class="page-header text-overflow">Store Details </h1>
+<h1 class="page-header text-overflow">Store & Sales Details </h1>
 </div>
 <div id="page-content">
 <div class="row">
@@ -17,6 +17,7 @@
 <!-- <th data-field="image">Logo</th> -->
 <th data-field="ownername">Owner Name</th>
 <th data-field="city">City</th>
+<th data-field="accessLevel">AccessLevel</th>
 </tr>
 </thead>
 <tbody>
@@ -34,7 +35,13 @@
 </div>
 <script>
 function drawtable(resultrow) {
-return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.storename + "</td><td>" + resultrow.ownername + "</td><td>" + resultrow.city + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editstore?id=');?>"+resultrow.id+"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deletestore?id='); ?>"+resultrow.id+"'><i class='icon-trash '></i></a></td></tr>";
+  if(resultrow.accesslevel==1){
+    resultrow.accesslevel="Dealer";
+  }
+  else if(resultrow.accesslevel==2){
+    resultrow.accesslevel="Sales";
+  }
+return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.storename + "</td><td>" + resultrow.ownername + "</td><td>" + resultrow.city + "</td><td>" + resultrow.accesslevel + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editstore?id=');?>"+resultrow.id+"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deletestore?id='); ?>"+resultrow.id+"'><i class='icon-trash '></i></a></td></tr>";
 }
 generatejquery("<?php echo $base_url;?>");
 </script>
