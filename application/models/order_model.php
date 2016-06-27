@@ -257,11 +257,12 @@ class Order_model extends CI_Model
 					$productid=$cart['id'];
 					$totalamt=$cart['qty']*$cart['price'];
 					$sum=$sum+$totalamt;
-							 $this->db->query("UPDATE `dea_order` SET `finalamount`='$sum' WHERE `id`='$order'");
+	 				$this->db->query("UPDATE `product` SET `product`.`quantity`=`product`.`quantity`-$quantity WHERE `product`.`id`='$productid'");
 
 
 			}
-				 $this->db->query("UPDATE `product` SET `product`.`quantity`=`product`.`quantity`-$quantity WHERE `product`.`id`='$productid'");
+			 $this->db->query("UPDATE `dea_order` SET `finalamount`='$sum' WHERE `id`='$order'");
+
 			// $userquery=$this->db->query("UPDATE `user` SET `phone`='$billingcontact',`status`='$status',`billingaddress`='$billingaddressforuser',`billingcity`='$billingcity',`billingstate`='$billingstate',`billingcountry`='$billingcountry',`companyname`='$company' WHERE `id`='$user'");
 			$this->cart->destroy();
 			if($query){
