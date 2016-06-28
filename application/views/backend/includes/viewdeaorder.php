@@ -17,6 +17,7 @@
 <th data-field="paymentstatus">Payment Status</th>
 <th data-field="sales">Sales</th>
 <th data-field="finalamount">Final Amount</th>
+<th data-field="saledealer">Dealer name</th>
 <!-- <th data-field="firstname">First Name</th>
 <th data-field="lastname">Last Name</th>
 <th data-field="email">Email</th> -->
@@ -51,6 +52,7 @@ resultrow.store=resultrow.ownername;
   else {
     resultrow.sales="By Dealer himself";
     resultrow.store=resultrow.store;
+    resultrow.saledealer='';
   }
 
 
@@ -60,7 +62,7 @@ resultrow.store=resultrow.ownername;
   // else {
   //   resultrow.store=resultrow.store;
   // }
-return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.store + "</td><td>" + resultrow.paymentstatus + "</td><td>" + resultrow.sales + "</td><td>" + resultrow.finalamount + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editdeaorder?id=');?>"+resultrow.id+"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deletedeaorder?id='); ?>"+resultrow.id+"'><i class='icon-trash '></i></a></td></tr>";
+return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.store + "</td><td>" + resultrow.paymentstatus + "</td><td>" + resultrow.sales + "</td><td>" + resultrow.finalamount + "</td><td>" + resultrow.saledealer + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editdeaorder?id=');?>"+resultrow.id+"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deletedeaorder?id='); ?>"+resultrow.id+"'><i class='icon-trash '></i></a></td></tr>";
 }
 generatejquery("<?php echo $base_url;?>");
 </script>

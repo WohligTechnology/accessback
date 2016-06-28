@@ -24,9 +24,9 @@ $this->db->where("id",$id);
 $query=$this->db->get("dea_order")->row();
 return $query;
 }
-public function edit($id,$store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress)
+public function edit($id,$store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress,$saledealer)
 {
-$data=array("store" => $store,"paymentstatus" => $paymentstatus,"sales" => $sales,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"billingcity" => $billingcity,"billingstate" => $billingstate,"billingcountry" => $billingcountry,"billingcontact" => $billingcontact,"billingpincode" => $billingpincode,"shippingcity" => $shippingcity,"shippingstate" => $shippingstate,"shippingcountry" => $shippingcountry,"shippingcontact" => $shippingcontact,"shippingpincode" => $shippingpincode,"long" => $long,"password" => $password,"creationdate" => $creationdate,"modificationdate" => $modificationdate,"billingaddress" => $billingaddress,"shippingaddress" => $shippingaddress);
+$data=array("store" => $store,"paymentstatus" => $paymentstatus,"sales" => $sales,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"billingcity" => $billingcity,"billingstate" => $billingstate,"billingcountry" => $billingcountry,"billingcontact" => $billingcontact,"billingpincode" => $billingpincode,"shippingcity" => $shippingcity,"shippingstate" => $shippingstate,"shippingcountry" => $shippingcountry,"shippingcontact" => $shippingcontact,"shippingpincode" => $shippingpincode,"long" => $long,"password" => $password,"creationdate" => $creationdate,"modificationdate" => $modificationdate,"billingaddress" => $billingaddress,"shippingaddress" => $shippingaddress,"saledealer" => $saledealer);
 $this->db->where( "id", $id );
 $query=$this->db->update( "dea_order", $data );
 

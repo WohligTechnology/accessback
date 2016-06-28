@@ -277,7 +277,8 @@ class Json extends CI_Controller {
         $couponcode = $order['couponcode'];
         $paymentstatus = $order['paymentstatus'];
         $sales = $order['sales'];
-        $data["message"] = $this->order_model->placeOrderForDealer($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode,$paymentstatus,$sales);
+        $dealer = $order['dealer'];
+        $data["message"] = $this->order_model->placeOrderForDealer($user, $firstname, $lastname, $email,$billingcontact,$billingaddress, $billingcity, $billingstate, $billingcountry, $shippingaddress, $shippingcity, $shippingcountry, $shippingstate, $shippingpincode, $billingpincode, $status, $company, $carts, $finalamount, $shippingmethod, $shippingname, $shippingcontact, $customernote,$couponcode,$paymentstatus,$sales,$dealer);
         //$data["message"]=$this->order_model->placeorder($user,$firstname,$lastname,$email,$billingaddress,$billingcity,$billingstate,$billingcountry,$shippingaddress,$shippingcity,$shippingcountry,$shippingstate,$shippingpincode,$billingpincode,$phone,$status,$company,$fax);
         $this->load->view("json", $data);
     }

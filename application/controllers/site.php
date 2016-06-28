@@ -5973,6 +5973,11 @@ $image=$uploaddata['file_name'];
 	$elements[24]->sort="1";
 	$elements[24]->header="Final Amount";
 	$elements[24]->alias="finalamount";
+	$elements[25]=new stdClass();
+	$elements[25]->field="`dea_store`.`ownername`";
+	$elements[25]->sort="1";
+	$elements[25]->header="Dealer Name";
+	$elements[25]->alias="saledealer";
 	$search=$this->input->get_post("search");
 	$pageno=$this->input->get_post("pageno");
 	$orderby=$this->input->get_post("orderby");
@@ -6081,6 +6086,7 @@ $image=$uploaddata['file_name'];
 	$data["paymentstatus"]=$this->deaorder_model->getpaymentstatusdropdown();
 	$data["store"]=$this->deaorder_model->getstoredropdown();
 	$data["sales"]=$this->deaorder_model->getsalesdropdown();
+		$data["saledealer"]=$this->deaorder_model->getstoredropdown();
 	$data["title"]="Edit deaorder";
 	$data["before"]=$this->deaorder_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
@@ -6119,6 +6125,7 @@ $image=$uploaddata['file_name'];
 	$data["title"]="Edit deaorder";
 	$data["paymentstatus"]=$this->deaorder_model->getpaymentstatusdropdown();
 	$data["store"]=$this->deaorder_model->getstoredropdown();
+	$data["saledealer"]=$this->deaorder_model->getstoredropdown();
 	$data["sales"]=$this->deaorder_model->getsalesdropdown();
 	$data["before"]=$this->deaorder_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
@@ -6148,7 +6155,8 @@ $image=$uploaddata['file_name'];
 	$modificationdate=$this->input->get_post("modificationdate");
 	$billingaddress=$this->input->get_post("billingaddress");
 	$shippingaddress=$this->input->get_post("shippingaddress");
-	if($this->deaorder_model->edit($id,$store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress)==0)
+	$saledealer=$this->input->get_post("saledealer");
+	if($this->deaorder_model->edit($id,$store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress,$saledealer)==0)
 	$data["alerterror"]="New deaorder could not be Updated.";
 	else
 	$data["alertsuccess"]="deaorder Updated Successfully.";
