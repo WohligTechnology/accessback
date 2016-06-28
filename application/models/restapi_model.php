@@ -375,6 +375,10 @@ else
          $quantity=$query->quantity;
         return $quantity;
     }
+    public function getStoreDropDown(){
+         $query=$this->db->query("SELECT `id`,`storename` FROM `dea_store` WHERE `accesslevel`=1")->result();
+        return $query;
+    }
     public function getorderbyorderid($orderid){
          $query=$this->db->query("SELECT `id`, `user`, `firstname`, `lastname`, `email`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `defaultcurrency`, `timestamp`, `totalamount`, `discountamount`, `finalamount`, `discountcoupon`, `paymentmethod`, `orderstatus`, `currency`, `trackingcode`, `billingpincode`, `shippingmethod`, `shippingname`, `shippingtel`, `customernote`, `billingcontact`, `shippingcontact`, `json`, `trackingcompany` FROM `order` WHERE `id`='$orderid'")->row();
         return $query;

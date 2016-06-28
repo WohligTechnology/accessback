@@ -416,6 +416,10 @@ class Json extends CI_Controller {
         $data["message"] = $this->wishlist_model->showwishlist($user);
         $this->load->view("json", $data);
     }
+    function getStoreDropDown() {
+        $data["message"] = $this->restapi_model->getStoreDropDown();
+        $this->load->view("json", $data);
+    }
     function newsletter() {
         $id = $this->input->get_post('id');
         $email = $this->input->get_post('email');
