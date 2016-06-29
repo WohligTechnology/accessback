@@ -26,7 +26,7 @@ class Order_model extends CI_Model
 
 		// $query="SELECT * FROM `dea_order` WHERE `store`='$user'";
 		// $query=$this->db->query($query)->row();
-		  $query=$this->db->query("SELECT * FROM `dea_order` WHERE `store`='$user'")->row();
+		  $query=$this->db->query("SELECT * FROM `dea_order` WHERE `store`='$user'")->result();
 		if($query){
 			return $query;
 		}

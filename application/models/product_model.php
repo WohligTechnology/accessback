@@ -662,21 +662,37 @@ INNER JOIN `brand` ON `brand`.`id`=`productbrand`.`brand`
 LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`
 GROUP BY `product`.`id` ORDER BY  `product`.`id` DESC");
 
-       $content= $this->dbutil->csv_from_result($query);
-        //$data = 'Some file data';
+$content= $this->dbutil->csv_from_result($query);
+//$data = 'Some file data';
 $timestamp=new DateTime();
-        $timestamp=$timestamp->format('Y-m-d_H.i.s');
-//        file_put_contents("gs://magicmirroruploads/products_$timestamp.csv", $content);
-//		redirect("http://magicmirror.in/servepublic?name=products_$timestamp.csv", 'refresh');
-        if ( ! write_file('./csvgenerated/productfile.csv', $content))
-        {
-             echo 'Unable to write the file';
-        }
-        else
-        {
-            redirect(base_url('csvgenerated/productfile.csv'), 'refresh');
-             echo 'File written!';
-        }
+$timestamp=$timestamp->format('Y-m-d_H.i.s');
+if ( ! write_file("./uploads/productfile_$timestamp.csv", $content))
+{
+//  echo 'Unable to write the file';
+}
+else
+{
+redirect(base_url("uploads/productfile_$timestamp.csv"));
+ // echo 'File written!';
+}
+
+
+
+//        $content= $this->dbutil->csv_from_result($query);
+//         //$data = 'Some file data';
+// $timestamp=new DateTime();
+//         $timestamp=$timestamp->format('Y-m-d_H.i.s');
+// //        file_put_contents("gs://magicmirroruploads/products_$timestamp.csv", $content);
+// //		redirect("http://magicmirror.in/servepublic?name=products_$timestamp.csv", 'refresh');
+//         if ( ! write_file('./csvgenerated/productfile.csv', $content))
+//         {
+//              echo 'Unable to write the file';
+//         }
+//         else
+//         {
+//             redirect(base_url('csvgenerated/productfile.csv'), 'refresh');
+//              echo 'File written!';
+//         }
 //		file_put_contents("gs://lylafiles/product_$timestamp.csv", $content);
 //		redirect("http://lylaloves.co.uk/servepublic?name=product_$timestamp.csv", 'refresh');
 	}

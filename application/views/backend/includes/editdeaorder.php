@@ -5,7 +5,7 @@
 <div class="panel-body">
 <form class='form-horizontal tasi-form' method='post' action='<?php echo site_url("site/editdeaordersubmit");?>' enctype= 'multipart/form-data'>
 <input type="hidden" id="normal-field" class="form-control" name="id" value="<?php echo set_value('id',$before->id);?>" style="display:none;">
-<div class=" form-group" style="display:none">
+<div class=" form-group">
 <label class="col-sm-2 control-label" for="normal-field">Store</label>
 <div class="col-sm-4">
 <?php echo form_dropdown("store",$store,set_value('store',$before->store),"class='chzn-select form-control'");?>
@@ -15,6 +15,18 @@
 <label class="col-sm-2 control-label" for="normal-field">Payment Status</label>
 <div class="col-sm-4">
 <?php echo form_dropdown("paymentstatus",$paymentstatus,set_value('paymentstatus',$before->paymentstatus),"class='chzn-select form-control'");?>
+</div>
+</div>
+<div class=" form-group" >
+<label class="col-sm-2 control-label" for="normal-field">Approve Order</label>
+<div class="col-sm-4">
+<?php echo form_dropdown("approve",$approve,set_value('approve',$before->approve),"class='chzn-select form-control'");?>
+</div>
+</div>
+<div class=" form-group" >
+<label class="col-sm-2 control-label" for="normal-field">Dealer Name</label>
+<div class="col-sm-4">
+<?php echo form_dropdown("saledealer",$saledealer,set_value('saledealer',$before->saledealer),"class='chzn-select form-control'");?>
 </div>
 </div>
 <div class=" form-group" >
@@ -146,7 +158,7 @@
 <div class="form-group">
 <label class="col-sm-2 control-label" for="normal-field">&nbsp;</label>
 <div class="col-sm-4">
-<!-- <button type="submit" class="btn btn-primary">Save</button> -->
+<button type="submit" class="btn btn-primary">Save</button>
 <a href='<?php echo site_url("site/viewdeaorder"); ?>' class='btn btn-secondary'>Cancel</a>
 </div>
 </div>

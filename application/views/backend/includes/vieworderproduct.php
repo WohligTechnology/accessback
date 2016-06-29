@@ -33,7 +33,13 @@
 </div>
 <script>
 function drawtable(resultrow) {
+  if(resultrow.approve==1){
+return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.product + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.price + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorderproduct?id=');?>"+resultrow.id+"'><i class='icon-pencil'></i></a></td></tr>";
+  }
+  else{
 return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.product + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.price + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editorderproduct?id=');?>"+resultrow.id+"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deleteorderproduct?id='); ?>"+resultrow.id+"&deaorder="+resultrow.order+"'><i class='icon-trash '></i></a></td></tr>";
+  }
+
 }
 generatejquery("<?php echo $base_url;?>");
 </script>
