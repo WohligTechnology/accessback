@@ -5514,6 +5514,20 @@ LEFT OUTER JOIN `orderstatus` ON `orderstatus`.`id`=`order`.`orderstatus`","$whe
 	$address=$this->input->get_post("address");
 	$accesslevel=$this->input->get_post("accesslevel");
 	$password=$this->input->post('password');
+	$formofcompany=$this->input->post('formofcompany');
+	$shippingaddress=$this->input->post('shippingaddress');
+	$vat=$this->input->post('vat');
+	$cst=$this->input->post('cst');
+	$manager=$this->input->post('manager');
+	$website=$this->input->post('website');
+	$facebook=$this->input->post('facebook');
+	$twitter=$this->input->post('twitter');
+	$insta=$this->input->post('insta');
+	$google=$this->input->post('google');
+	$pan=$this->input->post('pan');
+	$shoptime=$this->input->post('shoptime');
+	$paymentcollectiontime=$this->input->post('paymentcollectiontime');
+	$shopclosedon=$this->input->post('shopclosedon');
 	$config['upload_path'] = './uploads/';
 $config['allowed_types'] = 'gif|jpg|png|jpeg';
 $this->load->library('upload', $config);
@@ -5548,7 +5562,7 @@ $image=$uploaddata['file_name'];
 			}
 
 }
-	if($this->store_model->create($storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address,$accesslevel,$password)==0)
+	if($this->store_model->create($storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address,$accesslevel,$password,$formofcompany,$shippingaddress,$vat,$cst,$manager,$website,$facebook,$twitter,$insta,$google,$pan,$shoptime,$paymentcollectiontime,$shopclosedon)==0)
 	$data["alerterror"]="New store could not be created.";
 	else
 	$data["alertsuccess"]="store created Successfully.";
@@ -5611,6 +5625,20 @@ $image=$uploaddata['file_name'];
 	$address=$this->input->get_post("address");
 	$accesslevel=$this->input->get_post("accesslevel");
 	$password=$this->input->get_post("password");
+	$formofcompany=$this->input->post('formofcompany');
+	$shippingaddress=$this->input->post('shippingaddress');
+	$vat=$this->input->post('vat');
+	$cst=$this->input->post('cst');
+	$manager=$this->input->post('manager');
+	$website=$this->input->post('website');
+	$facebook=$this->input->post('facebook');
+	$twitter=$this->input->post('twitter');
+	$insta=$this->input->post('insta');
+	$google=$this->input->post('google');
+	$pan=$this->input->post('pan');
+	$shoptime=$this->input->post('shoptime');
+	$paymentcollectiontime=$this->input->post('paymentcollectiontime');
+	$shopclosedon=$this->input->post('shopclosedon');
 	$config['upload_path'] = './uploads/';
 $config['allowed_types'] = 'gif|jpg|png|jpeg';
 $this->load->library('upload', $config);
@@ -5652,7 +5680,7 @@ $image=$uploaddata['file_name'];
 		 // print_r($image);
 			$image=$image->image;
 	}
-	if($this->store_model->edit($id,$storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address,$accesslevel,$password)==0)
+	if($this->store_model->edit($id,$storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address,$accesslevel,$password,$formofcompany,$shippingaddress,$vat,$cst,$manager,$website,$facebook,$twitter,$insta,$google,$pan,$shoptime,$paymentcollectiontime,$shopclosedon)==0)
 	$data["alerterror"]="New store could not be Updated.";
 	else
 	$data["alertsuccess"]="store Updated Successfully.";
