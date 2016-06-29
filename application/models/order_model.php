@@ -28,7 +28,7 @@ class Order_model extends CI_Model
 		// $query=$this->db->query($query)->row();
 		  $query=$this->db->query("SELECT * FROM `dea_order` WHERE `store`='$user'")->result();
 			foreach($query as $row){
-				$row->products=$this->db->query("SELECT `product`.* FROM `dea_orderproduct` INNER JOIN `product` ON `product`.`id`=`dea_orderproduct`.`product` WHERE `order`='$row->id'")->result();
+				$row->products=$this->db->query("SELECT `product`.*,`productimage`.`image` as `image` FROM `dea_orderproduct` INNER JOIN `product` ON `product`.`id`=`dea_orderproduct`.`product` INNER JOIN `productimage` ON `productimage`.`product`=`product`.`id` WHERE `dea_orderproduct`.`order`='$row->id' GROUP BY `product`.`id`")->result();
 			}
 		if($query){
 			return $query;
