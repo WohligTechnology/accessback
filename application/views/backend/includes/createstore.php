@@ -93,6 +93,90 @@ Create store </h3>
 </div>
 </div>
 <div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Form of company</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="formofcompany" value='<?php echo set_value('formofcompany');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Shipping Address</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="shippingaddress" value='<?php echo set_value('shippingaddress');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Vat</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="vat" value='<?php echo set_value('vat');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Cst</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="cst" value='<?php echo set_value('cst');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Purchase Manager</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="manager" value='<?php echo set_value('manager');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Website</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="website" value='<?php echo set_value('website');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Facebook</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="facebook" value='<?php echo set_value('facebook');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Twitter</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="twitter" value='<?php echo set_value('twitter');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Instagram</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="insta" value='<?php echo set_value('insta');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Google</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="google" value='<?php echo set_value('google');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Pan no.</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="pan" value='<?php echo set_value('pan');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Shop Time</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="shoptime" value='<?php echo set_value('shoptime');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Payment Collection Time</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="paymentcollectiontime" value='<?php echo set_value('paymentcollectiontime');?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Shop Closed On</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="shopclosedon" value='<?php echo set_value('shopclosedon');?>'>
+</div>
+</div>
+<div class="form-group">
 <label class="col-sm-2 control-label" for="normal-field">&nbsp;</label>
 <div class="col-sm-4">
 <button type="submit" class="btn btn-primary">Save</button>

@@ -97,10 +97,105 @@
 <input type="text" id="normal-field" class="form-control" name="modificationdate" value='<?php echo set_value('modificationdate',$before->modificationdate);?>'>
 </div>
 </div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">longitude</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="long" value='<?php echo set_value('long',$before->long);?>'>
+</div>
+</div>
 <div class=" form-group">
 <label class="col-sm-2 control-label" for="normal-field">Address</label>
 <div class="col-sm-8">
 <textarea name="address" id="" cols="20" rows="10" class="form-control"><?php echo set_value( 'address',$before->address);?></textarea>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Form of company</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="formofcompany" value='<?php echo set_value('formofcompany',$before->formofcompany);?>'>
+</div>
+</div>
+<div class=" form-group">
+<label class="col-sm-2 control-label" for="normal-field">Shipping Address</label>
+<div class="col-sm-8">
+<textarea name="shippingaddress" id="" cols="20" rows="10" class="form-control"><?php echo set_value( 'shippingaddress',$before->shippingaddress);?></textarea>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Vat</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="vat" value='<?php echo set_value('vat',$before->vat);?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Cst</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="cst" value='<?php echo set_value('cst',$before->cst);?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Purchase Manager</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="manager" value='<?php echo set_value('manager',$before->manager);?>'>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Website</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="website" value='<?php echo set_value('website',$before->website);?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Facebook</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="facebook" value='<?php echo set_value('facebook',$before->facebook);?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Twitter</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="twitter" value='<?php echo set_value('twitter',$before->twitter);?>'>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Instagram</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="insta" value='<?php echo set_value('insta',$before->insta);?>'>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Google</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="google" value='<?php echo set_value('google',$before->google);?>'>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Pan no.</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="pan" value='<?php echo set_value('pan',$before->pan);?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Shop time</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="shoptime" value='<?php echo set_value('shoptime',$before->shoptime);?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Payment Collection Time</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="paymentcollectiontime" value='<?php echo set_value('paymentcollectiontime',$before->paymentcollectiontime);?>'>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Shop Closed On</label>
+<div class="col-sm-4">
+<input type="text" id="normal-field" class="form-control" name="shopclosedon" value='<?php echo set_value('shopclosedon',$before->shopclosedon);?>'>
 </div>
 </div>
 <div class="form-group">

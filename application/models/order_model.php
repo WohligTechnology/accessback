@@ -267,7 +267,7 @@ class Order_model extends CI_Model
 					$productid=$cart['id'];
 					$totalamt=$cart['qty']*$cart['price'];
 					$sum=$sum+$totalamt;
-	 				$this->db->query("UPDATE `product` SET `product`.`quantity`=`product`.`quantity`-$quantity WHERE `product`.`id`='$productid'");
+					// 	$this->db->query("UPDATE `product` SET `product`.`quantity`=`product`.`quantity`-$quantity WHERE `product`.`id`='$productid'");
 
 
 			}

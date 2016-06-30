@@ -78,8 +78,12 @@ public function getsalesdropdown()
 public function getpaymentstatusdropdown()
 {
   $status= array(
-     "1" => "Full Payment",
-     "2" => "Advance Payment"
+     "" => "Select",
+     "1" => "CDC",
+     "2" => "7 days",
+     "3" => "15 days",
+     "4" => "21 days",
+     "5" => "30 days"
     );
   return $status;
 }

@@ -40,10 +40,19 @@
 <script>
 function drawtable(resultrow) {
   if(resultrow.paymentstatus==1){
-resultrow.paymentstatus="Full Payment";
+resultrow.paymentstatus="CDC";
   }
   else if(resultrow.paymentstatus==2){
-    resultrow.paymentstatus="Advance Payment";
+    resultrow.paymentstatus="7 days";
+  }
+  else if(resultrow.paymentstatus==3){
+    resultrow.paymentstatus="15 days";
+  }
+  else if(resultrow.paymentstatus==4){
+    resultrow.paymentstatus="21 days";
+  }
+  else if(resultrow.paymentstatus==5){
+    resultrow.paymentstatus="30 days";
   }
 
   if(resultrow.approve==1){

@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class store_model extends CI_Model
 {
-public function create($storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address,$accesslevel,$password)
+public function create($storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address,$accesslevel,$password,$formofcompany,$shippingaddress,$vat,$cst,$manager,$website,$facebook,$twitter,$insta,$google,$pan,$shoptime,$paymentcollectiontime,$shopclosedon)
 {
-$data=array("storename" => $storename,"image" => $image,"ownername" => $ownername,"city" => $city,"state" => $state,"pincode" => $pincode,"phone" => $phone,"email" => $email,"lat" => $lat,"long" => $long,"creationdate" => '',"address" => $address,"accesslevel" => $accesslevel,"password" => $password);
+$data=array("storename" => $storename,"image" => $image,"ownername" => $ownername,"city" => $city,"state" => $state,"pincode" => $pincode,"phone" => $phone,"email" => $email,"lat" => $lat,"long" => $long,"creationdate" => '',"address" => $address,"accesslevel" => $accesslevel,"password" => $password,"formofcompany" => $formofcompany,"shippingaddress" => $shippingaddress,"vat" => $vat,"cst" => $cst,"manager" => $manager,"website" => $website,"facebook" => $facebook,"twitter" => $twitter,"insta" => $insta,"google" => $google,"pan" => $pan,"shoptime" => $shoptime,"paymentcollectiontime" => $paymentcollectiontime,"shopclosedon" => $shopclosedon);
 $query=$this->db->insert( "dea_store", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -33,9 +33,9 @@ public function getaccesslevels()
     );
   return $status;
 }
-public function edit($id,$storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address,$accesslevel,$password)
+public function edit($id,$storename,$image,$ownername,$city,$state,$pincode,$phone,$email,$lat,$long,$creationdate,$modificationdate,$address,$accesslevel,$password,$formofcompany,$shippingaddress,$vat,$cst,$manager,$website,$facebook,$twitter,$insta,$google,$pan,$shoptime,$paymentcollectiontime,$shopclosedon)
 {
-$data=array("storename" => $storename,"image" => $image,"ownername" => $ownername,"city" => $city,"state" => $state,"pincode" => $pincode,"phone" => $phone,"email" => $email,"lat" => $lat,"long" => $long,"modificationdate" => $modificationdate,"address" => $address,"accesslevel" => $accesslevel);
+$data=array("storename" => $storename,"image" => $image,"ownername" => $ownername,"city" => $city,"state" => $state,"pincode" => $pincode,"phone" => $phone,"email" => $email,"lat" => $lat,"long" => $long,"creationdate" => '',"address" => $address,"accesslevel" => $accesslevel,"password" => $password,"formofcompany" => $formofcompany,"shippingaddress" => $shippingaddress,"vat" => $vat,"cst" => $cst,"manager" => $manager,"website" => $website,"facebook" => $facebook,"twitter" => $twitter,"insta" => $insta,"google" => $google,"pan" => $pan,"shoptime" => $shoptime,"paymentcollectiontime" => $paymentcollectiontime,"shopclosedon" => $shopclosedon);
 if($password != "")
   $data['password']=md5($password);
 $this->db->where( "id", $id );
