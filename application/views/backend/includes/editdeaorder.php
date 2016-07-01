@@ -24,7 +24,7 @@
 </div>
 </div>
 <div class=" form-group" >
-<label class="col-sm-2 control-label" for="normal-field">Dealer Name</label>
+<label class="col-sm-2 control-label" for="normal-field">Dealer Name Selected by Sales</label>
 <div class="col-sm-4">
 <?php echo form_dropdown("saledealer",$saledealer,set_value('saledealer',$before->saledealer),"class='chzn-select form-control'");?>
 </div>
