@@ -3,6 +3,26 @@ if ( !defined( 'BASEPATH' ) )
 	exit( 'No direct script access allowed' );
 class restapi_model extends CI_Model
 {
+		public function getAllBrands(){
+			$query=$this->db->query("SELECT * FROM `brand`")->result();
+			foreach($query as $row){
+					$row->totalproduct=$this->db->query("SELECT COUNT(`product`) as `totalproduct` FROM `productbrand` WHERE `brand`='$row->id'")->result();
+					$row->pageno=ceil(($row->totalproduct[0]->totalproduct)/18);
+			}
+			return $query;
+		}
+		public function getAllCategories(){
+			$query=$this->db->query("SELECT * FROM `category`")->result();
+			foreach($query as $row){
+					$row->totalproduct=$this->db->query("SELECT COUNT(`product`) as `totalproduct` FROM `productcategory` WHERE `category`='$row->id'")->result();
+					$row->pageno=ceil(($row->totalproduct[0]->totalproduct)/18);
+			}
+			return $query;
+		}
+		public function getAllProductId(){
+			$query=$this->db->query("SELECT `id` FROM `product`")->result();
+			return $query;
+		}
 
     public function getmultipleoffer($userid)
     {

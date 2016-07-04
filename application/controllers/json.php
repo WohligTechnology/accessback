@@ -464,6 +464,14 @@ class Json extends CI_Controller {
         $data["message"] = $this->restapi_model->removefromwishlist($user, $product);
         $this->load->view("json", $data);
     }
+    function getAllBrands() {
+        $data["message"] = $this->restapi_model->getAllBrands();
+        $this->load->view("json", $data);
+    }
+    function getAllCategories() {
+        $data["message"] = $this->restapi_model->getAllCategories();
+        $this->load->view("json", $data);
+    }
     function loginuser() {
       $data = json_decode(file_get_contents('php://input'), true);
       $email=$data["email"];
@@ -517,6 +525,10 @@ class Json extends CI_Controller {
     }
     function getnavigation() {
         $data["message"] = $this->navigation_model->getnavigation();
+        $this->load->view("json", $data);
+    }
+    function getAllProductId() {
+        $data["message"] = $this->restapi_model->getAllProductId();
         $this->load->view("json", $data);
     }
 
