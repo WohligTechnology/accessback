@@ -6037,6 +6037,7 @@ $image=$uploaddata['file_name'];
 	$data["paymentstatus"]=$this->deaorder_model->getpaymentstatusdropdown();
 	$data["store"]=$this->deaorder_model->getstoredropdown();
 	$data["sales"]=$this->deaorder_model->getsalesdropdown();
+		$data["salestype"]=$this->deaorder_model->getsalestypedropdown();
 	$data["title"]="Create deaorder";
 	$this->load->view("template",$data);
 	}
@@ -6072,6 +6073,7 @@ $image=$uploaddata['file_name'];
 	$data["paymentstatus"]=$this->deaorder_model->getpaymentstatusdropdown();
 	$data["store"]=$this->deaorder_model->getstoredropdown();
 	$data["sales"]=$this->deaorder_model->getsalesdropdown();
+		$data["salestype"]=$this->deaorder_model->getsalestypedropdown();
 	$data["page"]="createdeaorder";
 	$data["title"]="Create deaorder";
 	$this->load->view("template",$data);
@@ -6101,7 +6103,8 @@ $image=$uploaddata['file_name'];
 	$billingaddress=$this->input->get_post("billingaddress");
 	$shippingaddress=$this->input->get_post("shippingaddress");
 	$approve=$this->input->get_post("approve");
-	if($this->deaorder_model->create($store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress,$approve)==0)
+	$salestype=$this->input->get_post("salestype");
+	if($this->deaorder_model->create($store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress,$approve,$salestype)==0)
 	$data["alerterror"]="New order could not be created.";
 	else
 	$data["alertsuccess"]="order created Successfully.";
@@ -6122,6 +6125,7 @@ $image=$uploaddata['file_name'];
 	$data["sales"]=$this->deaorder_model->getsalesdropdown();
 		$data["saledealer"]=$this->deaorder_model->getsaledealerdropdown();
 			$data["approve"]=$this->deaorder_model->getapprovedropdown();
+				$data["salestype"]=$this->deaorder_model->getsalestypedropdown();
 	$data["title"]="Edit deaorder";
 	$data["before"]=$this->deaorder_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
@@ -6162,6 +6166,7 @@ $image=$uploaddata['file_name'];
 	$data["store"]=$this->deaorder_model->getstoredropdown();
 	$data["saledealer"]=$this->deaorder_model->getsaledealerdropdown();
 	$data["approve"]=$this->deaorder_model->getapprovedropdown();
+	$data["salestype"]=$this->deaorder_model->getsalestypedropdown();
 	$data["sales"]=$this->deaorder_model->getsalesdropdown();
 	$data["before"]=$this->deaorder_model->beforeedit($this->input->get("id"));
 	$this->load->view("template",$data);
@@ -6193,7 +6198,8 @@ $image=$uploaddata['file_name'];
 	$shippingaddress=$this->input->get_post("shippingaddress");
 	$saledealer=$this->input->get_post("saledealer");
 	$approve=$this->input->get_post("approve");
-	if($this->deaorder_model->edit($id,$store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress,$saledealer,$approve)==0)
+	$salestype=$this->input->get_post("salestype");
+	if($this->deaorder_model->edit($id,$store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress,$saledealer,$approve,$salestype)==0)
 	$data["alerterror"]="New deaorder could not be Updated.";
 	else
 	$data["alertsuccess"]="deaorder Updated Successfully.";

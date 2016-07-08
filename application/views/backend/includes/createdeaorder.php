@@ -26,6 +26,12 @@ Create order </h3>
 </div>
 </div>
 <div class=" form-group">
+<label class="col-sm-2 control-label" for="normal-field">Sales Type</label>
+<div class="col-sm-4">
+<?php echo form_dropdown("salestype",$salestype,set_value('salestype'),"class='chzn-select form-control'");?>
+</div>
+</div>
+<div class=" form-group">
 <label class="col-sm-2 control-label" for="normal-field">Sales</label>
 <div class="col-sm-4">
 <?php echo form_dropdown("sales",$sales,set_value('sales'),"class='chzn-select form-control'");?>

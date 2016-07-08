@@ -18,6 +18,12 @@
 </div>
 </div>
 <div class=" form-group" >
+<label class="col-sm-2 control-label" for="normal-field">Sales Type</label>
+<div class="col-sm-4">
+<?php echo form_dropdown("salestype",$salestype,set_value('salestype',$before->salestype),"class='chzn-select form-control'");?>
+</div>
+</div>
+<div class=" form-group" >
 <label class="col-sm-2 control-label" for="normal-field">Approve Order</label>
 <div class="col-sm-4">
 <?php echo form_dropdown("approve",$approve,set_value('approve',$before->approve),"class='chzn-select form-control'");?>
