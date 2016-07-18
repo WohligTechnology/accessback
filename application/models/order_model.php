@@ -499,9 +499,7 @@ class Order_model extends CI_Model
 
 	function getorderitem($id)
 	{
-        $query=$this->db->query("SELECT `orderitems`.`id`,`order`.`firstname`,`orderitems`.`order`,`orderitems`.`product`,`product`.`name`,`product`.`sku`,IFNULL(`product`.`tax`,0) as `tax`, `orderitems`.`quantity`,`orderitems`.`price`,`orderitems`.`discount`,`orderitems`.`finalprice` FROM `orderitems`
-		INNER JOIN `order` ON `order`.`id`=`orderitems`.`order`
-		INNER JOIN `product` ON `product`.`id`=`orderitems`.`product` AND `orderitems`.`order`='$id'
+        $query=$this->db->query("SELECT `orderitems`.`id`,`order`.`firstname`,`orderitems`.`order`,`orderitems`.`product`,`product`.`name`,`product`.`sku`,IFNULL(`product`.`tax`,0) as `tax`, `orderitems`.`quantity`,`orderitems`.`price`,`orderitems`.`discount`,`orderitems`.`finalprice`,`productimage`.`image` FROM `orderitems` LEFT OUTER JOIN `order` ON `order`.`id`=`orderitems`.`order` LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`orderitems`.`product` LEFT OUTER JOIN `product` ON `product`.`id`=`orderitems`.`product` WHERE `orderitems`.`order`='$id' GROUP BY `product`
         " )->result();
         foreach($query as $row){
             if($row->tax==''){

@@ -14,9 +14,8 @@ $order=$this->input->get('id');
 				<tr>
 					<!--<th>Id</th>-->
 					<th>id</th>
-					<th>order</th>
 					<th>product</th>
-                    <th>product SKU</th>
+                    <th>Image</th>
 					<th>quantity</th>
 					<th> price </th>
 					<th>discount</th>
@@ -28,9 +27,9 @@ $order=$this->input->get('id');
 			   <?php foreach($table as $row) { ?>
 					<tr >
 						<td class="id"><?php echo $row->id; ?></td>
-						<td><?php echo $row->firstname; ?></td>
 						<td><?php echo $row->name; ?></td>
-                        <td><?php echo $row->sku; ?></td>
+	<td><img src="<?php echo base_url('uploads')."/".$row->image; ?>" width="50px" height="auto"></td>
+
 						<td><?php echo $row->quantity; ?></td>
 						<td><?php echo $row->price; ?></td>
 						<td><?php echo $row->discount; ?></td>
@@ -42,7 +41,7 @@ $order=$this->input->get('id');
 			</tbody>
 			</table>
                <br></br>
-                
+
             </div>
 			  <!--  <form class="form-horizontal tasi-form" method="post" action="<?php echo site_url('site/editorderitemssubmit');?>" >
 					<div class="amount-message alert alert-danger" style="display:none;"></div>
@@ -114,7 +113,7 @@ $order=$this->input->get('id');
 												<button class="editproduct"  type="button"><i class="icon-pencil"></i></button>&nbsp;
 												<button class="deleteproduct"  type="button"><i class="icon-trash"></i></button>&nbsp;
 											</td>
-										</tr>								
+										</tr>
 								<?php } ?>
 								</tbody>
 							</table>
@@ -122,42 +121,42 @@ $order=$this->input->get('id');
 					</div>
 					<div class=" form-group">
 					  <label class="col-sm-2 control-label">Total Amount</label>
-					  <div class="col-sm-4"> 
+					  <div class="col-sm-4">
 						<input type="double" name="totalamount" class="form-control totalamount" value="<?php echo set_value('totalamount',$before['order']->totalamount); ?>">
 					  </div>
 					</div>
 					<div class=" form-group">
 					  <label class="col-sm-2 control-label">Discount</label>
-					  <div class="col-sm-4"> 
+					  <div class="col-sm-4">
 						<input type="double" name="discount" class="form-control discountamount" value="<?php echo set_value('discount',$before['order']->discountamount); ?>" readonly>
 					  </div>
 					</div>
 					<div class=" form-group">
 					  <label class="col-sm-2 control-label">Final Amount</label>
-					  <div class="col-sm-4"> 
-						
+					  <div class="col-sm-4">
+
 						<input type="text" name="finalamount" class="form-control finalamount" value="<?php echo set_value('finalamount',$before['order']->finalamount); ?>" readonly>
 					  </div>
 					</div>
-					
+
 					<div class=" form-group">
 					  <label class="col-sm-2 control-label"> Amount Paid</label>
-					  <div class="col-sm-4"> 
+					  <div class="col-sm-4">
 						<input type="double" name="amountpaid" class="form-control amountpaid" value="<?php echo set_value('amountpaid',$before['order']->amountpaid); ?>">
 					  </div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">&nbsp;</label>
-						<div class="col-sm-4">	
+						<div class="col-sm-4">
 							<button type="button" class="btn btn-info finalsubmit">Submit</button>
 						</div>
 					</div>
 				</form>-->
 			</div>
 		</section>
-    
+
 <script>
-    
+
     $(document).ready(function () {
         $(".deleteorder").click(function() {
             var id=$(this).parents("tr").children(".id").text();
@@ -165,14 +164,14 @@ $order=$this->input->get('id');
             $.get("<?php echo site_url("site/deleteorderitem");?>",{id:id}, function(data) {
                 console.log("demo");
                 $(mytr).remove();
-                
+
             });
-            
-            
-            
+
+
+
         });
     });
-        
+
     /*
 function getURLParameter(name) {
     	return decodeURI(
@@ -204,7 +203,7 @@ function totalcalc()
 	$('.totalamount').val(totalamount);
 	$('.finalamount').val(finalamount);
 	//$('.finaltotal').text(finaltotal.toFixed(2));
-	
+
 	var amountpaid=parseFloat($('.amountpaid').text());
 	//var balanceleft=finaltotal-advanceamount;
 	//$('.balanceleft').text(balanceleft.toFixed(2));
@@ -213,17 +212,17 @@ function totalcalc()
 		$(".category").change(function (){
 			var form_data = { category:$(".category").select2("val") };
 			$.getJSON("<?php echo site_url('site/getproductbycategory') ?>",form_data,function(msg){
-				$('select.product').html(""); 
+				$('select.product').html("");
 				for(var i=0;i<msg.length;i++)
 				{
 					$('select.product').append("<option value='"+msg[i].id+"'>"+msg[i].name+"</option>");
 				}
-				
+
 				//$(".product").trigger("liszt:updated");
 				$("select.product").select2();
 			});
 		});
-		
+
 		$('.deleteproduct').click(function(){
 			$(this).parents('tr').remove();
 			totalcalc();
@@ -242,7 +241,7 @@ function totalcalc()
 					//console.log(msg);
 					var message= msg;
 					//console.log(message);
-					
+
 					$('.product').html("");
 					for(var i=0;i<message.length;i++)
 					{
@@ -250,14 +249,14 @@ function totalcalc()
 						$('.product').val(productval);
 						//$(".product").trigger("liszt:updated");
 					}
-					
+
 					$(".category").trigger("liszt:updated");
 					$("select.product").select2();
 					$(row).remove();
 					totalcalc();
-				
+
 			});
-		
+
 		});
 		$(".productsubmit").click(function(){
 			var form_data = {
@@ -277,7 +276,7 @@ function totalcalc()
 					//console.log(total);
 					var totalamount = (message.price * quantity)-discount;
 					$('tbody.tablebody').append("<tr ><td style='display:none;' class='productid'>"+message.id+"</td><td style='display:none;' class='categoryid'>"+category+"</td><td class='productname'>"+message.name+"</td><td class='productquantity'>"+quantity+"</td><td class='productdiscount'>"+discount+"</td><td class='productamount' >"+totalamount+"</td><td><button class='editproduct'  type='button'><i class='icon-pencil'></i></button>&nbsp;<button class='deleteproduct'  type='button'><i class='icon-trash'></i></button>&nbsp;</td></tr>");
-					
+
 					totalcalc();
 					$('.deleteproduct').click(function(){
 						$(this).parents('tr').remove();
@@ -297,7 +296,7 @@ function totalcalc()
 								//console.log(msg);
 								var message= msg;
 								//console.log(message);
-								
+
 								$('.product').html("");
 								for(var i=0;i<message.length;i++)
 								{
@@ -305,14 +304,14 @@ function totalcalc()
 									$('.product').val(productval);
 									//$(".product").trigger("liszt:updated");
 								}
-								
+
 								$(".category").trigger("liszt:updated");
 								$("select.product").select2();
 								$(row).remove();
 								totalcalc();
-							
+
 						});
-					
+
 					});
 				});
 		});
@@ -343,7 +342,7 @@ function totalcalc()
 					category : category,
 					}
 					console.log(form_data);
-				//console.log(productrows);	
+				//console.log(productrows);
 					$.ajax({
 						url: "<?php echo site_url('site/editordersubmit'); ?>",
 						type: 'POST',
@@ -351,13 +350,13 @@ function totalcalc()
 						success: function(msg) {
 										console.log("DONE")
 							window.location.href = "<?php echo site_url('site/vieworder'); ?>";
-								
+
 						}
 						});
 			}
 			else
 			{
-				
+
 				$('.amount-message').fadeIn(500);
 				$('.amount-message').html("<span class='alert alert-error'>Please Enter Valid Amount..Balance Amount is "+$('.balanceleft').text()+"</span>");
 				$('.amount-message').delay(2000).fadeOut(1000);

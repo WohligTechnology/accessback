@@ -6264,6 +6264,13 @@ $image=$uploaddata['file_name'];
 	$elements[5]->sort="1";
 	$elements[5]->header="Approve";
 	$elements[5]->alias="approve";
+
+	$elements[6]=new stdClass();
+ 	$elements[6]->field="`productimage`.`image`";
+ 	$elements[6]->sort="1";
+ 	$elements[6]->header="Image";
+ 	$elements[6]->alias="image";
+
 	$search=$this->input->get_post("search");
 	$pageno=$this->input->get_post("pageno");
 	$orderby=$this->input->get_post("orderby");
@@ -6278,7 +6285,7 @@ $image=$uploaddata['file_name'];
 	$orderby="id";
 	$orderorder="ASC";
 	}
-	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_orderproduct` LEFT OUTER JOIN `product` ON `product`.`id`=`dea_orderproduct`.`product`","WHERE `dea_orderproduct`.`order`='$id'");
+	$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `dea_orderproduct` LEFT OUTER JOIN `product` ON `product`.`id`=`dea_orderproduct`.`product` LEFT OUTER JOIN `productimage` ON `productimage`.`product`=`product`.`id`","WHERE `dea_orderproduct`.`order`='$id' GROUP BY `product`.`id`");
 	$this->load->view("json",$data);
 	}
 
