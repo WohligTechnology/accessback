@@ -6104,7 +6104,10 @@ $image=$uploaddata['file_name'];
 	$shippingaddress=$this->input->get_post("shippingaddress");
 	$approve=$this->input->get_post("approve");
 	$salestype=$this->input->get_post("salestype");
-	if($this->deaorder_model->create($store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress,$approve,$salestype)==0)
+	$deliveredtime=$this->input->get_post("deliveredtime");
+	$delivereddate=$this->input->get_post("delivereddate");
+	$note=$this->input->get_post("note");
+	if($this->deaorder_model->create($store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress,$approve,$salestype,$delivereddate,$deliveredtime,$note)==0)
 	$data["alerterror"]="New order could not be created.";
 	else
 	$data["alertsuccess"]="order created Successfully.";
@@ -6199,7 +6202,10 @@ $image=$uploaddata['file_name'];
 	$saledealer=$this->input->get_post("saledealer");
 	$approve=$this->input->get_post("approve");
 	$salestype=$this->input->get_post("salestype");
-	if($this->deaorder_model->edit($id,$store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress,$saledealer,$approve,$salestype)==0)
+	$deliverabletime=$this->input->get_post("deliverabletime");
+	$deliverabledate=$this->input->get_post("deliverabledate");
+	$note=$this->input->get_post("note");
+	if($this->deaorder_model->edit($id,$store,$paymentstatus,$sales,$firstname,$lastname,$email,$billingcity,$billingstate,$billingcountry,$billingcontact,$billingpincode,$shippingcity,$shippingstate,$shippingcountry,$shippingcontact,$shippingpincode,$long,$password,$creationdate,$modificationdate,$billingaddress,$shippingaddress,$saledealer,$approve,$salestype,$deliverabledate,$deliverabletime,$note)==0)
 	$data["alerterror"]="New deaorder could not be Updated.";
 	else
 	$data["alertsuccess"]="deaorder Updated Successfully.";

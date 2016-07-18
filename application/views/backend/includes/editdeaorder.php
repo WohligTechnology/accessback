@@ -143,6 +143,18 @@
 <input type="text" id="normal-field" class="form-control" name="creationdate" value='<?php echo set_value('creationdate',$before->creationdate);?>'>
 </div>
 </div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Deliverable date</label>
+<div class="col-sm-4">
+<input type="date" id="normal-field" class="form-control" name="deliverabledate" value='<?php echo set_value('deliverabledate',$before->deliverabledate);?>'>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="normal-field">Deliverable time</label>
+<div class="col-sm-4">
+<input type="time" id="normal-field" class="form-control" name="deliverabletime" value='<?php echo set_value('deliverabletime',$before->deliverabletime);?>'>
+</div>
+</div>
 <div class="form-group" style="display:none">
 <label class="col-sm-2 control-label" for="normal-field">Modification Date</label>
 <div class="col-sm-4">
@@ -161,6 +173,22 @@
 <textarea name="shippingaddress" id="" cols="20" rows="10" class="form-control "><?php echo set_value( 'shippingaddress',$before->shippingaddress);?></textarea>
 </div>
 </div>
+<?php if($before->sales !=0) { ?>
+  <div class="form-group">
+  <label class="col-sm-2 control-label" for="normal-field">Sales's Person Note</label>
+  <div class="col-sm-8">
+  <textarea name="note" id="" cols="20" rows="10" class="form-control "><?php echo set_value( 'note',$before->note);?></textarea>
+  </div>
+  </div>
+<?php } else { ?>
+  <div class="form-group">
+  <label class="col-sm-2 control-label" for="normal-field">Dealer's Note</label>
+  <div class="col-sm-8">
+  <textarea name="note" id="" cols="20" rows="10" class="form-control "><?php echo set_value( 'note',$before->note);?></textarea>
+  </div>
+  </div>
+  <?php } ?>
+
 <div class="form-group">
 <label class="col-sm-2 control-label" for="normal-field">&nbsp;</label>
 <div class="col-sm-4">
