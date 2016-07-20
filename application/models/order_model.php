@@ -262,6 +262,11 @@ class Order_model extends CI_Model
 			$sum=0;
 			foreach($carts as $cart)
 			{
+				// calculate discount amount
+				$discount=($cart['pricePer']*$cart['price'])/100;
+				$finaldiscountamount=$cart['price']-$discount;
+				$cart['price']=$finaldiscountamount;
+
 					$querycart=$this->db->query("INSERT INTO `dea_orderproduct`(`order`, `product`, `quantity`, `price`, `finalprice`) VALUES ('$order','".$cart['id']."','".$cart['qty']."','".$cart['price']."','".$cart['qty']."'*'".$cart['price']."')");
 					$quantity=intval($cart['qty']);
 					$productid=$cart['id'];
