@@ -31,7 +31,7 @@ $config =
 
 			"Google" => array (
 				"enabled" => true,
-				"keys"    => array ( "id" => "1020486677583-qu1b7lap3l7ardv0nt2gkgstlpsi67ne.apps.googleusercontent.com", "secret" => "2oAmQbZgeI2RyViZxcTe5_T9" ),
+				"keys"    => array ( "id" => "1036204930203-t2sbk4dfrfsthjfcq3mmt977hs5fhh05.apps.googleusercontent.com", "secret" => "22n1CgIjcPtIfcvLXk-q3vHo" ),
                 "scope"           => "https://www.googleapis.com/auth/userinfo.profile ". // optional
                                "https://www.googleapis.com/auth/userinfo.email"   , // optional
                   "access_type"     => "offline",   // optional
