@@ -1143,7 +1143,11 @@ echo $filepath;
         LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid'
         LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1
         LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=0", "WHERE `product`.`status`=1 $where 1 " , ' GROUP BY `product`.`id` ');
-        $data3["filter"] = $this->restapi_model->getFiltersLater($data3["data"]->querycomplete);
+
+        if($this->input->get("offline") != "1")
+        {
+          //$data3["filter"] = $this->restapi_model->getFiltersLater($data3["data"]->querycomplete);
+        }
 
         $data["message"] = $data3;
 
