@@ -1106,6 +1106,412 @@ redirect(base_url("uploads/productfile_$timestamp.csv"));
 			return  1;
 
     }
+	public function createbynewcsv($file)
+	{
+//        echo "in Model";
+
+        foreach ($file as $row)
+        {
+
+            if($row['Special Price From'] != "")
+				$specialpricefrom = date("Y-m-d",strtotime($row['Special Price From']));
+			if($row['Special Price To'] != "")
+				$specialpriceto = date("Y-m-d",strtotime($row['Special Price To']));
+            $sku=$row['SKU'];
+            $productfeatures=$row['Product Features'];
+            $image1=$row['Image1'];
+            $image2=$row['Image2'];
+            $image3=$row['Image3'];
+            $image4=$row['Image4'];
+            $image5=$row['Image5'];
+            $image6=$row['Image6'];
+            $image7=$row['Image7'];
+            $category=$row['Category'];
+//            $allcategories=explode(",",$category);
+
+            $name=$row['Name'];
+            $url=$row['url'];
+            $metatitle=$row['Meta Title'];
+            $metadescription=$row['Meta Description'];
+            $metakeyword=$row['Meta Keyword'];
+            $quantity=$row['Quantity'];
+            $price=$row['Price'];
+            $wholesaleprice=$row['Wholesale Price'];
+            $firstsaleprice=$row['Firstsale Price'];
+            $secondsaleprice=$row['Secondsale Price'];
+
+            $brand=$row['Brand'];
+
+            $allbrand=explode(",",$brand);
+
+            $modelnumber=$row['Model Number'];
+            $brandcolor=$row['Brand Color'];
+            $eanorupc=$row['EAN/UPC'];
+            $eanorupcmeasuringunits=$row['EAN/UPC-Measuring Unit'];
+
+            $type=$row['Type'];
+            $alltype=explode(",",$type);
+
+            $compatibledevice=$row['Compatible Device'];
+            $compatiblewith=$row['Compatible With'];
+            $material=$row['Material'];
+            $color=$row['Color'];
+            $design=$row['Design'];
+            $width=$row['Width'];
+            $height=$row['Height'];
+            $depth=$row['Depth'];
+            $portsize=$row['Port Size'];
+            $packof=$row['Pack Of'];
+            $salespackage=$row['Sales Package'];
+            $keyfeatures=$row['Key Features'];
+            $videourl=$row['Video URL'];
+            $modelname=$row['Model Type'];
+            $finish=$row['Finish'];
+            $weight=$row['Weight'];
+            $domesticwarranty=$row['Warranty'];
+            $domesticwarrantymeasuringunits=$row['Domestic Warranty Measuring Units'];
+            $internationalwarranty=$row['Internation Warranty'];
+            $internationalwarrantymeasuringunits=$row['International Warranty Measuring Units'];
+            $warrantysummary=$row['Warranty Summary'];
+            $warrantyservicetype=$row['Warranty Service Type'];
+            $coveredinwarranty=$row['Covered In Warranty'];
+            $notcoveredinwarranty=$row['Not Covered In Warranty'];
+            $size=$row['Size'];
+            $subcategory=$row['Sub-Category'];
+            $dimension=$row['Dimension'];
+            $colormatch=$row['Color Match'];
+            $microphone=$row['Microphone'];
+            $length=$row['Length'];
+            $capacity=$row['Capacity'];
+            $voltage=$row['Voltage'];
+            $tax=$row['Tax'];
+            $allsubcategory=explode(",",$subcategory);
+
+            $q="INSERT INTO `product`( `name`, `sku`, `url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`,`dimension`,`colormatch`,`microphone`,`length`,`capacity`,`voltage`) VALUES ('$name','$sku','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$dimension','$colormatch','$microphone','$length','$capacity','$voltage')";
+
+            $data  = array(
+			'name' => $row['name'],
+			'sku' => $row['sku'],
+			'url' => $row['url'],
+			'visibility' => 1,
+			'price' => $row['price'],
+			'wholesaleprice' => $row['wholesaleprice'],
+			'firstsaleprice' => $row['firstsaleprice'],
+			'secondsaleprice' => $row['secondsaleprice'],
+			'specialpricefrom' => $specialpricefrom,
+			'specialpriceto' => $specialpriceto,
+			'metatitle' => $row['metatitle'],
+			'metadesc' => $row['metadescription'],
+			'metakeyword' => $row['metakeyword'],
+			'quantity' => $row['quantity'],
+			'status' => 1
+		);
+//            $q1="SELECT COUNT(`id`) as `count1` FROM `product` WHERE `name` LIKE '$name'";
+
+            $checkproductpresent=$this->db->query("SELECT COUNT(`id`) as `count1` FROM `product` WHERE `name` LIKE '$name'")->row();
+
+            if($checkproductpresent->count1 == 0)
+            {
+                $query=$this->db->query("INSERT INTO `product`( `name`, `sku`,`url`, `visibility`, `price`, `wholesaleprice`, `firstsaleprice`, `secondsaleprice`, `specialpriceto`, `specialpricefrom`, `metatitle`, `metadesc`, `metakeyword`, `quantity`, `status`, `modelnumber`, `brandcolor`, `eanorupc`, `eanorupcmeasuringunits`, `type`, `compatibledevice`, `compatiblewith`, `material`, `color`, `design`, `width`, `height`, `depth`, `portsize`, `packof`, `salespackage`, `keyfeatures`, `videourl`, `modelname`, `finish`, `weight`, `domesticwarranty`, `domesticwarrantymeasuringunits`, `internationalwarranty`, `internationalwarrantymeasuringunits`, `warrantysummary`, `warrantyservicetype`, `coveredinwarranty`, `notcoveredinwarranty`,`size`,`dimension`,`colormatch`,`microphone`,`length`,`capacity`,`voltage`,`tax`) VALUES ('$name','$sku','$url','1','$price','$wholesaleprice','$firstsaleprice','$secondsaleprice','$specialpriceto','$specialpricefrom','$metatitle','$metadescription','$metakeyword','$quantity',1,'$modelnumber','$brandcolor','$eanorupc','$eanorupcmeasuringunits','$type','$compatibledevice','$compatiblewith','$material','$color','$design','$width','$height','$depth','$portsize','$packof','$salespackage','$keyfeatures','$videourl','$modelname','$finish','$weight','$domesticwarranty','$domesticwarrantymeasuringunits','$internationalwarranty','$internationalwarrantymeasuringunits','$warrantysummary','$warrantyservicetype','$coveredinwarranty','$notcoveredinwarranty','$size','$dimension','$colormatch','$microphone','$length','$capacity','$voltage','$tax')");
+                $productid=$this->db->insert_id();
+//                echo "pid".$productid;
+                if($image1!=""){
+				$dataimg  = array(
+					'image' => $image1,
+					'product' => $productid,
+					'order' => 0
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image2!=""){
+				$dataimg  = array(
+					'image' => $image2,
+					'product' => $productid,
+					'order' => 1
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image3!=""){
+				$dataimg  = array(
+					'image' => $image3,
+					'product' => $productid,
+                    'order' => 2
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image4!=""){
+				$dataimg  = array(
+					'image' => $image4,
+					'product' => $productid,
+                    'order' => 3
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image5!=""){
+				$dataimg  = array(
+					'image' => $image5,
+					'product' => $productid,
+                    'order' => 4
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image6!=""){
+				$dataimg  = array(
+					'image' => $image6,
+					'product' => $productid,
+                    'order' => 5
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image7!=""){
+				$dataimg  = array(
+					'image' => $image7,
+					'product' => $productid,
+                    'order' => 6
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                $category=trim($category);
+                $categoryquery=$this->db->query("SELECT * FROM `category` where `name`LIKE '$category'")->row();
+                if(empty($categoryquery))
+                {
+                    $this->db->query("INSERT INTO `category`(`name`) VALUES ('$category')");
+                    $categoryid=$this->db->insert_id();
+                    $allsubcategory=trim($allsubcategory);
+                    // INSERT MULTIPLE SUBCATEGORIES
+                    foreach($allsubcategory as $key => $subcategory)
+			         {
+                        $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name` LIKE '$subcategory'")->row();
+                        if(empty($subcategoryquery))
+                        {
+                            $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+                            $subcategoryid=$this->db->insert_id();
+                        }
+                        else
+                        {
+                            $subcategoryid=$subcategoryquery->id;
+                             $data2  = array(
+                            'product' => $productid,
+                            'category' => $subcategoryid,
+                        );
+                        $queryproductsubcategory=$this->db->insert( 'productcategory', $data2 );
+                        }
+
+			         }
+
+                    $data2  = array(
+					'product' => $productid,
+					'category' => $categoryid,
+                    );
+                    $queryproductcategory=$this->db->insert( 'productcategory', $data2 );
+
+                }
+                else
+                {
+                    $categoryid=$categoryquery->id;
+                    $data2  = array(
+					'product' => $productid,
+					'category' => $categoryid,
+                    );
+                    $queryproductcategory=$this->db->insert( 'productcategory', $data2 );
+                    // INSERT MULTIPLE SUBCATEGORIES
+                    foreach($allsubcategory as $key => $subcategory)
+			         {
+                        $subcategoryquery=$this->db->query("SELECT * FROM `category` where `name` LIKE '$subcategory'")->row();
+                        if(empty($subcategoryquery))
+                        {
+                            $this->db->query("INSERT INTO `category`(`name`,`parent`) VALUES ('$subcategory','$categoryid')");
+                            $subcategoryid=$this->db->insert_id();
+                        }
+                        else
+                        {
+                            $subcategoryid=$subcategoryquery->id;
+                            $data2  = array(
+                            'product' => $productid,
+                            'category' => $subcategoryid,
+                        );
+                        $queryproductsubcategory=$this->db->insert( 'productcategory', $data2 );
+                        }
+			         }
+                }
+
+
+
+
+			foreach($allbrand as $key => $brand)
+			{
+                $brand=trim($brand);
+                $brandquery=$this->db->query("SELECT * FROM `brand` where `name` LIKE '$brand'")->row();
+                if(empty($brandquery))
+                {
+                    $this->db->query("INSERT INTO `brand`(`name`) VALUES ('$brand')");
+                    $brandid=$this->db->insert_id();
+                }
+                else
+                {
+                    $brandid=$brandquery->id;
+                }
+
+				$data2  = array(
+					'product' => $productid,
+					'brand' => $brandid,
+				);
+				$queryproductbrand=$this->db->insert( 'productbrand', $data2 );
+			}
+
+			foreach($alltype as $key => $type)
+			{
+                $type=trim($type);
+                $typequery=$this->db->query("SELECT * FROM `type` where `name` LIKE '$type'")->row();
+                if(empty($typequery))
+                {
+                    $this->db->query("INSERT INTO `type`(`name`) VALUES ('$type')");
+                    $typeid=$this->db->insert_id();
+                }
+                else
+                {
+                    $typeid=$typequery->id;
+                }
+
+				$data2  = array(
+					'product' => $productid,
+					'type' => $typeid,
+				);
+				$queryproducttype=$this->db->insert( 'producttype', $data2 );
+			}
+
+            }   //product insert end
+            else
+            {
+                // update product
+
+                $getprod=$this->db->query("SELECT * FROM `product` WHERE `name` LIKE '$name'")->row();
+                $getprodid=$getprod->id;
+                $data = array(
+               'name' => $name,
+			'sku' => $sku,
+			'url' => $url,
+			'visibility' => 1,
+			'wholesaleprice' => $wholesaleprice,
+			'firstsaleprice' => $firstsaleprice,
+			'secondsaleprice' => $secondsaleprice,
+			'specialpricefrom' => $specialpricefrom,
+			'specialpriceto' => $specialpriceto,
+			'metatitle' => $metatitle,
+			'metadesc' => $metadesc,
+			'metakeyword' => $metakeyword,
+			'status' => 1,
+            'modelnumber' => $modelnumber,
+			'brandcolor' => $brandcolor,
+			'eanorupc' => $eanorupc,
+			'eanorupcmeasuringunits' => $eanorupcmeasuringunits,
+			'compatibledevice' => $compatibledevice,
+			'compatiblewith' => $compatiblewith,
+			'material' => $material,
+			'color' => $color,
+			'width' => $width,
+			'height' => $height,
+			'depth' => $depth,
+			'salespackage' => $salespackage,
+			'keyfeatures' => $keyfeatures,
+			'videourl' => $videourl,
+			'modelname' => $modelname,
+			'finish' => $finish,
+			'weight' => $weight,
+			'domesticwarranty' => $domesticwarranty,
+			'warrantysummary' => $warrantysummary,
+			'size' => $size,
+			'type' => $type,
+			'design' => $design,
+			'portsize' => $portsize,
+			'packof' => $packof,
+			'domesticwarrantymeasuringunits' => $domesticwarrantymeasuringunits,
+			'internationalwarranty' => $internationalwarranty,
+			'internationalwarrantymeasuringunits' => $internationalwarrantymeasuringunits,
+			'warrantyservicetype' => $warrantyservicetype,
+			'coveredinwarranty' => $coveredinwarranty,
+			'notcoveredinwarranty' => $notcoveredinwarranty,
+			'dimension' => $dimension,
+			'colormatch' => $colormatch,
+            'microphone' => $microphone,
+			'length' => $length,
+			'capacity' => $capacity,
+			'voltage' => $voltage,
+			'tax' => $tax
+            );
+
+                $this->db->where('name', $name);
+                $this->db->update('product', $data);
+
+                //UPDATE IMAGE
+
+                $query=$this->db->query("DELETE FROM `productimage` WHERE `product`='$getprodid'");
+
+                if($image1!=""){
+				$dataimg  = array(
+					'image' => $image1,
+					'product' => $getprodid,
+					'order' => 0
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image2!=""){
+				$dataimg  = array(
+					'image' => $image2,
+					'product' => $getprodid,
+					'order' => 1
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image3!=""){
+				$dataimg  = array(
+					'image' => $image3,
+					'product' => $getprodid,
+                    'order' => 2
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image4!=""){
+				$dataimg  = array(
+					'image' => $image4,
+					'product' => $getprodid,
+                    'order' => 3
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image5!=""){
+				$dataimg  = array(
+					'image' => $image5,
+					'product' => $getprodid,
+                    'order' => 4
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image6!=""){
+				$dataimg  = array(
+					'image' => $image6,
+					'product' => $getprodid,
+                    'order' => 5
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+                if($image7!=""){
+				$dataimg  = array(
+					'image' => $image7,
+					'product' => $getprodid,
+                    'order' => 6
+				);
+				$queryproductimage=$this->db->insert( 'productimage', $dataimg );
+                }
+
+        }
+        }
+		if(!$query)
+			return  0;
+		else
+			return  1;
+
+    }
     //new functions by avinash
 
     function deleteallselectedproducts($id)

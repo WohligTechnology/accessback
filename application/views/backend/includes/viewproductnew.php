@@ -1,13 +1,17 @@
 <div class="row" style="padding:1% 0;">
-<div class="col-md-7">
-		<div class=" pull-right col-md-1 createbtn" ><a class="btn btn-primary" href="<?php echo site_url('site/exportproductcsv'); ?>"target="_blank"><i class="icon-plus"></i>Export to CSV </a></div>
+<div class="col-md-3">
+		<div  ><a class="btn btn-primary" href="<?php echo site_url('site/exportproductcsv'); ?>"target="_blank"><i class="icon-plus"></i>Export to CSV </a></div>
 	</div>
 
 	<div class="col-md-3">
 
 		<a class="btn btn-primary btn-pos"  href="<?php echo site_url('site/uploadproductcsv'); ?>"><i class="icon-upload"></i>Upload Product</a> &nbsp;
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-3">
+
+		<a class="btn btn-primary btn-pos"  href="<?php echo site_url('site/uploadproductdescriptioncsv'); ?>"><i class="icon-upload"></i>Upload Product New</a> &nbsp;
+	</div>
+	<div class="col-md-3">
 	<div class=" pull-right col-md-1 createbtn" ><a class="btn btn-primary btn-poss" href="<?php echo site_url('site/createproduct'); ?>"><i class="icon-plus"></i>Create </a></div>
 	</div>
 </div>
@@ -66,13 +70,6 @@
             }
             return "<tr><td><input type='checkbox' class='deleteall all checkbox1' name='name[]' value='"+ resultrow.id +"'></td><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.sku + "</td><td>" + resultrow.price + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.firstsaleprice + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editproduct?id=');?>" + resultrow.id + "'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' onclick=\"return confirm('Are you sure you want to delete?');\" href='<?php echo site_url('site/deleteproduct?id='); ?>" + resultrow.id + "'><i class='icon-trash '></i></a></td></tr>";
         }
-//        <td>
-//						<input type="hidden" name="iniquantity" class="iniquantity form-control" value="<?php echo $row->quantity; ?>">
-//						<input type="text" name="quantity" class="quantity form-control" value="<?php echo $row->quantity; ?>" readonly style="width:58px"> &nbsp;
-//						<button class="btn btn-xs btn-primary editquantity"><i class="icon-pencil"></i></button>
-//						<button class="btn btn-xs btn-success savequantity" style="display:none;"><i class="icon-save"></i></button>
-//						<button class="btn btn-xs btn-danger cancelquantity" style="display:none;"><i class="icon-remove-sign"></i></button>
-//						</td>
         generatejquery("<?php echo $base_url;?>");
     </script>
 </div>
