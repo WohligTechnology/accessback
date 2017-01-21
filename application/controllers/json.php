@@ -1136,7 +1136,7 @@ echo $filepath;
         if ($maxrow == "") {
             $maxrow = 18;
         }
-        $data3["data"] = $this->chintantable->query($pageno, $maxrow, $orderby,$orderorder, $search, $elements, "FROM `product`
+        $data3["data"] = $this->chintantable->query($pageno, $maxrow,"id","DESC", $search, $elements, "FROM `product`
         INNER JOIN `productcategory` ON `productcategory`.`product`=`product`.`id`
         INNER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id`
         INNER JOIN `producttype` ON `producttype`.`product`=`product`.`id`
