@@ -1136,13 +1136,13 @@ echo $filepath;
         if ($maxrow == "") {
             $maxrow = 18;
         }
-        $data3["data"] = $this->chintantable->query($pageno, $maxrow, $orderby, $orderorder, $search, $elements, "FROM `product`
+        $data3["data"] = $this->chintantable->query($pageno, $maxrow, "ORDER BY `id` DESC", $orderorder, $search, $elements, "FROM `product`
         INNER JOIN `productcategory` ON `productcategory`.`product`=`product`.`id`
         INNER JOIN `productbrand` ON `productbrand`.`product`=`product`.`id`
         INNER JOIN `producttype` ON `producttype`.`product`=`product`.`id`
         LEFT OUTER JOIN `userwishlist` ON `userwishlist`.`product`=`product`.`id` AND `userwishlist`.`user`='$userid'
         LEFT OUTER JOIN `productimage` as `image2` ON `image2`.`product`=`product`.`id` AND `image2`.`order`=1
-        LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=0", "WHERE `product`.`status`=1 $where 1 " , ' GROUP BY `product`.`id` ',"","ORDER BY `id` DESC");
+        LEFT OUTER JOIN `productimage` as `image1` ON `image1`.`product`=`product`.`id` AND `image1`.`order`=0", "WHERE `product`.`status`=1 $where 1 " , ' GROUP BY `product`.`id` ');
 
         if($this->input->get("offline") != "1")
         {
