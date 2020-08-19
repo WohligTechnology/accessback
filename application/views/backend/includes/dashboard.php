@@ -98,7 +98,7 @@
                 {
                 image="No Receipt Available";
                 }
-                return "<tr><td>" + resultrow.order + "</td><td><a href='http://accessworld.in/#/productdetail/" + resultrow.productid + "' target='_blank'>" + resultrow.product + "</a></td><td>" + image + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.orderstatus + "</td></tr>";
+                return "<tr><td>" + resultrow.order + "</td><td><a href='https://accessworld.in/#/productdetail/" + resultrow.productid + "' target='_blank'>" + resultrow.product + "</a></td><td>" + image + "</td><td>" + resultrow.quantity + "</td><td>" + resultrow.orderstatus + "</td></tr>";
                 //            <a href='http://accessworld.in/#/productdetail/158'></a>
             }
             generatejquery("<?php echo $base_url;?>");
