@@ -395,10 +395,10 @@ if ( ! function_exists('auto_link'))
 					}
 
 					$str = str_replace($matches['0'][$i],
-										$matches['1'][$i].'<a href="http'.
+										$matches['1'][$i].'<a href="https'.
 										$matches['4'][$i].'://'.
 										$matches['5'][$i].
-										$matches['6'][$i].'"'.$pop.'>http'.
+										$matches['6'][$i].'"'.$pop.'>https'.
 										$matches['4'][$i].'://'.
 										$matches['5'][$i].
 										$matches['6'][$i].'</a>'.
@@ -444,7 +444,7 @@ if ( ! function_exists('prep_url'))
 {
 	function prep_url($str = '')
 	{
-		if ($str == 'http://' OR $str == '')
+		if ($str == 'https://' OR $str == '')
 		{
 			return '';
 		}
@@ -453,7 +453,7 @@ if ( ! function_exists('prep_url'))
 
 		if ( ! $url OR ! isset($url['scheme']))
 		{
-			$str = 'http://'.$str;
+			$str = 'https://'.$str;
 		}
 
 		return $str;
